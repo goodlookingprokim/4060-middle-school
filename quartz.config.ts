@@ -9,7 +9,7 @@ const config: QuartzConfig = {
     enablePopovers: true,
     analytics: null,
     locale: "ko-KR",
-    baseUrl: "REPLACE_ME_GITHUB_PAGES_URL",
+    baseUrl: "goodlookingprokim.github.io/4060-middle-school",
     ignorePatterns: ["private", "templates", ".obsidian"],
     defaultDateType: "modified",
     theme: {

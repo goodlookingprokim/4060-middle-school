@@ -5,28 +5,25 @@ export const sharedPageComponents: SharedLayout = {
   head: Component.Head(),
   header: [
     Component.TechMasthead({
-      eyebrow: "OpenClaw Publishing System",
-      title: "GoodlookingProKim",
-      subtitle: "AI 자동화, 문서 제작, 작업 노트를 바로 다시 쓸 수 있게 정리하는 실전 테크 블로그",
+      eyebrow: "4060 MIDDLE SCHOOL",
+      title: "4060미들스쿨",
+      subtitle: "중년의 배움, 삶의 변화, 함께 나눌 질문을 차분하게 기록하는 모임 블로그",
       links: [
-        { label: "AI 자동화", href: "ai-automation" },
-        { label: "문서와 슬라이드", href: "docs-slides" },
-        { label: "작업 노트", href: "work-notes" },
+        { label: "모임 소개", href: "meeting-intro" },
+        { label: "이번 주제", href: "topics" },
+        { label: "모임 후 정리", href: "after-notes" },
         { label: "RSS", href: "index.xml" },
-        {
-          label: "GitHub",
-          href: "https://github.com/goodlookingprokim/goodlookingprokim.github.io",
-        },
+        { label: "GitHub", href: "https://github.com/goodlookingprokim/4060-middle-school" },
       ],
     }),
   ],
   afterBody: [],
   footer: Component.Footer({
-    message: "다음 작업에서 다시 꺼내 쓸 수 있는 기록을 남깁니다.",
+    message: "함께 나눈 이야기를 다음 만남에서도 다시 꺼내 쓸 수 있게 기록합니다.",
     links: {
-      Home: "https://goodlookingprokim.github.io/",
-      GitHub: "https://github.com/goodlookingprokim/goodlookingprokim.github.io",
-      RSS: "https://goodlookingprokim.github.io/index.xml",
+      Home: "https://goodlookingprokim.github.io/4060-middle-school/",
+      GitHub: "https://github.com/goodlookingprokim/4060-middle-school",
+      RSS: "https://goodlookingprokim.github.io/4060-middle-school/index.xml",
     },
   }),
 }
