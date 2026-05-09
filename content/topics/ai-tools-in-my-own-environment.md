@@ -262,6 +262,9 @@ Codex 앱은 계속 바뀝니다. Plugins, Skills 같은 요소도 눈에 띕니
   - [요약 링크](https://lilys.ai/digest/9412485/10847933?s=1&noteVersionId=7360972&include_suggestion=true)
 - 맥에서 파일 경로 바로 복사하기
   - `Option + Command + C`
+- OpenClaw에서 카카오톡 자동화를 붙이는 `openclaw-kakao` 스킬
+  - [jkf87/openclaw-kakao](https://github.com/jkf87/openclaw-kakao)
+  - macOS 카카오톡 메시지 자동화를 위해 `kmsg` CLI를 OpenClaw 스킬 형태로 묶어둔 자료입니다. 카톡 읽기, 보내기, 드라이런 테스트, MCP 연동 같은 흐름을 한 번에 살펴보기 좋습니다.
 
 이런 자료는 한 번에 다 이해하려 하기보다, “아, 이런 방향도 있구나” 정도로 받아들이면 충분합니다. 오늘 다 소화하지 못해도 괜찮습니다.
 
