@@ -265,6 +265,12 @@ Codex 앱은 계속 바뀝니다. Plugins, Skills 같은 요소도 눈에 띕니
 - OpenClaw에서 카카오톡 자동화를 붙이는 `openclaw-kakao` 스킬
   - [jkf87/openclaw-kakao](https://github.com/jkf87/openclaw-kakao)
   - macOS 카카오톡 메시지 자동화를 위해 `kmsg` CLI를 OpenClaw 스킬 형태로 묶어둔 자료입니다. 카톡 읽기, 보내기, 드라이런 테스트, MCP 연동 같은 흐름을 한 번에 살펴보기 좋습니다.
+- HTML 기반으로 고급 프로토타입, 슬라이드, 인포그래픽까지 만드는 `huashu-design`
+  - [alchaincyf/huashu-design](https://github.com/alchaincyf/huashu-design)
+  - 한 문장 요청으로 프로토타입, 발표 자료, 모션 디자인까지 만들어보는 흐름이 인상적입니다. 디자인 결과물을 AI로 어디까지 밀어붙일 수 있는지 볼 때 참고할 만합니다.
+- Claude Design 계열을 오픈소스로 확장해보는 `open-design`
+  - [nexu-io/open-design](https://github.com/nexu-io/open-design)
+  - 로컬 우선, 다양한 코딩 에이전트 연동, 디자인 시스템과 스킬 묶음을 함께 보여주는 프로젝트입니다. 디자인 생성 흐름을 더 큰 작업 환경으로 넓혀서 보고 싶을 때 흥미롭게 볼 수 있습니다.
 
 이런 자료는 한 번에 다 이해하려 하기보다, “아, 이런 방향도 있구나” 정도로 받아들이면 충분합니다. 오늘 다 소화하지 못해도 괜찮습니다.
 
