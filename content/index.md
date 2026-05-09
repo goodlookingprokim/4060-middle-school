@@ -42,9 +42,11 @@ title: 4060미들스쿨
   </a>
 </div>
 
-## 먼저 읽어보면 좋은 글
+## 지금 먼저 보면 좋은 글
 
 <ul class="note-list">
+  <li><a href="./topics/2026-05-09-intermediate-meeting-notice" class="internal">5월 9일 중급반 모임 안내</a></li>
+  <li><a href="./topics/2026-05-09-participant-one-page" class="internal">5월 9일 참가자 한 장 메모</a></li>
   <li><a href="./meeting-intro/what-is-4060-middle-school" class="internal">4060미들스쿨은 어떤 모임인가</a></li>
   <li><a href="./topics/how-to-use-this-blog-before-meeting" class="internal">모임 전에 이 블로그를 어떻게 보면 좋은가</a></li>
 </ul>
