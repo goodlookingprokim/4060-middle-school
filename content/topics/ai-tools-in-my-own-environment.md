@@ -271,6 +271,9 @@ Codex 앱은 계속 바뀝니다. Plugins, Skills 같은 요소도 눈에 띕니
 - Claude Design 계열을 오픈소스로 확장해보는 `open-design`
   - [nexu-io/open-design](https://github.com/nexu-io/open-design)
   - 로컬 우선, 다양한 코딩 에이전트 연동, 디자인 시스템과 스킬 묶음을 함께 보여주는 프로젝트입니다. 디자인 생성 흐름을 더 큰 작업 환경으로 넓혀서 보고 싶을 때 흥미롭게 볼 수 있습니다.
+- Claude Code의 `.claude` 폴더 구조를 설명하는 Company Bites 자료
+  - https://lilys.ai/digest/9152904/10491376?s=1&noteVersionId=6992026
+  - `.claude` 폴더를 단순 설정이 아니라 협업 운영 체계로 보는 관점이 인상적입니다. `CLAUDE.md`, `.local`, `settings.json`, `commands/`, `rules/`, `skills/`, `agents/` 같은 구성을 통해 팀 기준과 역할을 어떻게 나눌 수 있는지 살펴볼 수 있습니다.
 
 이런 자료는 한 번에 다 이해하려 하기보다, “아, 이런 방향도 있구나” 정도로 받아들이면 충분합니다. 오늘 다 소화하지 못해도 괜찮습니다.
 
