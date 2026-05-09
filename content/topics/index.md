@@ -17,11 +17,11 @@ cssclasses:
 
 <div class="reading-path">
   <a href="./2026-05-09-intermediate-meeting-notice" class="internal">
-    <strong>5월 9일 중급반 모임 안내</strong>
+    <strong>2026년 5월 9일(토) 중급반 모임 안내</strong>
     <span>이번 모임 일정과 주제를 가장 먼저 확인할 수 있는 안내 글입니다.</span>
   </a>
   <a href="./2026-05-09-participant-one-page" class="internal">
-    <strong>5월 9일 참가자 한 장 메모</strong>
+    <strong>2026년 5월 9일(토) 참가자 한 장 메모</strong>
     <span>길게 읽지 않아도 이번 모임 질문만 가볍게 붙들고 올 수 있게 정리한 메모입니다.</span>
   </a>
   <a href="./how-to-use-this-blog-before-meeting" class="internal">
@@ -33,7 +33,7 @@ cssclasses:
     <span>다음 모임에서 꺼내기 좋은 배움과 변화에 관한 질문을 정리한 글입니다.</span>
   </a>
   <a href="./ai-tools-in-my-own-environment" class="internal">
-    <strong>AI를 내 환경에 붙여보는 여섯 가지 이야기</strong>
+    <strong>2026년 5월 9일(토) AI를 내 환경에 붙여보는 여섯 가지 이야기</strong>
     <span>오늘 중급반에서 함께 볼 블로그, 윈도우 환경, 로컬 LLM, 옵시디언, 코덱스 앱 이야기를 한 글로 정리했습니다.</span>
   </a>
 </div>
