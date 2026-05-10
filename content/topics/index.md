@@ -16,6 +16,10 @@ cssclasses:
 ## 읽기 경로
 
 <div class="reading-path">
+  <a href="./2026-05-10-hermes-on-old-android-phone" class="internal">
+    <strong>2026년 5월 10일(일) 방치된 안드로이드폰에 Hermes Agent 설치하고 Telegram으로 대화하기</strong>
+    <span>집에서 놀고 있는 안드로이드폰을 다시 깨워 Hermes Agent와 Telegram 대화용 장치로 만드는 실습형 가이드입니다.</span>
+  </a>
   <a href="./2026-05-10-claude-md-setup-guide" class="internal">
     <strong>2026년 5월 10일(일) CLAUDE.md 완벽 세팅 가이드</strong>
     <span>Claude Code를 처음 쓰는 사람이 전역 규칙, 프로젝트 규칙, 로컬 규칙을 어떻게 잡으면 좋은지 핵심만 간단히 정리한 글입니다.</span>
