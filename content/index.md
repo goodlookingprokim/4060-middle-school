@@ -45,6 +45,8 @@ title: 4060미들스쿨
 ## 지금 먼저 보면 좋은 글
 
 <ul class="note-list">
+  <li><a href="./topics/2026-05-10-hermes-on-old-android-phone" class="internal">2026년 5월 10일(일) 방치된 안드로이드폰에 Hermes Agent 설치하고 Telegram으로 대화하기</a></li>
+  <li><a href="./topics/2026-05-10-claude-md-setup-guide" class="internal">2026년 5월 10일(일) CLAUDE.md 완벽 세팅 가이드</a></li>
   <li><a href="./meeting-intro/what-is-4060-middle-school" class="internal">4060미들스쿨은 어떤 모임인가</a></li>
 </ul>
 
