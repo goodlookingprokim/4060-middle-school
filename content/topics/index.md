@@ -16,6 +16,10 @@ cssclasses:
 ## 읽기 경로
 
 <div class="reading-path">
+  <a href="./2026-05-10-claude-md-setup-guide" class="internal">
+    <strong>2026년 5월 10일(일) CLAUDE.md 완벽 세팅 가이드</strong>
+    <span>Claude Code를 처음 쓰는 사람이 전역 규칙, 프로젝트 규칙, 로컬 규칙을 어떻게 잡으면 좋은지 핵심만 간단히 정리한 글입니다.</span>
+  </a>
   <a href="./the-speed-of-relearning" class="internal">
     <strong>다시 배우는 사람의 속도</strong>
     <span>다음 모임에서 꺼내기 좋은 배움과 변화에 관한 질문을 정리한 글입니다.</span>
