@@ -17,8 +17,8 @@ cssclasses:
 
 <div class="reading-path">
   <a href="./2026-05-10-hermes-on-old-android-phone" class="internal">
-    <strong>2026년 5월 10일(일) 방치된 안드로이드폰에 Hermes Agent 설치하고 Telegram으로 대화하기</strong>
-    <span>집에서 놀고 있는 안드로이드폰을 다시 깨워 Hermes Agent와 Telegram 대화용 장치로 만드는 실습형 가이드입니다.</span>
+    <strong>2026년 5월 11일(월) Android 폰에서 Hermes Agent 설치하고 Telegram + Discord까지 연결하기</strong>
+    <span>집에서 놀고 있는 안드로이드폰에 Hermes Agent를 설치하고 Telegram과 Discord에서 실제로 대화가 오가도록 연결하는 실습형 가이드입니다.</span>
   </a>
   <a href="./2026-05-10-claude-md-setup-guide" class="internal">
     <strong>2026년 5월 10일(일) CLAUDE.md 완벽 세팅 가이드</strong>
