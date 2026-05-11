@@ -16,9 +16,13 @@ cssclasses:
 ## 읽기 경로
 
 <div class="reading-path">
-  <a href="./2026-05-10-hermes-on-old-android-phone" class="internal">
-    <strong>2026년 5월 11일(월) Android 폰에서 Hermes Agent 설치하고 Telegram + Discord + OpenClaw 팀 운영까지 연결하기</strong>
-    <span>안드로이드폰의 Hermes Agent를 Telegram과 Discord에 연결하고, OpenClaw를 팀장 봇으로 붙여 팀 운영 구조까지 만드는 실습형 가이드입니다.</span>
+  <a href="./2026-05-11-hermes-android-part-1" class="internal">
+    <strong>2026년 5월 11일(월) Android 폰에서 Hermes Agent 설치하고 Telegram + Discord 연결하기 1편</strong>
+    <span>안드로이드폰의 Termux 안에 Hermes Agent를 설치하고, Telegram과 Discord에서 실제로 답장하는 상태까지 만드는 실습형 가이드입니다.</span>
+  </a>
+  <a href="./2026-05-11-hermes-android-part-2" class="internal">
+    <strong>2026년 5월 11일(월) Android 폰에서 Hermes Agent와 OpenClaw 팀 운영 연결하기 2편</strong>
+    <span>Hermes를 Discord에 붙인 뒤, OpenClaw를 팀장 봇으로 추가해 팀장-팀원 구조와 복구 흐름까지 정리한 운영편입니다.</span>
   </a>
   <a href="./2026-05-10-claude-md-setup-guide" class="internal">
     <strong>2026년 5월 10일(일) CLAUDE.md 완벽 세팅 가이드</strong>
