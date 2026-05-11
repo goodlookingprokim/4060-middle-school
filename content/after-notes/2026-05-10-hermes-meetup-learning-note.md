@@ -7,13 +7,25 @@ tags:
   - review
   - ai-tools
 created: "2026-05-10"
-modified: "2026-05-10"
+modified: "2026-05-11"
 publish: true
 cssclasses:
   - field-note
 ---
 
 # 2026년 5월 10일(일) Hermes 서울 밋업 학습 자료를 다시 본 기록
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; margin: 1rem 0 1.5rem 0; border-radius: 12px;">
+  <iframe
+    src="https://www.youtube.com/embed/hKwnmbrfUJQ"
+    title="Hermes 서울 밋업 영상"
+    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen>
+  </iframe>
+</div>
+
+위 영상을 바로 눌러서 현장의 흐름을 먼저 볼 수도 있고, 아래로 스크롤을 내리면서 전사형 학습 자료와 함께 천천히 읽을 수도 있습니다. 듣고 보면서 감을 잡고 싶은 분도 있고, 정리된 글을 먼저 읽고 싶은 분도 있으니 두 길을 같이 열어두는 편이 좋겠다고 생각했습니다.
 
 어제 모임이 끝난 뒤 다시 들여다보게 된 자료가 하나 있었습니다. [Hermes Meetup 전사형 학습 자료](https://hermes-agent-seoul-meetup-learning.vercel.app/)입니다. 이런 자료는 보통 발표 내용을 길게 옮겨 적는 데서 그치기 쉬운데, 이번 자료는 조금 달랐습니다. 현장의 말맛과 흐름을 살리면서도, 나중에 다시 공부하는 사람이 길을 잃지 않게 잘 정리되어 있었습니다.
 
