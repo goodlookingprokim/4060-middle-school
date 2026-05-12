@@ -54,7 +54,7 @@ Hermes
 2. Hermes 쪽은 단독 운영 모드와 OpenClaw 팀장 모드를 구분해서 봐야 한다.
 3. OpenClaw 팀장 모드에서는 Hermes의 DISCORD_FREE_RESPONSE_CHANNELS를 비워 둔다.
 4. 봇끼리 무한 반복을 막으려면 bot-to-bot 대화를 무조건 열지 말고 mentions 조건으로 제한한다.
-5. OpenClaw 경로와 LaunchAgent 이름은 예전 방식 대신 ~/.openclaw / ai.openclaw.gateway 기준으로 정리됐다.
+5. OpenClaw 경로와 LaunchAgent 구성은 예전 방식 대신 기본 설치 기준으로 정리됐다.
 6. 상태 명령보다 실제 Discord 화면에서 새 메시지와 새 답장을 확인하는 것이 더 중요하다.
 ```
 
@@ -96,7 +96,7 @@ Discord = 두 봇이 만나는 공용 작업 공간
 ~/.openclaw/openclaw.json
 ~/.openclaw/runtime
 openclaw
-~/Library/LaunchAgents/ai.openclaw.gateway.plist
+~/Library/LaunchAgents/<openclaw-launchagent>.plist
 ```
 
 파인만식으로 말하면:
@@ -115,17 +115,17 @@ OpenClaw 명령은 어느 폴더에서든 바로 실행합니다.
 openclaw --help
 ```
 
-현재 MacBook의 LaunchAgent는 OpenClaw gateway를 Node 24로 실행하도록 정리했습니다.
+현재 MacBook의 LaunchAgent는 OpenClaw gateway를 안정적인 Node LTS 환경으로 실행하도록 정리했습니다.
 
 ```bash
-plutil -p "$HOME/Library/LaunchAgents/ai.openclaw.gateway.plist" | grep node@24
+plutil -p "$HOME/Library/LaunchAgents/<openclaw-launchagent>.plist"
 ```
 
 의미:
 
 ```text
 터미널에서 보이는 기본 node 버전과 별개로,
-백그라운드에서 Discord와 연결되는 OpenClaw gateway는 Node 24 실행 파일을 사용한다.
+백그라운드에서 Discord와 연결되는 OpenClaw gateway는 터미널 기본 환경과 별도로 관리될 수 있다.
 ```
 
 ---
@@ -149,7 +149,7 @@ Gateway connected
 Bot user 표시
 ```
 
-이번 실습에서는 OpenClaw가 Discord에 `OpenClawYSGH` 봇으로 온라인 접속되어 있음을 확인했습니다.
+이번 실습에서는 OpenClaw가 Discord에 `OpenClaw bot` 봇으로 온라인 접속되어 있음을 확인했습니다.
 
 ---
 
@@ -160,19 +160,19 @@ OpenClaw는 macOS LaunchAgent로 계속 실행되게 구성할 수 있습니다.
 상태 확인:
 
 ```bash
-launchctl print "gui/$(id -u)/ai.openclaw.gateway"
+launchctl print "gui/$(id -u)/<openclaw-launchagent-label>"
 ```
 
 재시작:
 
 ```bash
-launchctl kickstart -k "gui/$(id -u)/ai.openclaw.gateway"
+launchctl kickstart -k "gui/$(id -u)/<openclaw-launchagent-label>"
 ```
 
 LaunchAgent 파일 확인:
 
 ```bash
-plutil -p "$HOME/Library/LaunchAgents/ai.openclaw.gateway.plist"
+plutil -p "$HOME/Library/LaunchAgents/<openclaw-launchagent>.plist"
 ```
 
 주의:
@@ -194,7 +194,7 @@ OpenClaw도 Hermes와 마찬가지로 아무 채널에서나 말하게 만들면
 1. 대상 Discord 서버와 채널을 명확히 제한한다.
 2. 운영 채널에서는 OpenClaw가 사람 메시지를 읽을 수 있게 한다.
 3. 다른 봇 메시지는 평소에는 무시한다.
-4. 단, @OpenClawYSGH처럼 직접 멘션된 봇 메시지는 처리한다.
+4. 단, @OpenClaw bot처럼 직접 멘션된 봇 메시지는 처리한다.
 5. Hermes를 부를 때는 반드시 @Hermes로 명시한다.
 ```
 
@@ -221,10 +221,10 @@ allowBots=mentions = 다른 봇이 OpenClaw를 직접 부를 때만 응답한다
 교육용으로 경고를 줄이기 위해 함께 적용한 안전 설정은 아래와 같습니다.
 
 ```text
-tools.profile = messaging # 대화 중심 모드
-tools.exec.security = deny # Discord 대화로 Mac 명령 실행 금지
-tools.fs.workspaceOnly = true # 파일 도구는 워크스페이스 안으로 제한
-tools.elevated.enabled = false # 높은 권한 도구 비활성
+대화 중심 도구 프로필 사용
+실행 도구는 제한
+파일 접근 범위는 워크스페이스 안으로 제한
+높은 권한 도구는 비활성
 ```
 
 중요:
@@ -434,7 +434,7 @@ OpenClaw가 Hermes를 정확히 부르려면 username보다 Discord bot ID를 �
 OpenClaw CLI에서 Discord 사용자/봇을 찾습니다.
 
 ```bash
-openclaw channels resolve --channel discord --kind user Hermes OpenClawYSGH --json
+openclaw channels resolve --channel discord --kind user Hermes OpenClaw bot --json
 ```
 
 Discord 메시지에서 직접 멘션할 때는 보통 아래 형식입니다.
@@ -494,8 +494,8 @@ Hermes 응답 뒤 OpenClaw가 팀장처럼 마무리한다.
 이번 실습에서 OpenClaw CLI의 `message read` 계열 명령이 아래 유형의 오류를 낸 적이 있습니다.
 
 ```text
-Discord bot token configured for account "default" is unavailable
-resolve SecretRefs against the active runtime snapshot
+Discord 계정 토큰 확인 경고
+활성 runtime snapshot에서 SecretRef 확인 경고
 ```
 
 이 오류는 "Discord gateway가 반드시 죽었다"는 뜻이 아닙니다.
@@ -515,7 +515,7 @@ openclaw channels status --deep
 그리고 Discord 브라우저 화면에서 직접 봅니다.
 
 ```text
-OpenClawYSGH가 온라인인가?
+OpenClaw bot가 온라인인가?
 Hermes가 온라인인가?
 OpenClaw가 보낸 메시지가 채널에 보이는가?
 Hermes가 그 뒤에 응답했는가?
@@ -532,8 +532,8 @@ Hermes가 그 뒤에 응답했는가?
 증상:
 
 ```text
-Bluelion이 @Hermes를 부르면 Hermes가 답한다.
-이은하, 리아가 @Hermes를 불러도 Hermes가 바로 답하지 않는다.
+운영자A이 @Hermes를 부르면 Hermes가 답한다.
+참석자A, 참석자B가 @Hermes를 불러도 Hermes가 바로 답하지 않는다.
 ```
 
 원인:
@@ -625,7 +625,7 @@ DISCORD_ALLOW_MENTION_USERS=true
 ```text
 OpenClaw가 Discord 채널에 @Hermes 메시지를 보낸다.
 Hermes는 온라인인데 답하지 않는다.
-Bluelion이 @Hermes를 부르면 Hermes가 답한다.
+운영자A이 @Hermes를 부르면 Hermes가 답한다.
 ```
 
 이번 실습에서 실제로 확인한 원인:
@@ -743,7 +743,7 @@ OpenClaw가 확인하고 정리한다.
 
 ```text
 openclaw security audit --deep
-Potential multi-user setup detected
+공유 채널 운영 경고
 ```
 
 이번 실습의 최종 상태:
@@ -773,11 +773,11 @@ OpenClaw의 기본 보안 모델은 개인 비서 모델이다.
 이번 교육에서 실제로 제거한 위험:
 
 ```text
-실행 도구 차단: tools.exec.security=deny
-파일 범위 제한: tools.fs.workspaceOnly=true
-높은 권한 차단: tools.elevated.enabled=false
-채널 범위 제한: channels.discord.groupPolicy=allowlist
-운영 채널 제한: channels.discord.guilds.<서버ID>.channels.<채널ID>
+실행 도구 차단
+파일 범위 제한
+높은 권한 차단
+채널 범위 제한
+운영 채널 제한
 ```
 
 경고를 진짜 0으로 만들 수 있는 방법:
@@ -795,7 +795,7 @@ OpenClaw의 기본 보안 모델은 개인 비서 모델이다.
 증상:
 
 ```text
-Preserved Codex OAuth model routes
+Codex OAuth 모델 경로 보존 경고
 ```
 
 의미:
@@ -814,8 +814,8 @@ OPENAI_API_KEY가 없으면 OpenClaw가 답변하지 못한다.
 이번 실습에서 확인한 결과:
 
 ```text
-openai/gpt-5.5로 바꾸기 -> No API key found 오류
-openai-codex/gpt-5.5 유지 -> ping 정상 응답
+OpenAI API key 경로로 바꾸기 -> API 키가 없으면 응답 실패 가능
+Codex OAuth 경로 유지 -> 현재 실습 환경에서는 정상 응답 확인
 ```
 
 따라서 교육용 기본값은 `openai-codex/gpt-5.5` 유지입니다.
@@ -974,7 +974,7 @@ openclaw channels status --deep
 LaunchAgent 재시작:
 
 ```bash
-launchctl kickstart -k "gui/$(id -u)/ai.openclaw.gateway"
+launchctl kickstart -k "gui/$(id -u)/<openclaw-launchagent-label>"
 sleep 5
 openclaw channels status --deep
 ```
@@ -1062,21 +1062,21 @@ bash hermes-discord-room-mode.sh
 
 - `~/.openclaw` 폴더가 있다.
 - `openclaw` 명령이 실행된다.
-- `~/Library/LaunchAgents/ai.openclaw.gateway.plist`가 있다.
+- `~/Library/LaunchAgents/<openclaw-launchagent>.plist`가 있다.
 - `openclaw channels status --deep`에서 Discord gateway가 connected로 보인다.
-- Discord 서버 멤버 목록에서 `OpenClawYSGH`가 온라인이다.
+- Discord 서버 멤버 목록에서 `OpenClaw bot`가 온라인이다.
 - OpenClaw 설정에서 `channels.discord.groupPolicy`가 `allowlist`이다.
-- OpenClaw 설정에서 운영 서버 ID와 운영 채널 ID가 `channels.discord.guilds.<서버ID>.channels.<채널ID>`에 들어 있다.
-- 운영 채널 설정에서 `users: ["*"]`가 있어 참석자 전체가 OpenClaw에게 말할 수 있다.
-- 운영 채널 설정에서 `requireMention: false`라서 #수다방 안에서는 일반 메시지도 읽고 답할 수 있다.
+- OpenClaw 설정에 운영 서버와 운영 채널 제한이 들어 있다.
+- 운영 채널 설정에서 참석자 전체가 OpenClaw에게 말할 수 있다.
+- 운영 채널 설정에서 일반 메시지도 읽고 답할 수 있다.
 - OpenClaw 설정에서 봇 메시지는 `mentions` 조건으로만 허용되어 있다.
-- OpenClaw 설정에서 `tools.profile=messaging`이다.
-- OpenClaw 설정에서 `tools.exec.security=deny`라서 Discord 대화로 Mac 명령을 실행하지 못한다.
-- OpenClaw 설정에서 `tools.fs.workspaceOnly=true`이다.
-- OpenClaw 설정에서 `tools.elevated.enabled=false`이다.
+- OpenClaw 설정에서 대화 중심 도구 프로필을 사용한다.
+- OpenClaw 설정에서 실행 도구는 제한되어 있다.
+- OpenClaw 설정에서 파일 접근 범위는 워크스페이스 안으로 제한되어 있다.
+- OpenClaw 설정에서 높은 권한 도구는 비활성이다.
 - OpenClaw 채널 프롬프트에 "OpenClaw는 팀장, Hermes는 팀원" 역할이 들어 있다.
-- `openclaw doctor --fix --non-interactive`에서 channel security warning이 없다.
-- `openclaw security audit --deep`의 `Potential multi-user setup`은 공유 Discord 채널 운영 알림으로 설명할 수 있다.
+- `openclaw doctor --fix --non-interactive` 실행 뒤 치명적 channel security 오류가 없어야 한다.
+- `openclaw security audit --deep`의 공유 채널 운영 경고는 공개 운영 채널 사용에 따른 알림으로 설명할 수 있다.
 - `openclaw agent --agent main --message "ping"`에 짧은 응답이 온다.
 
 ### OpenClaw + Hermes 팀워크
@@ -1085,7 +1085,7 @@ bash hermes-discord-room-mode.sh
 - Hermes가 OpenClaw의 멘션에 팀원처럼 응답한다.
 - OpenClaw가 Hermes 응답을 확인하고 사람 운영자에게 정리한다.
 - 같은 요청으로 봇끼리 무한 반복하지 않는다.
-- 브라우저 Discord 화면에서 `Bluelion`, `Hermes`, `OpenClawYSGH`가 모두 온라인으로 보인다.
+- 브라우저 Discord 화면에서 `운영자A`, `Hermes`, `OpenClaw bot`가 모두 온라인으로 보인다.
 
 ---
 

@@ -181,7 +181,7 @@ adb devices
 
 ```text
 List of devices attached
-RF9N800SGKR device
+ABC123456 device
 ```
 
 `unauthorized`가 보이면 폰 화면의 허용 팝업을 다시 확인합니다.
@@ -692,7 +692,7 @@ Discord 멤버 목록에서 `Hermes`가 온라인으로 보이는지 확인합�
 실패 상태:
 
 ```text
-온라인 — 1: Bluelion
+온라인 — 1: 운영자A
 오프라인 — 1: Hermes
 ```
 
@@ -700,7 +700,7 @@ Discord 멤버 목록에서 `Hermes`가 온라인으로 보이는지 확인합�
 
 ```text
 온라인 — 2
-Bluelion
+운영자A
 Hermes
 ```
 
@@ -713,7 +713,7 @@ Hermes
 성공 예시:
 
 ```text
-Bluelion: @Hermes ping
+운영자A: @Hermes ping
 Hermes: pong
 ```
 
