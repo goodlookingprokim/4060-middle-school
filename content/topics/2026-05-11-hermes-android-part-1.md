@@ -8,7 +8,7 @@ tags:
   - telegram
   - discord
 created: "2026-05-11"
-modified: "2026-05-11"
+modified: "2026-05-13"
 publish: true
 cssclasses:
   - field-note
@@ -17,7 +17,7 @@ cssclasses:
 # Android 폰에서 Hermes Agent 설치하고 Telegram + Discord 연결하기 1편
 
 초보자를 위한 실습형 매뉴얼  
-작성 기준: 2026-05-11 실습 기록, Android 12, Termux, macOS, scrcpy, Hermes Agent
+작성 기준: 2026-05-13 실습 기록, Android 12, Termux, macOS, scrcpy, Hermes Agent
 
 > 이 글은 2부작의 1편입니다. 1편에서는 Android 폰 안에 Hermes Agent를 설치하고, Telegram과 Discord에서 실제로 답하는 상태까지 만드는 데 집중합니다. OpenClaw를 붙여 팀장-팀원 구조로 운영하는 내용은 [2편](./2026-05-11-hermes-android-part-2)에서 이어집니다.
 
@@ -503,13 +503,39 @@ DISCORD_REQUIRE_MENTION=true
 DISCORD_ALLOWED_USERS=111111111111111111,222222222222222222
 ```
 
-특정 채널 안에서 참석자 전체가 쓰게 하려면 나중에 2편에서 더 다루겠지만, 아래 같은 형태로 확장하게 됩니다.
+특정 Discord 채널 안에서 참석자 모두가 Hermes를 쓸 수 있게 하는 방법은 두 가지입니다.
+
+첫 번째는 `Hermes 단독 운영 모드`입니다. OpenClaw 없이 Hermes 혼자 운영방의 일반 대화에 반응해야 할 때만 사용합니다.
 
 ```bash
 DISCORD_ALLOW_ALL_USERS=true
 DISCORD_ALLOWED_CHANNELS=YOUR_DISCORD_CHANNEL_ID
 DISCORD_FREE_RESPONSE_CHANNELS=YOUR_DISCORD_CHANNEL_ID
+DISCORD_REQUIRE_MENTION=true
+DISCORD_IGNORE_NO_MENTION=false
+DISCORD_AUTO_THREAD=false
+DISCORD_NO_THREAD_CHANNELS=YOUR_DISCORD_CHANNEL_ID
+DISCORD_HOME_CHANNEL=YOUR_DISCORD_CHANNEL_ID
+DISCORD_ALLOW_BOTS=mentions
+DISCORD_ALLOW_MENTION_USERS=true
 ```
+
+두 번째는 `OpenClaw 팀장 / Hermes 팀원 모드`입니다. OpenClaw가 일반 대화를 먼저 보고, Hermes는 사람이나 OpenClaw가 직접 부를 때만 답합니다. 중복 답변과 봇끼리 반복 대화를 줄이려면 이 값을 권장합니다.
+
+```bash
+DISCORD_ALLOW_ALL_USERS=true
+DISCORD_ALLOWED_CHANNELS=YOUR_DISCORD_CHANNEL_ID
+DISCORD_FREE_RESPONSE_CHANNELS=
+DISCORD_REQUIRE_MENTION=true
+DISCORD_IGNORE_NO_MENTION=true
+DISCORD_AUTO_THREAD=false
+DISCORD_NO_THREAD_CHANNELS=YOUR_DISCORD_CHANNEL_ID
+DISCORD_HOME_CHANNEL=YOUR_DISCORD_CHANNEL_ID
+DISCORD_ALLOW_BOTS=mentions
+DISCORD_ALLOW_MENTION_USERS=true
+```
+
+이 차이는 2편에서 더 자세히 다룹니다.
 
 ### 11.3 값이 들어갔는지 길이만 확인
 
