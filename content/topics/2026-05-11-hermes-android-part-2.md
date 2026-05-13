@@ -149,7 +149,7 @@ Gateway connected
 Bot user 표시
 ```
 
-이번 실습에서는 OpenClaw가 Discord에 `OpenClaw bot` 봇으로 온라인 접속되어 있음을 확인했습니다.
+이번 실습에서는 OpenClaw가 Discord에 `OpenClaw bot` 계정으로 온라인 접속되어 있음을 확인했습니다.
 
 ---
 
@@ -194,7 +194,7 @@ OpenClaw도 Hermes와 마찬가지로 아무 채널에서나 말하게 만들면
 1. 대상 Discord 서버와 채널을 명확히 제한한다.
 2. 운영 채널에서는 OpenClaw가 사람 메시지를 읽을 수 있게 한다.
 3. 다른 봇 메시지는 평소에는 무시한다.
-4. 단, @OpenClaw bot처럼 직접 멘션된 봇 메시지는 처리한다.
+4. 다만 `@OpenClaw bot`처럼 직접 멘션된 봇 메시지는 처리한다.
 5. Hermes를 부를 때는 반드시 @Hermes로 명시한다.
 ```
 
@@ -515,7 +515,7 @@ openclaw channels status --deep
 그리고 Discord 브라우저 화면에서 직접 봅니다.
 
 ```text
-OpenClaw bot가 온라인인가?
+OpenClaw bot이 온라인인가?
 Hermes가 온라인인가?
 OpenClaw가 보낸 메시지가 채널에 보이는가?
 Hermes가 그 뒤에 응답했는가?
@@ -532,7 +532,7 @@ Hermes가 그 뒤에 응답했는가?
 증상:
 
 ```text
-운영자A이 @Hermes를 부르면 Hermes가 답한다.
+운영자A가 @Hermes를 부르면 Hermes가 답한다.
 참석자A, 참석자B가 @Hermes를 불러도 Hermes가 바로 답하지 않는다.
 ```
 
@@ -625,7 +625,7 @@ DISCORD_ALLOW_MENTION_USERS=true
 ```text
 OpenClaw가 Discord 채널에 @Hermes 메시지를 보낸다.
 Hermes는 온라인인데 답하지 않는다.
-운영자A이 @Hermes를 부르면 Hermes가 답한다.
+운영자A가 @Hermes를 부르면 Hermes가 답한다.
 ```
 
 이번 실습에서 실제로 확인한 원인:

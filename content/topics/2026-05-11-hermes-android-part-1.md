@@ -69,7 +69,7 @@ Telegram / Discord
 7. 상태 명령만 보지 말고 실제 Telegram, Discord 화면에서 답장이 오는지 확인한다.
 ```
 
-초보자용 한 줄 번역도 붙여두면 덜 헷갈립니다.
+초보자 기준으로는 아래처럼 짧게 풀어 보면 덜 헷갈립니다.
 
 ```text
 .env = 비밀 열쇠 보관함
@@ -479,7 +479,7 @@ User Settings -> Advanced -> Developer Mode ON
 
 ```text
 Discord bot token을 config.yaml에 넣는 것이 핵심이 아니다.
-권장 위치는 ~/.hermes/.env 이다.
+권장 위치는 `~/.hermes/.env`입니다.
 ```
 
 ### 11.1 `.env` 열기
@@ -535,7 +535,7 @@ DISCORD_ALLOW_BOTS=mentions
 DISCORD_ALLOW_MENTION_USERS=true
 ```
 
-이 차이는 2편에서 더 자세히 다룹니다.
+이 차이는 2편에서 조금 더 자세히 설명합니다.
 
 ### 11.3 값이 들어갔는지 길이만 확인
 
@@ -721,7 +721,7 @@ Hermes: pong
 
 ---
 
-## 여기까지 되면 된 것
+## 여기까지 되면 기본 연결은 끝입니다
 
 여기까지 성공하면, 적어도 아래 상태는 확보된 것입니다.
 
