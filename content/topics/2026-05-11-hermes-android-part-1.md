@@ -8,7 +8,7 @@ tags:
   - telegram
   - discord
 created: "2026-05-11"
-modified: "2026-05-13"
+modified: "2026-05-14"
 publish: true
 cssclasses:
   - field-note
@@ -17,7 +17,7 @@ cssclasses:
 # Android 폰에서 Hermes Agent 설치하고 Telegram + Discord 연결하기 1편
 
 초보자를 위한 실습형 매뉴얼  
-작성 기준: 2026-05-13 실습 기록, Android 12, Termux, macOS, scrcpy, Hermes Agent
+작성 기준: 2026-05-14 실습 기록, Android 12, Termux, macOS, scrcpy, Hermes Agent
 
 > 이 글은 2부작의 1편입니다. 1편에서는 Android 폰 안에 Hermes Agent를 설치하고, Telegram과 Discord에서 실제로 답하는 상태까지 만드는 데 집중합니다. OpenClaw를 붙여 팀장-팀원 구조로 운영하는 내용은 [2편](./2026-05-11-hermes-android-part-2)에서 이어집니다.
 

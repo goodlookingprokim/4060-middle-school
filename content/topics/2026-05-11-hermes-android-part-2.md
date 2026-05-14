@@ -8,7 +8,7 @@ tags:
   - discord
   - openclaw
 created: "2026-05-11"
-modified: "2026-05-13"
+modified: "2026-05-14"
 publish: true
 cssclasses:
   - field-note
@@ -17,7 +17,7 @@ cssclasses:
 # Android 폰에서 Hermes Agent와 OpenClaw 팀 운영 연결하기 2편
 
 초보자를 위한 실습형 매뉴얼  
-작성 기준: 2026-05-13 실습 기록, Android 12, Termux, macOS, Hermes Agent, OpenClaw
+작성 기준: 2026-05-14 실습 기록, Android 12, Termux, macOS, Hermes Agent, OpenClaw
 
 > 이 글은 2부작의 2편입니다. Hermes 설치와 Telegram·Discord 기본 연결은 [1편](./2026-05-11-hermes-android-part-1)에서 먼저 보시는 편이 좋습니다. 이번 글에서는 그다음 단계인 OpenClaw 팀장 봇 연결, 공동 운영 채널 설정, 봇 간 협업, 복구 흐름을 다룹니다.
 
@@ -153,7 +153,51 @@ Bot user 표시
 
 ---
 
-## 4. OpenClaw 자동 실행 재시작
+## 4. OpenClaw 대시보드 열기
+
+OpenClaw 대시보드는 그냥 웹 주소만 열면 안 됩니다.
+
+반드시 아래 명령으로 엽니다.
+
+```bash
+openclaw dashboard
+```
+
+이 명령이 하는 일:
+
+```text
+1. 현재 gateway 주소를 확인한다.
+2. gateway token이 포함된 인증 URL을 만든다.
+3. 브라우저에 그 URL을 연다.
+4. 같은 URL을 클립보드에도 복사한다.
+```
+
+토큰 포함 URL만 만들고 브라우저는 열지 않으려면:
+
+```bash
+openclaw dashboard --no-open
+```
+
+주의: `open http://127.0.0.1:18789/` 같은 식으로 주소만 열면 안 됩니다.
+
+이 주소는 대시보드의 겉문만 여는 방식이라, 인증 토큰이 없으면 아래 같은 오류가 뜰 수 있습니다.
+
+```text
+unauthorized: gateway token missing
+```
+
+파인만식으로 말하면:
+
+```text
+http://127.0.0.1:18789/ = 건물 주소
+openclaw dashboard = 출입증이 붙은 초대장
+```
+
+교육할 때는 “대시보드는 `openclaw dashboard`로 연다”라고만 안내하는 편이 가장 덜 헷갈립니다.
+
+---
+
+## 5. OpenClaw 자동 실행 재시작
 
 OpenClaw는 macOS LaunchAgent로 계속 실행되게 구성할 수 있습니다.
 
@@ -184,7 +228,7 @@ plist 안에 토큰이 직접 들어 있으면 안 된다.
 
 ---
 
-## 5. OpenClaw의 채널 운영 설정 원칙
+## 6. OpenClaw의 채널 운영 설정 원칙
 
 OpenClaw도 Hermes와 마찬가지로 아무 채널에서나 말하게 만들면 위험합니다.
 
@@ -236,7 +280,7 @@ Docker가 설치되지 않은 Mac에서는 agents.defaults.sandbox.mode="all"을
 
 ---
 
-## 6. Hermes 설정: 단독 운영 모드 vs 팀 운영 모드
+## 7. Hermes 설정: 단독 운영 모드 vs 팀 운영 모드
 
 특정 Discord 채널 안에서 참석자 모두가 Hermes를 쓸 수 있게 하는 방법은 두 가지입니다.
 
@@ -315,7 +359,7 @@ DISCORD_ALLOW_BOTS=mentions
 
 ---
 
-## 7. `config.yaml`에서 공동 채널 역할 정하기
+## 8. `config.yaml`에서 공동 채널 역할 정하기
 
 `~/.hermes/config.yaml`에는 공동 채널 맥락과 팀 역할을 쓰기 위해 아래 값을 둡니다. `free_response_channels: []`가 중요합니다. 이 값이 비어 있어야 Hermes가 일반 채널 메시지에 OpenClaw와 동시에 답하지 않습니다.
 
@@ -365,7 +409,7 @@ DISCORD_ALLOW_MENTION_USERS=true
 
 ---
 
-## 8. OpenClaw 팀장 프롬프트 예시
+## 9. OpenClaw 팀장 프롬프트 예시
 
 OpenClaw 쪽 채널 프롬프트에는 아래 의미가 들어가야 합니다.
 
@@ -396,7 +440,7 @@ discord:
 
 ---
 
-## 9. Hermes 쪽 봇 간 대화 허용 설정
+## 10. Hermes 쪽 봇 간 대화 허용 설정
 
 Hermes가 OpenClaw의 지시를 받으려면 `.env`에 아래 값이 있어야 합니다.
 
@@ -427,7 +471,7 @@ Hermes는 다른 봇의 말은 평소에는 무시한다.
 
 ---
 
-## 10. 봇 ID 확인
+## 11. 봇 ID 확인
 
 OpenClaw가 Hermes를 정확히 부르려면 username보다 Discord bot ID를 쓰는 것이 안정적입니다.
 
@@ -448,7 +492,7 @@ Discord 메시지에서 직접 멘션할 때는 보통 아래 형식입니다.
 
 ---
 
-## 11. 팀워크 실제 테스트
+## 12. 팀워크 실제 테스트
 
 OpenClaw가 Hermes에게 일을 맡기는 테스트입니다. 핵심은 `HERMES_BOT_ID`를 실제 숫자 ID로 바꿔 Discord가 파란 `@Hermes` 멘션으로 렌더링하게 하는 것입니다.
 
@@ -489,7 +533,7 @@ Hermes 응답 뒤 OpenClaw가 팀장처럼 마무리한다.
 
 ---
 
-## 12. OpenClaw message read가 실패할 때
+## 13. OpenClaw message read가 실패할 때
 
 이번 실습에서 OpenClaw CLI의 `message read` 계열 명령이 아래 유형의 오류를 낸 적이 있습니다.
 
@@ -525,7 +569,7 @@ Hermes가 그 뒤에 응답했는가?
 
 ---
 
-## 13. 이번 실습에서 실제로 막혔던 문제와 해결
+## 14. 이번 실습에서 실제로 막혔던 문제와 해결
 
 ### 문제 1. Hermes가 나에게만 답하고 다른 참석자에게 답하지 않음
 
@@ -820,26 +864,72 @@ Codex OAuth 경로 유지 -> 현재 실습 환경에서는 정상 응답 확인
 
 따라서 교육용 기본값은 `openai-codex/gpt-5.5` 유지입니다.
 
+### 문제 7. OpenClaw 대시보드에서 `gateway token missing`이 나옴
+
+증상:
+
+```text
+unauthorized: gateway token missing
+```
+
+화면에 OpenClaw dashboard는 보이지만 연결 버튼 아래에 빨간 오류가 표시될 수 있습니다.
+
+원인:
+
+```text
+gateway가 꺼진 것이 아니라,
+브라우저가 gateway token 없이 dashboard 주소만 연 상태다.
+```
+
+잘못된 예:
+
+```bash
+open http://127.0.0.1:18789/
+```
+
+올바른 명령:
+
+```bash
+openclaw dashboard
+```
+
+토큰 포함 URL만 만들고 싶을 때:
+
+```bash
+openclaw dashboard --no-open
+```
+
+정상 출력 예시:
+
+```text
+Dashboard URL: http://127.0.0.1:18789/
+Token auto-auth included in browser/clipboard URL.
+Copied to clipboard.
+Opened in your browser.
+```
+
+여기서 화면에 보이는 대시보드 주소만 따로 복사해서 열면 다시 실패할 수 있습니다. 실제 인증 정보는 OpenClaw가 브라우저와 클립보드에 함께 전달하는 인증 URL에 들어 있습니다.
+
 ---
 
-## 14. 전체 복구용 명령 모음
+## 15. 전체 복구용 명령 모음
 
 문제가 생겼을 때 아래 순서로 확인합니다.
 
-### 14.1 Termux에서 Hermes 환경 진입
+### 15.1 Termux에서 Hermes 환경 진입
 
 ```bash
 cd ~/.hermes/hermes-agent
 source venv-termux/bin/activate
 ```
 
-### 14.2 Hermes 버전 확인
+### 15.2 Hermes 버전 확인
 
 ```bash
 hermes --version
 ```
 
-### 14.3 Python 패키지 확인
+### 15.3 Python 패키지 확인
 
 ```bash
 python - <<'PY'
@@ -854,7 +944,7 @@ for name in ("openai", "telegram", "discord", "aiohttp"):
 PY
 ```
 
-### 14.4 Discord `.env` 마스킹 확인
+### 15.4 Discord `.env` 마스킹 확인
 
 ```bash
 python - <<'PY'
@@ -894,7 +984,7 @@ for key in keys:
 PY
 ```
 
-### 14.5 Hermes gateway 재시작
+### 15.5 Hermes gateway 재시작
 
 ```bash
 pkill -f "hermes gateway run" 2>/dev/null || true
@@ -905,7 +995,7 @@ hermes gateway status
 tail -n 120 ~/.hermes/gateway-discord.log
 ```
 
-### 14.6 Hermes 공동 운영 설정 확인
+### 15.6 Hermes 공동 운영 설정 확인
 
 Hermes가 운영 채널에서 사람과 OpenClaw 모두에게 적절히 반응하는지 확인합니다.
 
@@ -963,7 +1053,7 @@ group_sessions_per_user: False
 channel_prompts에 운영 채널 ID가 있음
 ```
 
-### 14.7 OpenClaw 상태 확인과 재시작
+### 15.7 OpenClaw 상태 확인과 재시작
 
 MacBook에서 실행합니다.
 
@@ -979,7 +1069,7 @@ sleep 5
 openclaw channels status --deep
 ```
 
-### 14.8 OpenClaw -> Hermes 팀워크 테스트
+### 15.8 OpenClaw -> Hermes 팀워크 테스트
 
 Discord bot ID는 본인 환경의 값으로 바꿉니다.
 
@@ -999,7 +1089,7 @@ OpenClaw가 Hermes 응답을 확인하고 마무리한다.
 같은 메시지가 반복 전송되지 않는다.
 ```
 
-### 14.9 실습에서 만든 Hermes Discord room-mode 스크립트
+### 15.9 실습에서 만든 Hermes Discord room-mode 스크립트
 
 이 프로젝트 폴더에는 오늘 설정을 다시 적용하기 위한 보조 스크립트가 있습니다.
 
@@ -1037,7 +1127,7 @@ bash hermes-discord-room-mode.sh
 
 ---
 
-## 15. 성공 기준 체크리스트
+## 16. 성공 기준 체크리스트
 
 ### Discord
 
@@ -1064,7 +1154,8 @@ bash hermes-discord-room-mode.sh
 - `openclaw` 명령이 실행된다.
 - `~/Library/LaunchAgents/<openclaw-launchagent>.plist`가 있다.
 - `openclaw channels status --deep`에서 Discord gateway가 connected로 보인다.
-- Discord 서버 멤버 목록에서 `OpenClaw bot`가 온라인이다.
+- `openclaw dashboard`로 대시보드가 정상 열리고 인증 오류가 없어야 한다.
+- Discord 서버 멤버 목록에서 `OpenClaw bot`이 온라인이다.
 - OpenClaw 설정에서 `channels.discord.groupPolicy`가 `allowlist`이다.
 - OpenClaw 설정에 운영 서버와 운영 채널 제한이 들어 있다.
 - 운영 채널 설정에서 참석자 전체가 OpenClaw에게 말할 수 있다.
@@ -1085,11 +1176,11 @@ bash hermes-discord-room-mode.sh
 - Hermes가 OpenClaw의 멘션에 팀원처럼 응답한다.
 - OpenClaw가 Hermes 응답을 확인하고 사람 운영자에게 정리한다.
 - 같은 요청으로 봇끼리 무한 반복하지 않는다.
-- 브라우저 Discord 화면에서 `운영자A`, `Hermes`, `OpenClaw bot`가 모두 온라인으로 보인다.
+- 브라우저 Discord 화면에서 `운영자A`, `Hermes`, `OpenClaw bot`이 모두 온라인으로 보인다.
 
 ---
 
-## 16. 초보자용 핵심 요약
+## 17. 초보자용 핵심 요약
 
 한 문장 요약:
 
