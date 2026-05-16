@@ -16,6 +16,10 @@ cssclasses:
 ## 읽기 경로
 
 <div class="reading-path">
+  <a href="./2026-05-16-plaud-mcp-for-members" class="internal">
+    <strong>2026년 5월 16일(토) PLAUD MCP로 내 회의 내용을 다른 AI에 연결하는 법</strong>
+    <span>PLAUD의 MCP와 CLI가 왜 중요한지, 4060미들스쿨 멤버들이 회의 기록·상담 메모·모임 대화를 다른 AI 도구와 어떻게 연결해 쓸 수 있는지 쉬운 말로 정리한 글입니다.</span>
+  </a>
   <a href="./2026-05-11-hermes-android-part-1" class="internal">
     <strong>2026년 5월 11일(월) Android 폰에서 Hermes Agent 설치하고 Telegram + Discord 연결하기 1편</strong>
     <span>안드로이드폰의 Termux 안에 Hermes Agent를 설치하고, Telegram과 Discord에서 실제로 답장하는 상태까지 만드는 실습형 가이드입니다.</span>

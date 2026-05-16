@@ -45,6 +45,7 @@ title: 4060미들스쿨
 ## 지금 먼저 보면 좋은 글
 
 <ul class="note-list">
+  <li><a href="./topics/2026-05-16-plaud-mcp-for-members" class="internal">2026년 5월 16일(토) PLAUD MCP로 내 회의 내용을 다른 AI에 연결하는 법</a></li>
   <li><a href="./topics/2026-05-11-hermes-android-part-1" class="internal">2026년 5월 11일(월) Android 폰에서 Hermes Agent 설치하고 Telegram + Discord 연결하기 1편</a></li>
   <li><a href="./topics/2026-05-11-hermes-android-part-2" class="internal">2026년 5월 11일(월) Android 폰에서 Hermes Agent와 OpenClaw 팀 운영 연결하기 2편</a></li>
   <li><a href="./topics/2026-05-10-claude-md-setup-guide" class="internal">2026년 5월 10일(일) CLAUDE.md 완벽 세팅 가이드</a></li>
