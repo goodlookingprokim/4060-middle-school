@@ -16,6 +16,10 @@ cssclasses:
 ## 읽기 경로
 
 <div class="reading-path">
+  <a href="./2026-05-16-claude-code-codex-hybrid-workflow" class="internal">
+    <strong>2026년 5월 16일(토) Claude Code와 Codex를 같이 쓸 때 일이 편해지는 순간</strong>
+    <span>Claude Code와 Codex를 누가 더 낫다고 비교하기보다, 둘을 어떻게 역할 나눠 함께 쓰면 좋은지 생활 밀착형 예시로 풀어본 글입니다.</span>
+  </a>
   <a href="./2026-05-16-plaud-mcp-for-members" class="internal">
     <strong>2026년 5월 16일(토) PLAUD MCP로 내 회의 내용을 다른 AI에 연결하는 법</strong>
     <span>PLAUD의 MCP와 CLI가 왜 중요한지, 4060미들스쿨 멤버들이 회의 기록·상담 메모·모임 대화를 다른 AI 도구와 어떻게 연결해 쓸 수 있는지 쉬운 말로 정리한 글입니다.</span>
