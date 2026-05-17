@@ -16,13 +16,13 @@ cssclasses:
 ## 읽기 경로
 
 <div class="reading-path">
-  <a href="./2026-05-17-jarvis-voice-assistant-progress-log" class="internal">
-    <strong>2026년 5월 17일(일) 자비스형 음성 비서, 여기까지 실제로 만들어보니</strong>
-    <span>Supertonic, faster-whisper, Ollama를 엮어 인간 비서형 음성 인터페이스를 실제로 만들면서 어디서 막혔고 무엇을 바꿨는지, 초보자도 따라올 수 있게 진행 기록 중심으로 정리한 글입니다.</span>
-  </a>
   <a href="./2026-05-17-hermes-supertonic-free-voice-guide" class="internal">
     <strong>2026년 5월 17일(일) Hermes + Supertonic으로 완전 무료 음성 대화 만들기</strong>
-    <span>Hermes의 유료 TTS 대신 Supertonic을 붙여 돈 들이지 않고 자연스러운 한국어 음성 대화를 만드는 방법을, 설치부터 말투 개선과 로그 분석까지 초보자도 따라 할 수 있게 정리한 글입니다.</span>
+    <span>Hermes의 유료 TTS 대신 Supertonic을 붙여 돈 들이지 않고 자연스러운 한국어 음성 대화를 만드는 방법을, 텔레그램에서 빠르게 첫 성공을 확인하는 흐름 중심으로 정리한 입문 실습 글입니다.</span>
+  </a>
+  <a href="./2026-05-17-jarvis-voice-assistant-progress-log" class="internal">
+    <strong>2026년 5월 17일(일) 자비스형 음성 비서, 여기까지 실제로 만들어보니</strong>
+    <span>Hermes + Supertonic 첫 성공 뒤에, GUI, STT 보정, 로컬 LLM 선택, 답변 품질 개선으로 어떻게 확장했는지 진행 기록 중심으로 정리한 운영 글입니다.</span>
   </a>
   <a href="./2026-05-16-claude-code-codex-hybrid-workflow" class="internal">
     <strong>2026년 5월 16일(토) Claude Code와 Codex를 같이 쓸 때 일이 편해지는 순간</strong>
