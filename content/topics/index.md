@@ -16,6 +16,10 @@ cssclasses:
 ## 읽기 경로
 
 <div class="reading-path">
+  <a href="./2026-05-17-hermes-supertonic-free-voice-guide" class="internal">
+    <strong>2026년 5월 17일(일) Hermes + Supertonic으로 완전 무료 음성 대화 만들기</strong>
+    <span>Hermes의 유료 TTS 대신 Supertonic을 붙여 돈 들이지 않고 자연스러운 한국어 음성 대화를 만드는 방법을, 설치부터 말투 개선과 로그 분석까지 초보자도 따라 할 수 있게 정리한 글입니다.</span>
+  </a>
   <a href="./2026-05-16-claude-code-codex-hybrid-workflow" class="internal">
     <strong>2026년 5월 16일(토) Claude Code와 Codex를 같이 쓸 때 일이 편해지는 순간</strong>
     <span>Claude Code와 Codex를 누가 더 낫다고 비교하기보다, 둘을 어떻게 역할 나눠 함께 쓰면 좋은지 생활 밀착형 예시로 풀어본 글입니다.</span>

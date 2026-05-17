@@ -45,6 +45,7 @@ title: 4060미들스쿨
 ## 지금 먼저 보면 좋은 글
 
 <ul class="note-list">
+  <li><a href="./topics/2026-05-17-hermes-supertonic-free-voice-guide" class="internal">2026년 5월 17일(일) Hermes + Supertonic으로 완전 무료 음성 대화 만들기</a></li>
   <li><a href="./topics/2026-05-16-claude-code-codex-hybrid-workflow" class="internal">2026년 5월 16일(토) Claude Code와 Codex를 같이 쓸 때 일이 편해지는 순간</a></li>
   <li><a href="./topics/2026-05-16-plaud-mcp-for-members" class="internal">2026년 5월 16일(토) PLAUD MCP로 내 회의 내용을 다른 AI에 연결하는 법</a></li>
   <li><a href="./topics/2026-05-11-hermes-android-part-1" class="internal">2026년 5월 11일(월) Android 폰에서 Hermes Agent 설치하고 Telegram + Discord 연결하기 1편</a></li>
