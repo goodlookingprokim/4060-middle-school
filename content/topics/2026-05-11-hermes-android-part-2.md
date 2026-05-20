@@ -8,7 +8,7 @@ tags:
   - discord
   - openclaw
 created: "2026-05-11"
-modified: "2026-05-14"
+modified: "2026-05-20"
 publish: true
 cssclasses:
   - field-note
@@ -406,6 +406,86 @@ DISCORD_ALLOW_MENTION_USERS=true
 ```
 
 즉, 토큰은 새 값으로 바뀌어야 하지만 채널 제한 값은 유지되어야 합니다.
+
+### 보충 사례: Discord에서 멘션 없이도 반응하게 만들고 싶을 때
+
+여기까지 읽고 나면 어떤 분은 바로 이런 질문을 하게 됩니다.
+
+```text
+"@Hermes를 붙이지 않고도, 같은 채널에서 그냥 말하면 바로 반응하게 만들 수는 없을까?"
+```
+
+결론부터 말하면 <strong>가능은 합니다.</strong> 다만 이건 지금까지 설명한 `팀 운영 모드`와는 목적이 다릅니다.
+
+- 팀 운영 모드: OpenClaw가 먼저 보고, Hermes는 직접 불렸을 때만 답함
+- 자유 반응 모드: Hermes가 멘션 없이도 일반 메시지에 반응함
+
+즉, 운영팀 구조를 유지하려면 기본값을 그대로 두는 편이 맞고, <strong>Hermes 혼자 운영방 일반 대화에 바로 끼어들게 하고 싶을 때만</strong> 아래 내용을 참고하면 됩니다.
+
+#### 실제로 문제였던 점
+
+처음에는 `~/.hermes/config.yaml` 안에 아래 값이 들어 있었습니다.
+
+```yaml
+discord:
+ require_mention: true
+```
+
+이 상태에서는 Discord 채널에서 일반 메시지를 보내도 Hermes가 반응하지 않습니다.
+말 그대로 "직접 이름을 불러야만 답하는 모드"이기 때문입니다.
+
+#### 우리가 해본 순서
+
+1. `config.yaml`에서 `require_mention: true`를 `false`로 바꿨습니다.
+2. 상태 진단 명령으로 Discord 연결 상태를 봤습니다.
+3. Message Content Intent도 다시 확인했습니다.
+4. 그런데도 바로는 반응이 없었습니다.
+5. 마지막에 gateway를 다시 읽히게 한 뒤부터 실제 동작이 시작됐습니다.
+
+#### 실제 해결 포인트
+
+여기서 핵심은 설정 파일을 바꾸는 것 자체보다, <strong>gateway가 그 설정을 다시 읽게 만드는 것</strong>이었습니다.
+
+Hermes의 Discord 어댑터는 gateway가 올라올 때 설정을 읽습니다.
+그래서 `config.yaml`만 고쳐 놓고 gateway를 그대로 두면, 이미 실행 중인 Discord 연결은 예전 값인 `require_mention: true`를 계속 들고 있을 수 있습니다.
+
+즉, 이 문제는 이렇게 이해하면 쉽습니다.
+
+```text
+설정 파일 수정 = 종이에 규칙 다시 써놓기
+gateway 재시작 = 실제 근무 중인 봇에게 새 규칙 다시 읽히기
+```
+
+#### 멘션 없이 반응하게 만들고 싶다면
+
+핵심은 아래 두 가지입니다.
+
+1. `config.yaml`에서 no-mention 반응에 맞는 값으로 바꾸기
+2. gateway를 재시작해서 Discord 어댑터가 새 값을 다시 읽게 하기
+
+예시는 이렇게 볼 수 있습니다.
+
+```yaml
+discord:
+ require_mention: false
+```
+
+그다음 아래처럼 gateway를 다시 올립니다.
+
+```bash
+hermes gateway restart
+```
+
+필요하면 Discord Developer Portal에서 <strong>Message Content Intent</strong>가 켜져 있는지도 함께 확인합니다.
+
+#### 이 사례에서 얻은 교훈
+
+- Discord 관련 값은 `config.yaml`만 바꿨다고 끝나지 않을 수 있습니다.
+- gateway가 설정을 다시 읽는 시점이 중요합니다.
+- `hermes status`나 `hermes doctor`가 정상이라고 해도, Discord 어댑터가 세부 설정을 예전 값으로 들고 있을 수 있습니다.
+
+이 사례는 특히 초보자에게 중요합니다.
+겉보기에는 "설정을 분명히 바꿨는데 왜 안 되지?"처럼 보이지만, 실제 원인은 <strong>설정값 자체가 아니라 실행 중인 gateway가 아직 예전 규칙으로 일하고 있었기 때문</strong>일 수 있기 때문입니다.
 
 ---
 
