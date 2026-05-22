@@ -45,6 +45,7 @@ title: 4060미들스쿨
 ## 지금 먼저 보면 좋은 글
 
 <ul class="note-list">
+  <li><a href="./topics/2026-05-23-kakao-playmcp-three-ways-overview" class="internal">2026년 5월 23일(토) Kakao PlayMCP를 Claude, Codex, OpenClaw에서 어떻게 나눠 쓰면 좋을까</a></li>
   <li><a href="./topics/2026-05-23-claude-kakao-playmcp-guide" class="internal">2026년 5월 23일(토) Claude에서 Kakao PlayMCP 설치부터 카카오톡 메모 활용까지</a></li>
   <li><a href="./topics/2026-05-23-openclaw-kakao-playmcp-guide" class="internal">2026년 5월 23일(토) OpenClaw에 Kakao PlayMCP 붙이고 실제로 써보는 방법</a></li>
   <li><a href="./topics/2026-05-23-codex-kakao-playmcp-guide" class="internal">2026년 5월 23일(토) Codex에서 Kakao PlayMCP 설치부터 카카오톡 활용까지</a></li>

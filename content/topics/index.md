@@ -16,6 +16,10 @@ cssclasses:
 ## 읽기 경로
 
 <div class="reading-path">
+  <a href="./2026-05-23-kakao-playmcp-three-ways-overview" class="internal">
+    <strong>2026년 5월 23일(토) Kakao PlayMCP를 Claude, Codex, OpenClaw에서 어떻게 나눠 쓰면 좋을까</strong>
+    <span>오늘 4060미들스쿨에서 다룰 Kakao PlayMCP 실습의 전체 지도입니다. Claude, Codex, OpenClaw 세 글을 어떤 순서로 보면 좋은지, 각각 어떤 역할로 보여주면 좋은지 한 번에 정리했습니다.</span>
+  </a>
   <a href="./2026-05-23-claude-kakao-playmcp-guide" class="internal">
     <strong>2026년 5월 23일(토) Claude에서 Kakao PlayMCP 설치부터 카카오톡 메모 활용까지</strong>
     <span>Claude에 Kakao PlayMCP를 연결해 카카오톡 나에게 보내기를 실습하고, 메모·할 일·대화 요약을 생활형으로 활용하는 가장 쉬운 입문 흐름을 정리한 글입니다.</span>
