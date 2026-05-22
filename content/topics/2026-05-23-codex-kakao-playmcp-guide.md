@@ -16,15 +16,15 @@ cssclasses:
 
 # 2026년 5월 23일(토) Codex에서 Kakao PlayMCP 설치부터 카카오톡 활용까지
 
-이번 글은 4060미들스쿨 멤버들이 Codex에서 Kakao PlayMCP를 붙일 때 가장 많이 헷갈리는 지점을 먼저 풀어주기 위해 정리했습니다.
+처음 Codex로 카카오 쪽 기능을 만져보면, 문 앞이 두 개 열려 있는 느낌이 듭니다.
+둘 다 비슷한 곳으로 들어가는 것처럼 보이는데, 막상 몇 걸음 들어가 보면 길의 성격이 다릅니다.
 
 겉으로 보면 둘 다 "카카오톡을 AI로 다룬다"는 이야기처럼 보이지만, 실제로는 서로 다른 두 기능이 함께 등장합니다.
 
 - <strong>Kakao PlayMCP 원격 MCP 추가</strong>
 - <strong>KakaoTalk Computer Use</strong>
 
-즉, 이번 글의 핵심은 단순 설치가 아니라,
-<strong>무엇이 PlayMCP이고 무엇이 Computer Use인지 분리해서 이해하는 것</strong>입니다.
+그래서 이번 글의 핵심은 단순 설치가 아니라, <strong>무엇이 PlayMCP이고 무엇이 Computer Use인지 차분히 떼어 놓고 보는 일</strong>입니다. 이 차이만 또렷해져도, 뒤의 실습은 훨씬 편안해집니다.
 
 ## 1. 한 줄로 이해하기
 
