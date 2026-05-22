@@ -45,6 +45,7 @@ title: 4060미들스쿨
 ## 지금 먼저 보면 좋은 글
 
 <ul class="note-list">
+  <li><a href="./topics/2026-05-23-openclaw-kakao-playmcp-guide" class="internal">2026년 5월 23일(토) OpenClaw에 Kakao PlayMCP 붙이고 실제로 써보는 방법</a></li>
   <li><a href="./topics/2026-05-23-codex-kakao-playmcp-guide" class="internal">2026년 5월 23일(토) Codex에서 Kakao PlayMCP 설치부터 카카오톡 활용까지</a></li>
   <li><a href="./topics/2026-05-17-hermes-supertonic-free-voice-guide" class="internal">2026년 5월 17일(일) Hermes + Supertonic으로 완전 무료 음성 대화 만들기</a></li>
   <li><a href="./topics/2026-05-17-jarvis-voice-assistant-progress-log" class="internal">2026년 5월 17일(일) 자비스형 음성 비서, 여기까지 실제로 만들어보니</a></li>

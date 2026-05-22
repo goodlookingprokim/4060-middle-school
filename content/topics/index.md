@@ -16,6 +16,10 @@ cssclasses:
 ## 읽기 경로
 
 <div class="reading-path">
+  <a href="./2026-05-23-openclaw-kakao-playmcp-guide" class="internal">
+    <strong>2026년 5월 23일(토) OpenClaw에 Kakao PlayMCP 붙이고 실제로 써보는 방법</strong>
+    <span>OpenClaw에 Kakao PlayMCP를 연결해 `mcporter`, `mcp-gateway`, MCP 브리지, 재시작, 도구 확인, 급식 조회, 시간표 조회, 카카오톡 메모 보내기까지 한 흐름으로 정리한 실전 가이드입니다.</span>
+  </a>
   <a href="./2026-05-23-codex-kakao-playmcp-guide" class="internal">
     <strong>2026년 5월 23일(토) Codex에서 Kakao PlayMCP 설치부터 카카오톡 활용까지</strong>
     <span>Codex에 Kakao PlayMCP 원격 MCP를 연결하고, 카카오톡 데스크톱을 Computer Use로 다룰 때 무엇이 다른지, 어디까지 안전하게 실습하면 좋은지 4060미들스쿨 기준으로 정리한 가이드입니다.</span>
