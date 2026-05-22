@@ -16,7 +16,7 @@ cssclasses:
 
 # 2026년 5월 23일(토) OpenClaw에 Kakao PlayMCP 붙이고 실제로 써보는 방법
 
-앞 글에서는 Codex에서 Kakao PlayMCP를 붙이는 흐름을 먼저 정리했습니다. 그런데 잘생김프로쌤 말씀처럼, 지금 4060미들스쿨에서 실제로 더 궁금한 건 이것일 수 있습니다.
+앞 글에서는 Codex에서 Kakao PlayMCP를 붙이는 흐름을 먼저 정리했습니다. 그런데 거기서 한 걸음 더 가면 자연스럽게 이런 질문이 남습니다.
 
 <strong>"그럼 OpenClaw에서는 이걸 어떻게 붙이고, 실제로 뭘 해볼 수 있나?"</strong>
 
