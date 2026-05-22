@@ -16,6 +16,10 @@ cssclasses:
 ## 읽기 경로
 
 <div class="reading-path">
+  <a href="./2026-05-23-codex-kakao-playmcp-guide" class="internal">
+    <strong>2026년 5월 23일(토) Codex에서 Kakao PlayMCP 설치부터 카카오톡 활용까지</strong>
+    <span>Codex에 Kakao PlayMCP 원격 MCP를 연결하고, 카카오톡 데스크톱을 Computer Use로 다룰 때 무엇이 다른지, 어디까지 안전하게 실습하면 좋은지 4060미들스쿨 기준으로 정리한 가이드입니다.</span>
+  </a>
   <a href="./2026-05-17-hermes-supertonic-free-voice-guide" class="internal">
     <strong>2026년 5월 17일(일) Hermes + Supertonic으로 완전 무료 음성 대화 만들기</strong>
     <span>Hermes의 유료 TTS 대신 Supertonic을 붙여 돈 들이지 않고 자연스러운 한국어 음성 대화를 만드는 방법을, 텔레그램에서 빠르게 첫 성공을 확인하는 흐름 중심으로 정리한 입문 실습 글입니다.</span>
