@@ -45,6 +45,7 @@ title: 4060미들스쿨
 ## 지금 먼저 보면 좋은 글
 
 <ul class="note-list">
+  <li><a href="./topics/2026-05-23-hermes-24h-assistant-five-points" class="internal">2026년 5월 23일(토) Hermes를 24시간 개인 비서처럼 굴릴 때 꼭 알아둘 5가지</a></li>
   <li><a href="./topics/2026-05-23-playmcp-claude-cowork-automation" class="internal">2026년 5월 23일(토) PlayMCP와 Claude, 코워크를 붙이면 코딩 없이 어디까지 자동화할 수 있을까</a></li>
   <li><a href="./topics/2026-05-23-kakao-playmcp-three-ways-overview" class="internal">2026년 5월 23일(토) Kakao PlayMCP를 Claude, Codex, OpenClaw에서 어떻게 나눠 쓰면 좋을까</a></li>
   <li><a href="./topics/2026-05-23-claude-kakao-playmcp-guide" class="internal">2026년 5월 23일(토) Claude에서 Kakao PlayMCP 설치부터 카카오톡 메모 활용까지</a></li>

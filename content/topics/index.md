@@ -16,6 +16,10 @@ cssclasses:
 ## 읽기 경로
 
 <div class="reading-path">
+  <a href="./2026-05-23-hermes-24h-assistant-five-points" class="internal">
+    <strong>2026년 5월 23일(토) Hermes를 24시간 개인 비서처럼 굴릴 때 꼭 알아둘 5가지</strong>
+    <span>Hermes를 늘 켜두는 개인 비서처럼 쓰고 싶을 때, 모델보다 먼저 챙겨야 할 운영 감각 다섯 가지를 차분히 풀어 쓴 글입니다.</span>
+  </a>
   <a href="./2026-05-23-playmcp-claude-cowork-automation" class="internal">
     <strong>2026년 5월 23일(토) PlayMCP와 Claude, 코워크를 붙이면 코딩 없이 어디까지 자동화할 수 있을까</strong>
     <span>PlayMCP로 한국형 데이터를 가져오고, Claude가 그것을 정리하고, 코워크가 반복 실행해 주는 흐름을 생활형 자동화 관점에서 풀어본 글입니다.</span>
