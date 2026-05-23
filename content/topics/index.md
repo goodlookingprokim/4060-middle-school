@@ -16,6 +16,10 @@ cssclasses:
 ## 읽기 경로
 
 <div class="reading-path">
+  <a href="./2026-05-23-codegraph-practical-guide" class="internal">
+    <strong>2026년 5월 23일(토) AI에게 소스코드 폴더를 통째로 던지지 말아야 하는 이유, 그리고 CodeGraph</strong>
+    <span>Claude Code, Codex, Cursor 같은 도구에 프로젝트 폴더를 통째로 던지는 방식이 왜 비효율적인지, CodeGraph를 붙이면 무엇이 달라지는지 초보자도 따라 하기 쉽게 정리한 실무 가이드입니다.</span>
+  </a>
   <a href="./2026-05-23-hermes-24h-assistant-five-points" class="internal">
     <strong>2026년 5월 23일(토) Hermes를 24시간 개인 비서처럼 굴릴 때 꼭 알아둘 5가지</strong>
     <span>Hermes를 늘 켜두는 개인 비서처럼 쓰고 싶을 때, 모델보다 먼저 챙겨야 할 운영 감각 다섯 가지를 차분히 풀어 쓴 글입니다.</span>
