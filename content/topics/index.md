@@ -16,6 +16,10 @@ cssclasses:
 ## 읽기 경로
 
 <div class="reading-path">
+  <a href="./2026-05-23-playmcp-claude-cowork-automation" class="internal">
+    <strong>2026년 5월 23일(토) PlayMCP와 Claude, 코워크를 붙이면 코딩 없이 어디까지 자동화할 수 있을까</strong>
+    <span>PlayMCP로 한국형 데이터를 가져오고, Claude가 그것을 정리하고, 코워크가 반복 실행해 주는 흐름을 생활형 자동화 관점에서 풀어본 글입니다.</span>
+  </a>
   <a href="./2026-05-23-kakao-playmcp-three-ways-overview" class="internal">
     <strong>2026년 5월 23일(토) Kakao PlayMCP를 Claude, Codex, OpenClaw에서 어떻게 나눠 쓰면 좋을까</strong>
     <span>오늘 4060미들스쿨에서 다룰 Kakao PlayMCP 실습의 전체 지도입니다. Claude, Codex, OpenClaw 세 글을 어떤 순서로 보면 좋은지, 각각 어떤 역할로 보여주면 좋은지 한 번에 정리했습니다.</span>
