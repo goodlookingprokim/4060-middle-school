@@ -8,7 +8,7 @@ tags:
   - tts
   - voice-assistant
 created: "2026-05-17"
-modified: "2026-05-17"
+modified: "2026-05-23"
 publish: true
 cssclasses:
   - field-note
@@ -596,6 +596,40 @@ Supertonic은 기본 상태에서도 꽤 괜찮지만, 그냥 그대로 두면 �
 이 감각이 한 번 오면,
 그다음부터는 단순 설치를 넘어서
 내 취향과 내 상황에 맞는 음성 도우미를 만드는 쪽으로 넘어가게 됩니다.
+
+## 추가로 보면 좋은 참고 글
+
+Supertonic을 조금 다른 방향에서 정리한 글로 아래 자료도 함께 볼 만합니다.
+
+- 참고 글: <https://min-inter.co.kr/youtube-curator-danbi/columns/supertonic3-free-local-tts-zip-guide>
+- 제목: <strong>슈퍼토닉3 무료 로컬 TTS 사용 가이드: CPU만으로 음성과 자막을 만드는 실전 워크플로</strong>
+
+이 글이 흥미로운 이유는, 우리가 여기서 다룬 Hermes 연동 흐름과는 결이 조금 다르기 때문입니다.
+
+이 글에서는 주로 아래 감각을 참고해볼 수 있습니다.
+
+- GPU 없이 <strong>CPU만으로도</strong> 로컬 TTS 흐름을 굴릴 수 있다는 점
+- Supertonic을 단독으로 써서 <strong>음성 합성 + 자막 보정</strong> 쪽까지 확장할 수 있다는 점
+- 설치를 최대한 가볍게 만들기 위해 <strong>ZIP 중심 배포 흐름</strong>으로 접근한다는 점
+- `faster-whisper`를 함께 써서 음성과 자막을 한 묶음 워크플로처럼 다룰 수 있다는 점
+
+즉, 지금 글이 <strong>Hermes에 Supertonic을 붙여 메신저 음성 응답을 만드는 입문편</strong>이라면,
+위 참고 글은 <strong>Supertonic 자체를 로컬 음성 제작 도구처럼 활용하는 흐름</strong>을 보는 데 도움이 됩니다.
+
+특히 아래 같은 분들에게는 이 참고 글이 잘 맞습니다.
+
+- "나는 먼저 TTS 단독 흐름부터 보고 싶다"
+- "자막까지 같이 만드는 워크플로가 궁금하다"
+- "Windows 환경에서 조금 더 쉬운 배포형 구조를 보고 싶다"
+- "Hermes 연동 말고도 Supertonic의 다른 쓰임새를 넓게 보고 싶다"
+
+반대로 말하면, 두 글은 경쟁하는 관계라기보다 서로 빈 곳을 채워주는 관계에 가깝습니다.
+
+- 이 글: <strong>Hermes + Supertonic으로 실제 음성 응답 만들기</strong>
+- 참고 글: <strong>Supertonic 로컬 TTS/자막 워크플로 넓혀 보기</strong>
+
+같이 보면 Supertonic을 단순 음성 엔진이 아니라,
+로컬 음성 제작과 자동화 흐름 안에서 어디까지 확장할 수 있는지 감이 훨씬 또렷해집니다.
 
 ## 마무리
 
