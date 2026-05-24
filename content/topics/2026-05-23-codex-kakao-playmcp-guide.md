@@ -8,7 +8,7 @@ tags:
   - kakao
   - mcp
 created: "2026-05-23"
-modified: "2026-05-23"
+modified: "2026-05-24"
 publish: true
 cssclasses:
   - field-note
@@ -594,11 +594,30 @@ url = "https://playmcp.kakao.com/mcp"
 이 주소는 브라우저에서 읽는 안내 페이지가 아니라 MCP 서버 URL입니다. PlayMCP 사이트 설정은 `https://playmcp.kakao.com`에서 진행하고, Codex에는 MCP 서버 주소로 넣어야 합니다.
 
 ### `@KakaoTalk`이 안 보일 때
+이 부분은 생각보다 자주 막히는 지점입니다. 그런데 실제로는 카카오톡 자체 문제라기보다, <strong>Codex가 현재 Mac의 카카오톡 앱을 아직 인식하지 못했거나 macOS 권한이 덜 열린 경우</strong>가 더 많습니다.
+
+먼저 아래 순서대로 확인해 보면 좋습니다.
+
+1. 카카오톡 데스크톱 앱이 실제로 실행 중인지 확인
+2. 카카오톡 로그인이 되어 있고 채팅 목록 화면까지 열려 있는지 확인
+3. Codex App을 완전히 종료했다가 다시 실행
+4. Computer Use 플러그인이 실제로 활성화되어 있는지 확인
+5. 화면 기록 / 손쉬운 사용 권한 확인
+6. `@KakaoTalk`, `@카카오톡`, `@Kakao`를 모두 검색
+7. 한글 입력 상태에서 잘 안 되면 영어 입력 상태로 다시 검색
+
+짧게 다시 정리하면 이렇습니다.
+
 - 카카오톡 앱 먼저 실행
 - Codex 재시작
 - Computer Use 설치 확인
 - 화면 기록 / 손쉬운 사용 권한 확인
 - 앱 목록에서 비슷한 이름 찾기
+- PlayMCP와 Computer Use를 서로 다른 기능으로 구분하기
+
+이 부분을 더 자세히 따라가고 싶다면 아래 별도 체크리스트 글을 함께 보면 됩니다.
+
+- [Codex App에서 Computer Use로 KakaoTalk이 안 보일 때 먼저 볼 체크리스트](./2026-05-24-codex-computer-use-kakaotalk-checklist)
 
 ### Codex가 화면을 못 볼 때
 보통은 화면 기록 권한 문제일 가능성이 큽니다.
