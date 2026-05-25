@@ -285,16 +285,21 @@ Hermes 세션 안에서 아래처럼 켭니다.
 
 ### 가장 자주 보는 형태
 
-- `/codex-runtime`
-  - 현재 상태 보여주기
-- `/codex-runtime on`
-  - `codex_app_server` 모드로 전환
-- `/codex-runtime off`
-  - 기본 Hermes 모드(`auto`)로 복귀
-- `/codex-runtime auto`
-  - 기본값으로 설정
-- `/codex-runtime codex_app_server`
-  - Codex app-server runtime으로 실제 작업 넘기기
+여기서 중요한 점이 하나 있습니다.
+
+<strong>이건 서로 다른 명령 여러 개가 아니라, `/codex-runtime`이라는 하나의 내장 명령에 인자를 다르게 주는 방식</strong>입니다.
+
+즉,
+- `/codex-runtime` = 현재 상태 보기
+- `/codex-runtime on` = `codex_app_server`로 켜기
+- `/codex-runtime off` = `auto`로 끄기
+- `/codex-runtime auto` = 기본 Hermes runtime으로 설정
+- `/codex-runtime codex_app_server` = Codex runtime으로 설정
+
+으로 이해하면 됩니다.
+
+다시 말해, <strong>`on`은 `codex_app_server`의 쉬운 별칭이고, `off`는 `auto`의 쉬운 별칭</strong>입니다.
+별도의 두 번째 유사 명령을 또 써야 하는 구조가 아닙니다.
 
 내부적으로는 결국 `model.openai_runtime` 값을 바꾸는 흐름으로 이해하면 됩니다.
 
