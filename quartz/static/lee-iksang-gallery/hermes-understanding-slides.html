@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hermes 이해하기 — 교육 슬라이드</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@500;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f1ece0;
+    --paper-2:#e8e1d0;
+    --card:#fbf8f0;
+    --ink:#211f1a;
+    --ink-soft:#5b554a;
+    --ink-faint:#938c7b;
+    --line:#cbc3ad;
+    --line-soft:#ddd6c3;
+    --signal:#d3381a;
+    --signal-deep:#a82c14;
+    --slate:#2c3a42;
+    --rail:#1b1a15;
+    --rail-2:#262420;
+    --rail-line:#3a382f;
+    --serif:'Hahmlet','Nanum Myeongjo','Apple SD Gothic Neo',serif;
+    --sans:'IBM Plex Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    --mono:'IBM Plex Mono',ui-monospace,'SFMono-Regular',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{height:100%;}
+  body{
+    font-family:var(--sans);background:var(--rail);color:var(--ink);
+    display:flex;height:100vh;overflow:hidden;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  }
+
+  /* ============ RAIL ============ */
+  .rail{
+    width:262px;flex-shrink:0;background:var(--rail);
+    display:flex;flex-direction:column;color:#b7b09c;
+    border-right:1px solid #000;
+  }
+  .rail-head{padding:24px 22px 16px;border-bottom:1px solid var(--rail-line);}
+  .mark{
+    display:flex;align-items:center;gap:9px;margin-bottom:13px;
+  }
+  .mark .glyph{
+    width:34px;height:34px;border:1.5px solid var(--signal);
+    color:var(--signal);font-family:var(--serif);font-weight:800;font-size:20px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .mark .mt{font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:#7e7867;line-height:1.5;}
+  .rail-head h1{font-family:var(--serif);font-weight:700;font-size:19px;color:#f1ece0;letter-spacing:-.01em;}
+  .rail-head .reg{font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;color:#6c6757;margin-top:4px;}
+
+  .rail-nav{flex:1;overflow-y:auto;padding:12px 12px;}
+  .rail-nav::-webkit-scrollbar{width:5px;}
+  .rail-nav::-webkit-scrollbar-thumb{background:var(--rail-line);}
+  .navitem{
+    display:flex;align-items:center;gap:11px;padding:8px 10px;
+    cursor:pointer;border-left:2px solid transparent;transition:.16s;
+  }
+  .navitem:hover{background:var(--rail-2);}
+  .navitem.current{background:var(--rail-2);border-left-color:var(--signal);}
+  .nx{
+    font-family:var(--mono);font-size:11px;font-weight:600;
+    width:22px;text-align:center;color:#6f6a59;flex-shrink:0;
+  }
+  .navitem.current .nx{color:var(--signal);}
+  .navitem.done .nx{color:#4f7d5e;}
+  .nt{font-size:13px;color:#9c9580;line-height:1.35;}
+  .navitem.current .nt{color:#f1ece0;}
+
+  .rail-foot{border-top:1px solid var(--rail-line);padding:13px 16px 16px;}
+  .tools{display:flex;gap:6px;margin-bottom:13px;}
+  .tool{
+    flex:1;background:var(--rail-2);border:1px solid var(--rail-line);
+    color:#9c9580;font-family:var(--mono);font-size:9.5px;letter-spacing:.05em;
+    padding:7px 4px;cursor:pointer;transition:.15s;text-align:center;
+  }
+  .tool:hover{border-color:var(--signal);color:var(--signal);}
+  .tool.on{background:var(--signal);border-color:var(--signal);color:#fff;}
+  .tool b{display:block;font-size:11px;font-weight:600;margin-bottom:1px;}
+  .fontctl{display:flex;align-items:center;gap:6px;margin-bottom:11px;}
+  .fontctl .fcl{font-family:var(--mono);font-size:9px;letter-spacing:.08em;color:#6c6757;text-transform:uppercase;margin-right:auto;}
+  .fc-btn{
+    width:32px;height:26px;background:var(--rail-2);border:1px solid var(--rail-line);
+    color:#9c9580;font-family:var(--serif);font-weight:700;font-size:13px;cursor:pointer;transition:.15s;
+  }
+  .fc-btn:hover{border-color:var(--signal);color:var(--signal);}
+  .fc-val{font-family:var(--mono);font-size:10px;color:#9c9580;width:40px;text-align:center;}
+  .pbar{display:flex;align-items:center;gap:9px;}
+  .pbar .pnum{font-family:var(--mono);font-size:11px;color:#7e7867;letter-spacing:.05em;}
+  .pbar .ptrk{flex:1;height:3px;background:var(--rail-line);}
+  .pbar .ptrk > div{height:100%;background:var(--signal);width:0;transition:width .35s;}
+
+  /* ============ STAGE ============ */
+  main{flex:1;position:relative;display:flex;flex-direction:column;background:var(--paper);min-width:0;}
+  .grain{
+    position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.5;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.32'/></svg>");
+  }
+  .frame{position:absolute;inset:18px;border:1px solid var(--line);z-index:2;pointer-events:none;}
+  .tick{position:absolute;font-family:var(--mono);font-size:13px;color:var(--signal);line-height:1;}
+  .tick.tl{top:-7px;left:-7px;} .tick.tr{top:-7px;right:-7px;}
+  .tick.bl{bottom:-7px;left:-7px;} .tick.br{bottom:-7px;right:-7px;}
+
+  #topline{position:absolute;top:0;left:0;height:3px;background:var(--signal);width:0;z-index:6;transition:width .35s;}
+
+  .deck{flex:1;position:relative;overflow:hidden;z-index:3;}
+  .slide{
+    position:absolute;inset:0;overflow-y:auto;
+    display:flex;padding:62px 70px 96px;
+    opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s;
+  }
+  .slide::-webkit-scrollbar{width:9px;}
+  .slide::-webkit-scrollbar-thumb{background:var(--line);}
+  .slide.active{opacity:1;visibility:visible;}
+
+  /* ghost numeral */
+  .slide::before{
+    content:attr(data-ghost);
+    position:absolute;top:14px;right:46px;z-index:0;
+    font-family:var(--serif);font-weight:800;font-size:260px;line-height:.8;
+    color:var(--signal);opacity:.06;letter-spacing:-.04em;pointer-events:none;
+  }
+
+  .wrap{margin:auto;width:100%;max-width:830px;position:relative;z-index:1;zoom:var(--fs,1);}
+
+  /* entrance stagger */
+  .slide.active .wrap > *{animation:rise .6s cubic-bezier(.2,.75,.25,1) both;}
+  .slide.active .wrap > *:nth-child(1){animation-delay:.03s;}
+  .slide.active .wrap > *:nth-child(2){animation-delay:.09s;}
+  .slide.active .wrap > *:nth-child(3){animation-delay:.15s;}
+  .slide.active .wrap > *:nth-child(4){animation-delay:.21s;}
+  .slide.active .wrap > *:nth-child(5){animation-delay:.27s;}
+  .slide.active .wrap > *:nth-child(6){animation-delay:.33s;}
+  .slide.active .wrap > *:nth-child(7){animation-delay:.39s;}
+  .slide.active .wrap > *:nth-child(8){animation-delay:.45s;}
+  @keyframes rise{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:none;}}
+
+  /* ---- typographic chrome ---- */
+  .kicker{
+    font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.13em;
+    color:var(--signal);text-transform:uppercase;margin-bottom:15px;
+    display:flex;align-items:center;gap:9px;
+  }
+  .kicker::before{content:"";width:9px;height:9px;background:var(--signal);}
+  .kicker .km{color:var(--ink-faint);}
+  h2{
+    font-family:var(--serif);font-weight:800;
+    font-size:clamp(28px,4vw,46px);line-height:1.16;letter-spacing:-.02em;
+    margin-bottom:10px;
+  }
+  .lede{color:var(--ink-soft);font-size:clamp(15px,1.8vw,18px);line-height:1.6;margin-bottom:22px;}
+  p{font-size:clamp(15px,1.7vw,17px);line-height:1.74;color:#3c382f;}
+  p+p{margin-top:11px;}
+  strong,b{color:var(--ink);font-weight:600;}
+  a{color:inherit;text-decoration:none;border-bottom:1.5px solid var(--signal);transition:background .15s;}
+  a:hover{background:#f7ead0;}
+
+  /* objective bar */
+  .objective{
+    border-top:2px solid var(--ink);border-bottom:1px solid var(--line);
+    padding:11px 2px;margin-bottom:24px;display:flex;gap:13px;align-items:baseline;
+  }
+  .objective .ol{
+    font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.1em;
+    color:var(--signal);text-transform:uppercase;flex-shrink:0;padding-top:2px;
+  }
+  .objective .ot{font-size:14.5px;color:var(--ink-soft);line-height:1.55;}
+  .objective .ot b{color:var(--ink);}
+
+  /* list */
+  ul.list{list-style:none;margin:16px 0;}
+  ul.list li{
+    position:relative;padding:10px 0 10px 30px;
+    font-size:clamp(14.5px,1.7vw,16.5px);line-height:1.62;color:#3c382f;
+    border-bottom:1px solid var(--line-soft);
+  }
+  ul.list li:last-child{border-bottom:none;}
+  ul.list li::before{
+    content:"›";position:absolute;left:6px;top:9px;
+    font-family:var(--mono);color:var(--signal);font-weight:600;font-size:16px;
+  }
+
+  /* annotation callouts */
+  .note{
+    position:relative;margin-top:16px;padding:13px 16px 13px 17px;
+    border-left:2px solid var(--slate);background:var(--card);
+    font-size:14.5px;line-height:1.66;color:#3c382f;
+  }
+  .note .nlabel{
+    display:block;font-family:var(--mono);font-size:10px;font-weight:600;
+    letter-spacing:.1em;text-transform:uppercase;color:var(--slate);margin-bottom:5px;
+  }
+  .note.analogy{border-left-color:var(--ink);background:#f4eedf;}
+  .note.analogy .nlabel{color:var(--ink);}
+  .note.analogy em{font-family:var(--serif);font-style:italic;}
+  .note.plain{border-left-color:var(--signal);background:#f7ead0;}
+  .note.plain .nlabel{color:var(--signal-deep);}
+  .note.warn{border-left-color:var(--signal);background:#f6e2d8;}
+  .note.warn .nlabel{color:var(--signal);}
+
+  /* self-check */
+  .note.check{border-left-color:var(--slate);background:#e7ebe7;}
+  .note.check .nlabel{color:var(--slate);}
+  .qa{list-style:none;margin-top:4px;}
+  .qa li{border-top:1px dashed var(--line);}
+  .qa li:first-child{border-top:none;}
+  .q-ask{
+    width:100%;text-align:left;background:none;border:none;cursor:pointer;
+    font-family:var(--sans);font-size:14px;color:#33302a;line-height:1.55;
+    padding:9px 24px 9px 20px;position:relative;
+  }
+  .q-ask::before{
+    content:"?";position:absolute;left:0;top:9px;
+    font-family:var(--mono);font-weight:600;color:var(--slate);
+  }
+  .q-ask::after{
+    content:"답 보기";position:absolute;right:0;top:10px;
+    font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;
+    color:var(--ink-faint);border:1px solid var(--line);padding:1px 5px;
+  }
+  .q.open .q-ask::after{content:"닫기";color:var(--signal);border-color:var(--signal);}
+  .q-ask:hover{color:var(--signal-deep);}
+  .q-ans{
+    display:none;margin:0 0 11px 20px;padding:10px 13px;
+    background:var(--card);border-left:2px solid var(--signal);
+    font-size:13.5px;line-height:1.62;color:var(--ink-soft);
+  }
+  .q.open .q-ans{display:block;animation:rise .35s both;}
+  .q-ans .am{
+    font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;
+    color:var(--signal);display:block;margin-bottom:4px;
+  }
+
+  /* quote */
+  .quote{
+    margin-top:18px;padding:22px 24px;background:var(--card);
+    border-top:2px solid var(--ink);border-bottom:1px solid var(--line);
+    font-family:var(--serif);font-weight:700;
+    font-size:clamp(18px,2.5vw,27px);line-height:1.4;color:var(--ink);letter-spacing:-.01em;
+  }
+  .quote .hl{color:var(--signal);font-style:italic;}
+
+  /* tables */
+  table{width:100%;border-collapse:collapse;margin-top:16px;font-size:clamp(13px,1.55vw,15px);}
+  th,td{padding:11px 13px;text-align:left;border:1px solid var(--line);vertical-align:top;line-height:1.5;}
+  th{
+    background:var(--ink);color:var(--paper);font-weight:600;
+    font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;
+  }
+  td{background:var(--card);color:#3c382f;}
+  tr:nth-child(even) td{background:#f4eedf;}
+  td b{color:var(--ink);}
+  .vs th:first-child{background:#6a655a;}
+
+  /* figure cards */
+  .figs{display:flex;gap:13px;margin-top:18px;flex-wrap:wrap;}
+  .fig{
+    flex:1;min-width:215px;background:var(--card);
+    border:1px solid var(--line);padding:16px;position:relative;
+  }
+  .fig.fill{background:#f7ead0;border-color:#dcc79a;}
+  .fig .ftag{
+    font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.07em;
+    color:var(--ink-faint);text-transform:uppercase;
+  }
+  .fig.fill .ftag{color:var(--signal-deep);}
+  .fig h3{font-family:var(--serif);font-weight:700;font-size:clamp(16px,2vw,20px);margin:7px 0 8px;}
+  .fig p{font-size:13.5px;line-height:1.55;color:var(--ink-soft);}
+
+  /* grid (use cases / glossary) */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px;}
+  .cell{background:var(--card);border:1px solid var(--line);padding:12px 15px;}
+  .cell .ct{font-family:var(--serif);font-weight:700;color:var(--ink);font-size:15px;margin-bottom:3px;}
+  .cell .ct .num{font-family:var(--mono);font-size:11px;color:var(--signal);margin-right:7px;}
+  .cell .cd{font-size:12.8px;line-height:1.55;color:var(--ink-soft);}
+
+  /* flow steps */
+  .flow{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap;}
+  .fstep{
+    flex:1;min-width:155px;background:var(--card);border:1px solid var(--line);
+    padding:14px;position:relative;
+  }
+  .fstep::before{
+    content:attr(data-n);position:absolute;top:10px;right:12px;
+    font-family:var(--serif);font-weight:800;font-size:34px;color:var(--signal);opacity:.16;
+  }
+  .fstep .fn{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.08em;color:var(--signal);}
+  .fstep h4{font-family:var(--serif);font-weight:700;font-size:15.5px;margin:4px 0 4px;}
+  .fstep p{font-size:12.6px;line-height:1.5;color:var(--ink-soft);}
+
+  /* diagram */
+  .diagram{margin-top:18px;display:flex;flex-direction:column;align-items:center;}
+  .dnode{
+    background:var(--ink);color:var(--paper);font-family:var(--mono);
+    font-weight:600;font-size:13px;letter-spacing:.05em;padding:9px 22px;
+  }
+  .dv{width:1px;height:20px;background:var(--line);}
+  .dbranch{display:flex;gap:13px;width:100%;}
+  .dcol{flex:1;min-width:158px;display:flex;flex-direction:column;align-items:center;}
+  .dpath{font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:var(--ink-faint);margin:5px 0;text-transform:uppercase;}
+  .dbox{background:var(--card);border:1px solid var(--line);padding:12px;text-align:center;width:100%;}
+  .dbox h4{font-family:var(--serif);font-weight:700;font-size:14px;margin-bottom:3px;}
+  .dbox p{font-size:11.4px;color:var(--ink-soft);line-height:1.4;}
+  .dbox.opt{border-style:dashed;border-color:var(--signal);background:#f7ead0;}
+  .obadge{display:inline-block;background:var(--signal);color:#fff;font-family:var(--mono);font-size:8.5px;letter-spacing:.05em;padding:1px 6px;margin-top:5px;}
+
+  /* checklist */
+  .checklist{list-style:none;margin-top:10px;}
+  .checklist li{
+    display:flex;gap:12px;align-items:flex-start;
+    padding:11px 14px;background:var(--card);border:1px solid var(--line);
+    margin-bottom:7px;font-size:clamp(13.5px,1.6vw,15.5px);line-height:1.5;
+  }
+  .checklist .ck{
+    flex-shrink:0;width:20px;height:20px;border:1.5px solid var(--slate);
+    font-family:var(--mono);font-size:11px;color:var(--slate);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .checklist .cm{font-family:var(--mono);font-size:11px;color:var(--ink-faint);}
+
+  /* resources */
+  .res{margin-top:16px;}
+  .ritem{
+    background:var(--card);border:1px solid var(--line);border-left:2px solid var(--signal);
+    padding:12px 16px;margin-bottom:8px;
+  }
+  .ritem b{font-size:15px;font-family:var(--serif);font-weight:700;}
+  .ritem span{display:block;color:var(--ink-soft);font-size:12.8px;margin-top:2px;}
+
+  /* hero */
+  .hero{text-align:center;}
+  .hero .hk{
+    font-family:var(--mono);font-size:11px;letter-spacing:.22em;
+    color:var(--signal);text-transform:uppercase;margin-bottom:20px;
+  }
+  .hero h2{font-size:clamp(40px,7vw,76px);line-height:1.04;margin-bottom:18px;}
+  .hero .hl-lede{font-size:clamp(15px,1.95vw,19px);color:var(--ink-soft);line-height:1.62;}
+  .hero .pills{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:26px;}
+  .pill{
+    border:1px solid var(--line);background:var(--card);
+    font-family:var(--mono);font-size:11.5px;color:#3c382f;padding:7px 14px;
+  }
+  .hero .src{margin-top:26px;font-family:var(--mono);font-size:10.5px;color:var(--ink-faint);line-height:1.7;letter-spacing:.02em;}
+  .hero .rule{width:54px;height:3px;background:var(--signal);margin:0 auto 20px;}
+
+  /* ============ FOLIO / CONTROLS / RESUME ============ */
+  .folio{
+    position:absolute;left:70px;bottom:34px;z-index:6;
+    font-family:var(--mono);font-size:11px;color:var(--ink-faint);letter-spacing:.06em;
+  }
+  .folio b{color:var(--signal);}
+  .khint{
+    position:absolute;left:50%;transform:translateX(-50%);bottom:34px;z-index:6;
+    font-family:var(--mono);font-size:10px;color:var(--ink-faint);letter-spacing:.04em;
+  }
+  .controls{position:absolute;right:64px;bottom:28px;z-index:6;display:flex;gap:7px;}
+  .nav-btn{
+    width:42px;height:42px;border:1px solid var(--line);background:var(--card);
+    color:var(--ink);font-family:var(--serif);font-size:20px;cursor:pointer;transition:.15s;
+  }
+  .nav-btn:hover:not(:disabled){background:var(--signal);color:#fff;border-color:var(--signal);}
+  .nav-btn:disabled{opacity:.3;cursor:default;}
+
+  .resume{
+    position:absolute;top:34px;right:46px;z-index:7;
+    background:var(--ink);color:var(--paper);display:none;
+    align-items:center;gap:10px;padding:9px 12px;
+  }
+  .resume.show{display:flex;animation:rise .4s both;}
+  .resume .rtxt{font-family:var(--mono);font-size:11px;letter-spacing:.04em;}
+  .resume .rgo{background:var(--signal);color:#fff;border:none;font-family:var(--mono);font-size:10px;padding:4px 9px;cursor:pointer;letter-spacing:.05em;}
+  .resume .rx{background:none;border:none;color:var(--ink-faint);font-size:15px;cursor:pointer;line-height:1;}
+
+  /* ============ PRESENTER PANEL ============ */
+  .pp{
+    position:absolute;left:0;right:0;bottom:0;z-index:8;height:40vh;
+    background:var(--rail);border-top:2px solid var(--signal);
+    transform:translateY(101%);transition:transform .38s cubic-bezier(.3,.7,.2,1);
+    display:flex;flex-direction:column;
+  }
+  .pp.open{transform:none;}
+  .pp-head{
+    display:flex;align-items:center;gap:14px;padding:12px 22px;
+    border-bottom:1px solid var(--rail-line);
+  }
+  .pp-head .pph{font-family:var(--mono);font-size:11px;letter-spacing:.13em;color:var(--signal);text-transform:uppercase;}
+  .pp-head .ppmeta{font-family:var(--mono);font-size:11px;color:#8a8472;}
+  .pp-head .ppx{margin-left:auto;background:none;border:1px solid var(--rail-line);color:#9c9580;font-family:var(--mono);font-size:10px;padding:4px 9px;cursor:pointer;}
+  .pp-head .ppx:hover{border-color:var(--signal);color:var(--signal);}
+  .pp-body{
+    flex:1;overflow-y:auto;padding:16px 22px 22px;
+    color:#cdc7b5;font-size:15px;line-height:1.78;
+  }
+  .pp-body::-webkit-scrollbar{width:7px;}
+  .pp-body::-webkit-scrollbar-thumb{background:var(--rail-line);}
+  .pp-body .cue{
+    font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:var(--signal);
+    text-transform:uppercase;display:block;margin:14px 0 4px;
+  }
+  .pp-body .cue:first-child{margin-top:0;}
+  .pnote{display:none;}
+
+  @media (max-width:900px){
+    .rail{display:none;}
+    .slide{padding:40px 26px 92px;}
+    .slide::before{font-size:150px;right:14px;}
+    .grid2{grid-template-columns:1fr;}
+    .folio,.khint{display:none;}
+    .pp{height:54vh;}
+  }
+
+  /* ============ PRINT ============ */
+  @media print{
+    @page{margin:14mm;}
+    html,body{height:auto;overflow:visible;background:#fff;display:block;}
+    *{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+    .rail,.controls,.folio,.khint,.resume,.pp,#topline,.grain,.frame{display:none!important;}
+    main{display:block;}
+    .deck{position:static;overflow:visible;}
+    .slide{
+      position:static!important;opacity:1!important;visibility:visible!important;
+      display:block!important;page-break-after:always;break-after:page;
+      min-height:auto;padding:0 0 24px;overflow:visible;
+    }
+    .slide::before{display:none;}
+    .slide.active .wrap > *{animation:none!important;}
+    .wrap{max-width:100%;}
+    .q-ans{display:block!important;margin-left:20px;}
+    .q-ask::after{display:none;}
+    .pp,.pnote{display:none!important;}
+    .wrap{zoom:1!important;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ RAIL ============ -->
+<aside class="rail">
+  <div class="rail-head">
+    <div class="mark">
+      <div class="glyph">H</div>
+      <div class="mt">OPERATOR<br>FIELD MANUAL</div>
+    </div>
+    <h1>Hermes 이해하기</h1>
+    <div class="reg">PRE-INSTALL COURSEWARE · 7 MODULES</div>
+  </div>
+  <nav class="rail-nav" id="nav">
+    <div class="navitem" data-sec="0" data-start="1"><span class="nx">—</span><span class="nt">들어가며</span></div>
+    <div class="navitem" data-sec="1" data-start="4"><span class="nx">00</span><span class="nt">왜 이해가 먼저인가</span></div>
+    <div class="navitem" data-sec="2" data-start="5"><span class="nx">01</span><span class="nt">어떤 시스템인가</span></div>
+    <div class="navitem" data-sec="3" data-start="9"><span class="nx">02</span><span class="nt">닫힌 학습 루프</span></div>
+    <div class="navitem" data-sec="4" data-start="11"><span class="nx">03</span><span class="nt">어디에 사는가</span></div>
+    <div class="navitem" data-sec="5" data-start="13"><span class="nx">04</span><span class="nt">하나에서 여럿으로</span></div>
+    <div class="navitem" data-sec="6" data-start="15"><span class="nx">05</span><span class="nt">협업, 그리고 함정</span></div>
+    <div class="navitem" data-sec="7" data-start="17"><span class="nx">06</span><span class="nt">에이전트는 키우는 것</span></div>
+    <div class="navitem" data-sec="8" data-start="18"><span class="nx">07</span><span class="nt">솔직한 trade-off</span></div>
+    <div class="navitem" data-sec="9" data-start="20"><span class="nx">+</span><span class="nt">부록 · 보충 자료</span></div>
+    <div class="navitem" data-sec="10" data-start="22"><span class="nx">✓</span><span class="nt">마무리 · 정리</span></div>
+  </nav>
+  <div class="rail-foot">
+    <div class="tools">
+      <button class="tool" id="tNote" title="발표자 노트 (S)"><b>S</b>노트</button>
+      <button class="tool" id="tPrint" title="인쇄·PDF (P)"><b>P</b>인쇄</button>
+      <button class="tool" id="tFull" title="전체화면 (F)"><b>F</b>전체</button>
+    </div>
+    <div class="fontctl">
+      <span class="fcl">글자 크기</span>
+      <button class="fc-btn" id="fcDown" title="글자 작게 (−)">A−</button>
+      <span class="fc-val" id="fcVal">100%</span>
+      <button class="fc-btn" id="fcUp" title="글자 크게 (+)">A+</button>
+    </div>
+    <div class="pbar">
+      <span class="pnum" id="pnum">01/25</span>
+      <span class="ptrk"><div id="ptrk"></div></span>
+    </div>
+  </div>
+</aside>
+
+<!-- ============ STAGE ============ -->
+<main>
+  <div class="grain"></div>
+  <div class="frame"><i class="tick tl">+</i><i class="tick tr">+</i><i class="tick bl">+</i><i class="tick br">+</i></div>
+  <div id="topline"></div>
+
+  <div class="resume" id="resume">
+    <span class="rtxt">지난 진도 · <b id="rNum">1</b>장</span>
+    <button class="rgo" id="rGo">이어 보기</button>
+    <button class="rx" id="rX">×</button>
+  </div>
+
+  <div class="deck" id="deck">
+
+    <!-- 1 표지 -->
+    <section class="slide active" data-sec="0" data-ghost="" data-time="0:30">
+      <div class="wrap hero">
+        <div class="hk">Educational Courseware</div>
+        <div class="rule"></div>
+        <h2>Hermes 이해하기</h2>
+        <p class="hl-lede">설치 전에 먼저 보는 <b>7개 학습 모듈</b><br>— 명령어를 입력하기 전에, 이 시스템이 어떤 물건인지부터.</p>
+        <div class="pills">
+          <span class="pill">⏱ 약 25–28분</span>
+          <span class="pill">입문자 · 미설치자 대상</span>
+          <span class="pill">공식 문서 기반</span>
+        </div>
+        <p class="src">근거 — Hermes 공식 문서<br>운영 마음가짐 일부 — Shann Holmberg, “How to Become a Hermes Agent Operator” (2026-05-13)</p>
+      </div>
+      <div class="pnote">안녕하세요. 오늘은 'Hermes'를 함께 살펴봅니다. 시작 전 분명히 — 이 시간은 '설치하는 법'이 아닙니다. 설치는 10분이면 끝나요. 우리가 할 일은, 설치 버튼을 누르기 전에 이게 어떤 종류의 물건인지 머릿속에 넣는 것. 7개 모듈, 30분 남짓 걸립니다. // 표지는 30초 안에 "오늘은 설치가 아니라 이해"만 박고 넘어가세요.</div>
+    </section>
+
+    <!-- 2 목적 -->
+    <section class="slide" data-sec="0" data-ghost="" data-time="1:00">
+      <div class="wrap">
+        <div class="kicker">들어가며 <span class="km">/ 01</span></div>
+        <h2>이 자료는 “설치 가이드”가 아닙니다</h2>
+        <p class="lede">Hermes를 아직 써 보지 않은 사람이 — 먼저 <b>이해</b>하도록 돕습니다.</p>
+        <p>다 읽고 나면 다음을 스스로 판단할 수 있습니다.</p>
+        <ul class="list">
+          <li>Hermes가 <b>내 상황·업무에 맞는 도구</b>인가</li>
+          <li>맞다면 <b>어떤 마음가짐과 순서</b>로 시작해야 하는가</li>
+          <li>사람들이 어디서 실수하는가 — 나는 그 <b>함정을 어떻게 피할</b> 것인가</li>
+        </ul>
+        <div class="note plain"><span class="nlabel">쉽게 말하면</span>새 가전제품을 살 때 “설명서대로 켜는 법”보다 “이게 어떤 제품이고 우리 집에 맞는지”를 먼저 보는 게 낫습니다. 이 자료는 바로 그 “먼저 볼 것”을 모은 것입니다.</div>
+      </div>
+      <div class="pnote">다 듣고 나면 세 가지를 판단할 수 있습니다 — 내게 맞는 도구인가, 맞다면 어떤 순서로 시작하나, 어디서 실수하나. 아래 박스: 설치는 명령어 몇 줄이지만 잘 쓰는 것은 개념 이해에서 시작된다. 개념을 건너뛰고 설치하면 작동은 하지만 곧 구조가 엉킵니다.</div>
+    </section>
+
+    <!-- 3 학습법·목차 -->
+    <section class="slide" data-sec="0" data-ghost="" data-time="0:50">
+      <div class="wrap">
+        <div class="kicker">학습 방법 <span class="km">/ 02</span></div>
+        <h2>이 슬라이드를 어떻게 볼까</h2>
+        <div class="objective"><span class="ol">FORMAT</span><span class="ot">각 모듈은 <b>학습 목표 → 설명 → 비유 → 쉽게 말하면 → 흔한 오해 → 스스로 점검</b> 순서로 흘러갑니다.</span></div>
+        <p>왼쪽 색인에서 지금 위치를 확인하고 클릭해 이동할 수 있습니다. “스스로 점검”은 클릭하면 모범답안이 펼쳐집니다 — 먼저 스스로 답해 본 뒤 확인하세요.</p>
+        <table>
+          <thead><tr><th>모듈</th><th>주제</th></tr></thead>
+          <tbody>
+            <tr><td><b>00</b></td><td>왜 설치보다 이해가 먼저인가</td></tr>
+            <tr><td><b>01</b></td><td>Hermes는 어떤 종류의 시스템인가</td></tr>
+            <tr><td>★</td><td>실전 사례 — Hermes로 무엇을 하나 <span style="color:var(--ink-faint);">(모듈 01 보강)</span></td></tr>
+            <tr><td><b>02</b></td><td>닫힌 학습 루프 — 오래 쓸수록 강해진다</td></tr>
+            <tr><td><b>03</b></td><td>에이전트는 어디에 사는가 — HERMES_HOME</td></tr>
+            <tr><td><b>04</b></td><td>하나에서 여럿으로 — Profile</td></tr>
+            <tr><td><b>05</b></td><td>여럿이 협업하는 법, 그리고 가장 큰 함정</td></tr>
+            <tr><td><b>06</b></td><td>에이전트는 “키우는” 것</td></tr>
+            <tr><td><b>07</b></td><td>솔직한 trade-off — 이게 나에게 맞는가</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="pnote">구성은 단순합니다. 모듈 0~7, 모두 같은 리듬 — 학습 목표·설명·비유·'쉽게 말하면' 박스·흔한 오해·스스로 점검. 모듈 1 뒤에 '실전 사례' 보강 코너가 끼어 있어요. 각 모듈 끝 점검 질문에 막힘없이 답하면 다음으로, 막히면 그 모듈을 다시.</div>
+    </section>
+
+    <!-- 4 모듈 0 -->
+    <section class="slide" data-sec="1" data-ghost="00" data-time="1:15">
+      <div class="wrap">
+        <div class="kicker">Module 00 <span class="km">/ 왜 이해가 먼저인가</span></div>
+        <h2>왜 설치보다 이해가 먼저인가</h2>
+        <div class="objective"><span class="ol">학습 목표</span><span class="ot">이 시스템을 “무작정 설치하면 안 되는” 이유를 이해한다.</span></div>
+        <div class="figs">
+          <div class="fig"><div class="ftag">대부분의 AI 도구</div><h3>설치 → 바로 사용</h3><p>잘못 써도 손해가 작다. 마음에 안 들면 지우면 그만.</p></div>
+          <div class="fig fill"><div class="ftag">Hermes</div><h3>구조가 쌓이는 시스템</h3><p>기억이 누적되고, 기능이 축적되고, 에이전트가 서로 의존한다. 초반 구조를 잘못 잡으면 바로잡는 비용이 매우 크다.</p></div>
+        </div>
+        <div class="note plain"><span class="nlabel">쉽게 말하면</span>메모장 앱은 마음에 안 들면 지우면 끝입니다. Hermes는 “이사”에 가깝습니다 — 짐이 쌓인 뒤에 집 구조를 바꾸려면 훨씬 힘듭니다. 그래서 <em>처음 배치</em>가 중요합니다.</div>
+        <div class="note check"><span class="nlabel">스스로 점검</span>
+          <ul class="qa">
+            <li class="q"><button class="q-ask">Hermes가 다른 AI 도구와 달리 “초반 구조 결정”이 중요한 이유를 한 문장으로 말할 수 있는가?</button><div class="q-ans"><span class="am">모범답안</span>기억·기능·에이전트 간 의존이 시간이 지나며 누적되어, 초반에 잘못 잡은 구조를 나중에 바로잡는 비용이 매우 크기 때문이다.</div></li>
+          </ul>
+        </div>
+      </div>
+      <div class="pnote">평소 AI 도구는 설치하고 바로 쓰죠 — 부담이 없습니다. Hermes는 다릅니다. 시간이 지날수록 구조가 쌓입니다. 메모장은 지우면 끝이지만 Hermes는 '이사' — 짐이 쌓인 뒤 구조를 바꾸기 어렵습니다. Hermes를 오래 써 온 운영자 Shann도 "맨바닥에서 쓰려다 주말 몇 번을 태웠다"고 했어요.</div>
+    </section>
+
+    <!-- 5 모듈 1 비교 -->
+    <section class="slide" data-sec="2" data-ghost="01" data-time="1:15">
+      <div class="wrap">
+        <div class="kicker">Module 01 <span class="km">/ 어떤 시스템인가</span></div>
+        <h2>Hermes는 어떤 종류의 시스템인가</h2>
+        <div class="objective"><span class="ol">학습 목표</span><span class="ot">Hermes를 “챗봇”이 아니라 “지속적으로 일하는 Operator”로 인식한다.</span></div>
+        <table class="vs">
+          <thead><tr><th>익숙한 AI 도구 (챗봇)</th><th>Hermes</th></tr></thead>
+          <tbody>
+            <tr><td>질문하면 답한다</td><td>워크플로를 처음부터 끝까지 실행한다</td></tr>
+            <tr><td>세션이 끝나면 잊는다</td><td>세션이 끝나도 살아남는 기억을 가진다</td></tr>
+            <tr><td>매번 다시 가르쳐야 한다</td><td>일하면서 스스로 학습한다</td></tr>
+          </tbody>
+        </table>
+        <div class="note plain"><span class="nlabel">쉽게 말하면</span><b>Operator(오퍼레이터)</b>는 “운영자·작업자”입니다. 한 번 묻고 답을 받는 상대가 아니라, <b>계속 옆에서 일을 처리해 주는 직원</b>이라고 보면 됩니다. “세션”은 한 번의 대화 묶음을 말합니다.</div>
+        <div class="note analogy"><span class="nlabel">한 줄 정의 (공식 문서)</span>Hermes는 <em>오래 돌릴수록 더 유능해지는 자율 에이전트</em>다.</div>
+      </div>
+      <div class="pnote">오늘 가장 중요한 멘탈 전환입니다. 챗봇은 질문하면 답하고, 세션이 끝나면 잊습니다. Hermes는 워크플로를 끝까지 실행하고, 기억이 살아남고, 일하며 스스로 학습합니다. 'Operator'는 계속 옆에서 일하는 직원. 한 줄 정의 — 공식 문서도 "오래 돌릴수록 더 유능해지는 자율 에이전트"라고 합니다. 꼭 가져가세요.</div>
+    </section>
+
+    <!-- 6 모듈 1 비유 -->
+    <section class="slide" data-sec="2" data-ghost="01" data-time="1:15">
+      <div class="wrap">
+        <div class="kicker">Module 01 <span class="km">/ 비유</span></div>
+        <h2>자판기 vs. 신입 직원</h2>
+        <div class="figs">
+          <div class="fig"><div class="ftag">챗봇 = 자판기</div><h3>동전 넣으면 음료가 나온다</h3><p>질문하면 답한다. 다음 사람에게는 당신이 뭘 샀는지 기억이 없다.</p></div>
+          <div class="fig fill"><div class="ftag">Hermes = 신입 직원</div><h3>지켜보며 배운다</h3><p>처음엔 서툴지만 일하는 방식을 배운다. 다음 주엔 다시 설명할 필요가 없고, 쓸수록 당신의 방식과 선호에 맞춰진다.</p></div>
+        </div>
+        <div class="note warn"><span class="nlabel">흔한 오해</span>“그냥 더 좋은 ChatGPT 아닌가?” → 핵심은 모델 성능이 아니라 <b>지속성</b>(기억이 남고 능력이 쌓이는 것)이다.</div>
+        <div class="note check"><span class="nlabel">스스로 점검</span>
+          <ul class="qa">
+            <li class="q"><button class="q-ask">“자판기 vs 신입 직원”의 차이를 Hermes에 적용해 설명할 수 있는가?</button><div class="q-ans"><span class="am">모범답안</span>자판기(챗봇)는 매번 기억 없이 처음으로 돌아가지만, 신입 직원(Hermes)은 일하며 배우고 기억을 쌓아 점점 더 유능해진다.</div></li>
+            <li class="q"><button class="q-ask">Hermes를 한 줄로 정의하면?</button><div class="q-ans"><span class="am">모범답안</span>오래 돌릴수록 더 유능해지는 자율 에이전트.</div></li>
+          </ul>
+        </div>
+      </div>
+      <div class="pnote">챗봇은 자판기 — 동전 넣으면 음료, 다음 사람은 기억 못 함. Hermes는 신입 직원 — 처음엔 서툴지만 지켜보며 배우고, 쓸수록 당신의 방식에 맞춰집니다. 흔한 오해: "더 좋은 ChatGPT?" 아닙니다 — 핵심은 모델 성능이 아니라 지속성입니다.</div>
+    </section>
+
+    <!-- 7 모듈 1 3구성요소 -->
+    <section class="slide" data-sec="2" data-ghost="01" data-time="1:10">
+      <div class="wrap">
+        <div class="kicker">Module 01 <span class="km">/ 구성</span></div>
+        <h2>에이전트 한 개는 무엇으로 이루어지는가</h2>
+        <div class="objective"><span class="ol">학습 목표</span><span class="ot">Hermes 에이전트 하나가 “기억 · 성격 · 능력” 세 가지로 이루어짐을 안다.</span></div>
+        <p class="lede">앞에서 Hermes를 “신입 직원”에 비유했습니다. 그 직원 한 명을 열어 보면, 딱 세 부분입니다.</p>
+        <div class="figs">
+          <div class="fig"><div class="ftag">기억 · Memory</div><h3>잊지 않는 부분</h3><p>세션이 끝나도 살아남는다. <b>사실</b>(무엇을 아는가)을 저장 — 사업·나에 대한 정보가 대화 시작 때마다 불려 온다.</p></div>
+          <div class="fig"><div class="ftag">성격 · SOUL.md</div><h3>말투와 분위기</h3><p>간결하게·격식 있게·직설적으로. 같은 기억 위에 다른 성격을 얹어 여러 에이전트를 만들 수 있다.</p></div>
+          <div class="fig"><div class="ftag">능력 · Skill</div><h3>할 줄 아는 일</h3><p><b>절차</b>(어떻게 하는가)를 저장한다. 기본 Skill이 다수 제공되고, 일하면서 스스로 더 늘린다.</p></div>
+        </div>
+        <div class="note plain"><span class="nlabel">쉽게 말하면</span>신입 직원 한 명을 떠올리면 됩니다 — 겪은 일을 기억하고(<b>기억</b>), 자기만의 말투가 있고(<b>성격</b>), 할 줄 아는 업무가 있죠(<b>능력</b>). 공식 문서의 구분: <b>기억은 ‘사실’</b>(무엇을 아는가), <b>능력은 ‘절차’</b>(어떻게 하는가)를 저장합니다.</div>
+      </div>
+      <div class="pnote">신입 직원 한 명은 무엇으로 이루어질까요? 셋입니다. 기억 — 세션이 끝나도 남는 부분, '사실'을 저장. 성격 — 말투와 분위기, 같은 기억 위에 다른 성격을 얹어 여러 에이전트도. 능력 — 할 줄 아는 일, '절차'를 저장. 공식 문서의 구분: 기억은 사실, 능력은 절차.</div>
+    </section>
+
+    <!-- 8 실전 사례 -->
+    <section class="slide" data-sec="2" data-ghost="★" data-time="1:30">
+      <div class="wrap">
+        <div class="kicker">Module 01 <span class="km">/ 실전 사례</span></div>
+        <h2>Hermes로 실제 무엇을 하나</h2>
+        <div class="objective"><span class="ol">학습 목표</span><span class="ot">추상적 개념을 “실제로 돌아가는 것”의 구체적 그림으로 바꾼다.</span></div>
+        <p class="lede">공식 문서·공식 가이드가 소개하는 대표적인 활용 — 전부 실제로 문서화된 사용 사례입니다.</p>
+        <div class="grid2">
+          <div class="cell"><div class="ct"><span class="num">01</span>CLI 코딩 어시스턴트</div><div class="cd">터미널에서 코드를 쓰고·리뷰하고·실행한다</div></div>
+          <div class="cell"><div class="ct"><span class="num">02</span>팀 메신저 어시스턴트</div><div class="cd">Telegram·Discord 봇 — 팀원이 함께 쓰는 공유 에이전트, 사용자별 권한</div></div>
+          <div class="cell"><div class="ct"><span class="num">03</span>데일리 브리핑 봇</div><div class="cd">매일 아침 관심 주제를 조사·요약해 메신저로 전달 (웹 검색 + cron)</div></div>
+          <div class="cell"><div class="ct"><span class="num">04</span>GitHub PR 리뷰 에이전트</div><div class="cd">레포를 지켜보며 새 PR을 자동 리뷰하고 요약을 보낸다</div></div>
+          <div class="cell"><div class="ct"><span class="num">05</span>작업 자동화</div><div class="cd">cron으로 반복 작업을 예약 — 정기 점검·리포트·리마인더</div></div>
+          <div class="cell"><div class="ct"><span class="num">06</span>멀티에이전트 협업</div><div class="cd">Kanban으로 리서치 분류·엔지니어링 파이프라인을 여러 에이전트가 분담</div></div>
+        </div>
+        <div class="quote">이 사례들의 공통점은 하나 — 전부 <span class="hl">“반복되는 워크플로”</span>다. Hermes의 가치는 일회성 질문이 아니라 반복에서 나온다.</div>
+        <div class="note check"><span class="nlabel">스스로 점검</span>
+          <ul class="qa">
+            <li class="q"><button class="q-ask">위 사례 중 내 일과 가장 닮은 것은?</button><div class="q-ans"><span class="am">모범답안</span>정해진 답은 없습니다 — 본인 업무를 여섯 사례에 대입해 보는 질문입니다.</div></li>
+            <li class="q"><button class="q-ask">그 일은 “반복되는 워크플로”인가, 일회성 작업인가?</button><div class="q-ans"><span class="am">모범답안</span>Hermes가 진가를 발휘하는 건 반복되는 워크플로입니다. 일회성 작업이라면 모듈 07에서 적합성을 다시 따져 보세요.</div></li>
+          </ul>
+        </div>
+      </div>
+      <div class="pnote">모듈 1의 정의가 아직 손에 안 잡히죠? 공식 문서·가이드가 소개하는 대표 활용을 봅니다 — CLI 코딩 어시스턴트, 팀 메신저 봇, 데일리 브리핑 봇, GitHub PR 리뷰, cron 작업 자동화, Kanban 멀티에이전트 협업. 전부 실제로 문서화된 사용 사례입니다. 공통점: 전부 반복되는 워크플로 — Hermes의 가치는 반복에서, 모듈 7에서 다시 나옵니다. // "본인 업무랑 닮은 게 있나요?" 물어보세요.</div>
+    </section>
+
+    <!-- 10 모듈 2 루프 -->
+    <section class="slide" data-sec="3" data-ghost="02" data-time="1:15">
+      <div class="wrap">
+        <div class="kicker">Module 02 <span class="km">/ 닫힌 학습 루프</span></div>
+        <h2>왜 오래 쓸수록 강해지는가</h2>
+        <div class="objective"><span class="ol">학습 목표</span><span class="ot">Hermes가 스스로 강해지는 메커니즘을 이해한다.</span></div>
+        <div class="flow">
+          <div class="fstep" data-n="1"><span class="fn">STEP 1</span><h4>관찰</h4><p>자기 작업을 지켜본다</p></div>
+          <div class="fstep" data-n="2"><span class="fn">STEP 2</span><h4>Skill 작성</h4><p>반복 패턴을 스스로 기능으로 만든다</p></div>
+          <div class="fstep" data-n="3"><span class="fn">STEP 3</span><h4>기억 정제</h4><p>틀린 건 고치고 사실은 정리한다</p></div>
+          <div class="fstep" data-n="4"><span class="fn">STEP 4</span><h4>맥락 호출</h4><p>다음에 과거 내용을 다시 불러온다</p></div>
+        </div>
+        <p>설치 직후부터 <b>풍부한 기본 Skill</b>을 갖추고 있다. 일을 시킬수록 그 위에 <b>나만의 기능 모음</b>이 저절로 쌓인다.</p>
+        <div class="note plain"><span class="nlabel">쉽게 말하면</span><b>Skill(스킬)</b>은 에이전트가 할 줄 아는 “기술 하나”입니다. 핵심은 — 이 스킬을 사람이 미리 쓰는 게 아니라 <b>에이전트가 일하며 스스로 만든다</b>는 것. 이것이 Hermes의 공식 동작(자율 스킬 생성)입니다.</div>
+      </div>
+      <div class="pnote">"오래 쓸수록 강해진다"의 메커니즘 = 닫힌 학습 루프. 관찰 → Skill 작성 → 기억 정제 → 맥락 호출 → 다시 1번. Skill은 에이전트가 할 줄 아는 기술 하나. 핵심은 — 사람이 미리 쓰는 게 아니라 에이전트가 일하며 스스로 만든다는 것. Hermes의 공식 동작입니다. 설치 직후부터 기본 Skill이 풍부합니다.</div>
+    </section>
+
+    <!-- 11 모듈 2 Day1 -->
+    <section class="slide" data-sec="3" data-ghost="02" data-time="1:30">
+      <div class="wrap">
+        <div class="kicker">Module 02 <span class="km">/ 운영자 Shann의 조언</span></div>
+        <h2>Day 1에 Skill을 직접 만들지 마라</h2>
+        <div class="quote">“직접 Skill을 미리 짜지 마라. 실제 작업을 돌리고, <span class="hl">에이전트가 일하며 스스로 쓰게 하라.</span>” <span style="font-size:14px;color:var(--ink-faint);font-family:var(--mono);font-style:normal;">— 운영자 Shann</span></div>
+        <div class="note analogy"><span class="nlabel">비유</span>운동 루틴을 처음부터 100페이지 계획서로 쓰지 않는다. 일단 시작하고, 몸이 반응하는 걸 보며 루틴이 잡힌다. Skill도 — <em>미리 쓰는 게 아니라 일하면서 자라난다.</em></div>
+        <div class="note warn"><span class="nlabel">흔한 오해</span>“Skill을 미리 많이 만들어 두면 빠르겠지” → 반대다. 검증 안 된 Skill은 짐이 된다.</div>
+        <div class="note check"><span class="nlabel">스스로 점검</span>
+          <ul class="qa">
+            <li class="q"><button class="q-ask">닫힌 학습 루프의 4단계를 순서대로 말할 수 있는가?</button><div class="q-ans"><span class="am">모범답안</span>① 관찰 → ② Skill 작성 → ③ 기억 정제 → ④ 맥락 호출, 그리고 다시 ①로.</div></li>
+            <li class="q"><button class="q-ask">입문자가 Day 1에 하지 말아야 할 일과 그 이유는?</button><div class="q-ans"><span class="am">모범답안</span>Skill을 미리 직접 많이 만드는 것. 검증 안 된 Skill은 짐이 되고, Skill은 일하면서 자라나야 하기 때문.</div></li>
+          </ul>
+        </div>
+      </div>
+      <div class="pnote">큰 글씨 — '에이전트가 일하며 스스로 Skill을 쓰게 하라'. 운영자 Shann의 조언입니다. 입문자는 의욕이 앞서 워크플로를 다 Skill로 미리 정의하려는데, 설계 방향과 정반대. 운동 계획서를 100페이지 먼저 쓰지 않죠 — 일단 시작하면 루틴이 잡힙니다. Skill도 일하면서 자라납니다. // "Day 1에 Skill 만들지 마라" — 한 박자 쉬고 강조.</div>
+    </section>
+
+    <!-- 12 모듈 3 · HERMES_HOME 구조 -->
+    <section class="slide" data-sec="4" data-ghost="03" data-time="1:15">
+      <div class="wrap">
+        <div class="kicker">Module 03 <span class="km">/ 어디에 사는가</span></div>
+        <h2>에이전트는 어디에 사는가</h2>
+        <div class="objective"><span class="ol">학습 목표</span><span class="ot">Hermes 에이전트 하나가 실제로 어디에, 어떻게 저장되는지 안다.</span></div>
+        <p class="lede">모듈 1의 기억·성격·능력은 물리적으로 어디에 있을까요? — <b>폴더 하나</b>에 있습니다. 이 폴더를 <b>HERMES_HOME</b>(기본 <code>~/.hermes/</code>)이라 합니다.</p>
+        <table>
+          <thead><tr><th>파일 · 폴더</th><th>담는 것</th></tr></thead>
+          <tbody>
+            <tr><td><b>config.yaml</b></td><td>설정 (모델, 동작 옵션)</td></tr>
+            <tr><td><b>.env</b></td><td><b>비밀</b> — API 키 등 새어 나가면 안 되는 값</td></tr>
+            <tr><td><b>SOUL.md</b></td><td>성격</td></tr>
+            <tr><td><b>memories/</b></td><td>기억 (MEMORY.md · USER.md)</td></tr>
+            <tr><td><b>skills/</b></td><td>능력 (Skill)</td></tr>
+            <tr><td>세션 · state.db</td><td>대화 · 실행 기록</td></tr>
+          </tbody>
+        </table>
+        <div class="note plain"><span class="nlabel">쉽게 말하면</span><b>HERMES_HOME</b>(<code>~/.hermes/</code>)은 이 에이전트의 <b>집</b>입니다. 설정·비밀·기억·능력이 다 그 집 안에 있습니다. <b>.env</b>는 그 집 안의 <b>금고</b> — 비밀번호를 모아 둔 곳입니다.</div>
+      </div>
+      <div class="pnote">모듈 1의 기억·성격·능력은 어디에 있을까요? 폴더 하나 — HERMES_HOME, 기본은 ~/.hermes/. 그 안에 config·.env(비밀)·SOUL.md·memories·skills·세션·state.db. 모듈 1의 셋이 전부 이 한 폴더의 파일들입니다. .env는 금고 — API 키 같은 비밀이 거기 모입니다.</div>
+    </section>
+
+    <!-- 13 모듈 3 · 비밀 격리·이식 -->
+    <section class="slide" data-sec="4" data-ghost="03" data-time="1:15">
+      <div class="wrap">
+        <div class="kicker">Module 03 <span class="km">/ 보관과 이전</span></div>
+        <h2>비밀은 한곳에, 통째로 이식 가능</h2>
+        <p class="lede">API 키 같은 비밀은 <b>.env 한 파일</b>에 모입니다. 흩어져 있지 않습니다. 덕분에 에이전트를 옮기거나 공유할 때 비밀만 따로 다룰 수 있습니다.</p>
+        <div class="figs">
+          <div class="fig"><div class="ftag">hermes backup</div><h3>전체를 압축</h3><p><b>비밀 포함.</b> 내 다른 기계로 이사할 때 — 그대로 복원된다.</p></div>
+          <div class="fig fill"><div class="ftag">hermes profile export</div><h3>단일 에이전트를 압축</h3><p><b>비밀 제외.</b> 남에게 공유해도 안전 — 자격증명이 빠진다.</p></div>
+        </div>
+        <div class="note analogy"><span class="nlabel">비유</span>에이전트 하나 = <b>책상 서랍 하나</b>. 서류(설정·기억·능력)는 같이 있지만, 열쇠(<code>.env</code>)는 잠긴 한 칸에 따로. 그래서 서랍째 옮기거나, 열쇠 칸만 빼고 남에게 건넬 수 있다.</div>
+        <div class="note warn"><span class="nlabel">흔한 오해</span>“설정·비밀이 시스템 여기저기 흩어져 있겠지?” → 아니다. 한 폴더에 모이고 비밀은 <code>.env</code>로 격리된다. 이 단순함이 백업·이전·보안을 쉽게 만든다.</div>
+        <div class="note check"><span class="nlabel">스스로 점검</span>
+          <ul class="qa">
+            <li class="q"><button class="q-ask">HERMES_HOME에는 무엇이 들어 있는가?</button><div class="q-ans"><span class="am">모범답안</span>config·.env(비밀)·SOUL.md·memories·skills·세션·state.db — 에이전트의 모든 것이 한 폴더에.</div></li>
+            <li class="q"><button class="q-ask">hermes backup과 profile export의 차이는?</button><div class="q-ans"><span class="am">모범답안</span>backup은 전체를 압축하고 비밀을 포함한다(내 이사용). profile export는 단일 에이전트를 압축하되 비밀을 제외한다(공유용).</div></li>
+          </ul>
+        </div>
+      </div>
+      <div class="pnote">비밀은 .env 한 파일에 모입니다 — 흩어져 있지 않아요. 그래서 두 가지 내보내기가 깔끔합니다. hermes backup은 전체+비밀 포함, 내 다른 기계로 이사할 때. profile export는 단일 에이전트인데 비밀을 빼서, 남에게 공유해도 안전. 책상 서랍 비유 — 서류는 같이, 열쇠는 잠긴 칸에 따로.</div>
+    </section>
+
+    <!-- 14 모듈 4 · Profile -->
+    <section class="slide" data-sec="5" data-ghost="04" data-time="1:20">
+      <div class="wrap">
+        <div class="kicker">Module 04 <span class="km">/ 하나에서 여럿으로</span></div>
+        <h2>하나에서 여럿으로 — Profile</h2>
+        <div class="objective"><span class="ol">학습 목표</span><span class="ot">한 에이전트로 부족할 때, Profile로 격리된 여러 에이전트를 운영하는 방식을 안다.</span></div>
+        <p class="lede">에이전트 하나에 코딩·개인 비서·리서치를 다 시키면 — 기억이 뒤섞이고, 성격이 충돌하고, 권한을 깔끔하게 못 나눕니다. 공식 해법은 <b>Profile</b>입니다.</p>
+        <div class="figs">
+          <div class="fig"><div class="ftag">완전 격리</div><h3>섞이지 않는다</h3><p>프로필끼리 기억도 세션도 섞이지 않는다.</p></div>
+          <div class="fig"><div class="ftag">자체 HERMES_HOME</div><h3>집을 하나 더</h3><p>자기만의 config·.env·SOUL.md·기억·스킬을 통째로 가진다.</p></div>
+          <div class="fig"><div class="ftag">자체 명령</div><h3>이름이 명령이 된다</h3><p><code>hermes profile create coder</code> → <code>coder chat</code>.</p></div>
+        </div>
+        <div class="note analogy"><span class="nlabel">비유</span>Profile = <b>직원 한 명</b>. 코더 직원, 리서처 직원, 비서 직원 — 각자 자기 책상(HERMES_HOME)과 자기 권한. 한 사람에게 모든 역할을 몰아주지 않는 것과 같다.</div>
+        <div class="note plain"><span class="nlabel">쉽게 말하면</span><b>Profile = 격리된 에이전트 한 마리.</b> <code>hermes profile create &lt;이름&gt;</code>으로 만들고, <code>&lt;이름&gt; chat</code>으로 대화합니다. 역할이 다르면 프로필을 나누세요.</div>
+      </div>
+      <div class="pnote">에이전트 하나에 코딩·비서·리서치를 다 시키면 기억이 섞이고 성격이 충돌합니다. 공식 해법은 Profile — hermes profile create coder 한 줄이면 'coder'라는 완전 별개 에이전트가 생깁니다. 자체 config·키·성격·기억·스킬, 즉 HERMES_HOME 하나를 통째로 더. 프로필끼리 완전 격리. 직원 한 명 = 프로필 하나.</div>
+    </section>
+
+    <!-- 15 모듈 4 · 언제 새 프로필 -->
+    <section class="slide" data-sec="5" data-ghost="04" data-time="1:10">
+      <div class="wrap">
+        <div class="kicker">Module 04 <span class="km">/ 판단</span></div>
+        <h2>언제 새 프로필을 만드나</h2>
+        <table>
+          <thead><tr><th>상황</th><th>판단</th></tr></thead>
+          <tbody>
+            <tr><td>자체 자격증명(다른 API 키)이 필요하다</td><td><b>새 프로필</b></td></tr>
+            <tr><td>자체 장기 기억이 필요하다</td><td><b>새 프로필</b></td></tr>
+            <tr><td>별도 역할로서 반복되는 일이다</td><td><b>새 프로필</b></td></tr>
+            <tr><td>그 외</td><td>기존 것을 그대로</td></tr>
+          </tbody>
+        </table>
+        <div class="note warn"><span class="nlabel">흔한 오해</span>“에이전트 하나에 전부 몰아주면 편하지 않나?” → 그게 피해야 할 패턴(메가 에이전트)이다. 격리를 잃고, 접근 권한을 깔끔하게 회수할 수 없으며, 에이전트가 어떤 역할로 행동할지 혼란스러워한다.</div>
+        <div class="note check"><span class="nlabel">스스로 점검</span>
+          <ul class="qa">
+            <li class="q"><button class="q-ask">Profile 하나는 무엇을 따로 갖는가?</button><div class="q-ans"><span class="am">모범답안</span>자체 config·.env·SOUL.md·기억·세션·스킬 — 완전히 격리된 별도의 HERMES_HOME 하나.</div></li>
+            <li class="q"><button class="q-ask">새 프로필을 만들어야 하는 신호 세 가지는?</button><div class="q-ans"><span class="am">모범답안</span>자체 자격증명이 필요할 때, 자체 장기 기억이 필요할 때, 별도 역할로서 반복되는 일일 때.</div></li>
+          </ul>
+        </div>
+      </div>
+      <div class="pnote">언제 새 프로필을 만드나 — 자체 자격증명이 필요할 때, 자체 장기 기억이 필요할 때, 별도 역할로 반복되는 일일 때. 그 외엔 기존 것 그대로. 피해야 할 패턴: 메가 에이전트 — 모든 키·기억을 한 에이전트에 몰아주면 격리를 잃습니다.</div>
+    </section>
+
+    <!-- 16 모듈 5 · 협업 도구 -->
+    <section class="slide" data-sec="6" data-ghost="05" data-time="1:30">
+      <div class="wrap">
+        <div class="kicker">Module 05 <span class="km">/ 협업</span></div>
+        <h2>여럿이 협업하는 법</h2>
+        <div class="objective"><span class="ol">학습 목표</span><span class="ot">여러 에이전트·작업이 협업하는 공식 방법을 안다.</span></div>
+        <div class="figs">
+          <div class="fig"><div class="ftag">delegate_task</div><h3>잠깐 도우미를 부른다</h3><p>서브에이전트를 즉석에서 띄워 일을 맡기고 결과만 받는다. 빠른 fork-join, 부모는 기다린다.</p></div>
+          <div class="fig"><div class="ftag">Kanban</div><h3>함께 보는 작업 게시판</h3><p>지속되는 멀티에이전트 보드. 여러 프로필이 작업을 집어 처리 — 재시도·사람 개입·재시작 생존.</p></div>
+          <div class="fig"><div class="ftag">Cron</div><h3>정해진 시각에 자동 실행</h3><p>“매일 9시 뉴스 요약” 같은 예약 작업. 자연어로 만들 수 있다.</p></div>
+        </div>
+        <div class="note plain"><span class="nlabel">쉽게 말하면 — 공식 구분</span><b>delegate_task는 함수 호출</b>(빠르고 일시적). <b>Kanban은 작업 큐</b>(지속·복구·사람 개입). 빠른 답이 필요하면 delegate_task, 작업이 에이전트 경계를 넘고 살아남아야 하면 Kanban.</div>
+      </div>
+      <div class="pnote">에이전트가 여럿이 되면 협업이 필요. 공식 세 도구 — delegate_task: 서브에이전트를 잠깐 띄워 일 맡기고 결과만 받음, 빠른 fork-join. Kanban: 지속되는 멀티에이전트 작업 보드, 여러 프로필이 처리, 재시도·사람 개입 가능. Cron: 정해진 시각 자동 실행. 공식 구분 — delegate_task는 함수 호출, Kanban은 작업 큐.</div>
+    </section>
+
+    <!-- 17 모듈 5 · 가장 큰 함정 -->
+    <section class="slide" data-sec="6" data-ghost="05" data-time="1:30">
+      <div class="wrap">
+        <div class="kicker">Module 05 <span class="km">/ 가장 큰 함정</span></div>
+        <h2>서두르지 마라</h2>
+        <div class="quote">“평범한 대화 하나를 제대로 끝내지 못하면, <span class="hl">기능을 더 얹지 마라.</span> 깨끗한 대화 하나를 먼저 — 그다음 한 겹씩.” <span style="font-size:14px;color:var(--ink-faint);font-family:var(--mono);font-style:normal;">— 공식 Quickstart</span></div>
+        <div class="note analogy"><span class="nlabel">비유</span>한 곡도 제대로 못 치면서 오케스트라 지휘부터 배우지 않는다. <em>에이전트 하나가 제 몫을 한다는 게 증명되기 전에는, 협업·자동화가 할 일이 없다.</em></div>
+        <div class="note plain"><span class="nlabel">쉽게 말하면</span>운영자 Shann도 같은 경고를 합니다 — “전문 에이전트가 유용하다는 것이 증명되기 전에 오케스트레이터부터 만들지 마라.” 입문자가 가장 자주 하는 실수가 바로 이것입니다.</div>
+        <div class="note warn"><span class="nlabel">흔한 오해</span>“처음부터 멀티에이전트·자동화로 가야 진짜 시스템이지” → 아니다. 평범한 대화 하나가 안정적으로 도는 것이 먼저. 그 위에 한 겹씩 얹는다.</div>
+        <div class="note check"><span class="nlabel">스스로 점검</span>
+          <ul class="qa">
+            <li class="q"><button class="q-ask">delegate_task와 Kanban의 차이는?</button><div class="q-ans"><span class="am">모범답안</span>delegate_task는 함수 호출(빠르고 일시적, 부모가 결과를 기다림). Kanban은 작업 큐(지속·복구·사람 개입, 여러 프로필이 처리).</div></li>
+            <li class="q"><button class="q-ask">협업·자동화를 손대기 전에 먼저 갖춰져야 하는 것은?</button><div class="q-ans"><span class="am">모범답안</span>에이전트 하나가 평범한 대화를 안정적으로 끝내는 것. 그 위에 게이트웨이·cron·스킬을 한 겹씩 얹는다.</div></li>
+          </ul>
+        </div>
+      </div>
+      <div class="pnote">가장 큰 함정 — 에이전트 하나도 제대로 안 되는데 협업·자동화부터 손대는 것. 공식 Quickstart: "평범한 대화 하나를 제대로 못 끝내면 기능을 더 얹지 마라. 깨끗한 대화 먼저, 그다음 한 겹씩." 운영자 Shann도 같은 경고. 악기 하나도 못 다루며 지휘부터 배우지 않죠. // 발표의 클라이맥스 — 한 박자 멈추고 눈 맞춤.</div>
+    </section>
+
+    <!-- 18 모듈 6 -->
+    <section class="slide" data-sec="7" data-ghost="06" data-time="1:30">
+      <div class="wrap">
+        <div class="kicker">Module 06 <span class="km">/ 키우는 것</span></div>
+        <h2>에이전트는 “키우는” 것이다</h2>
+        <div class="objective"><span class="ol">학습 목표</span><span class="ot">처음부터 완벽을 노리지 않는 자세를 갖춘다.</span></div>
+        <p class="lede">워크플로는 머릿속에서 완성된 형태로 나오지 않습니다 — 돌려 보면서 발견됩니다. 운영자 Shann이 권하는 <b>4단계</b>입니다.</p>
+        <div class="flow">
+          <div class="fstep" data-n="1"><span class="fn">STEP 1</span><h4>프로토타입</h4><p>시도하게 둔다. 첫 실행엔 대부분 틀린다 — 괜찮다.</p></div>
+          <div class="fstep" data-n="2"><span class="fn">STEP 2</span><h4>2–3회 반복</h4><p>매번 교정. 학습 루프가 지켜보며 Skill을 쌓는다.</p></div>
+          <div class="fstep" data-n="3"><span class="fn">STEP 3</span><h4>파인튜닝</h4><p>전용 공간에서 지시·흐름을 조인다.</p></div>
+          <div class="fstep" data-n="4"><span class="fn">STEP 4</span><h4>배포</h4><p>한 주 버텨 내면 cron 등 자동화로 넘긴다.</p></div>
+        </div>
+        <div class="note analogy"><span class="nlabel">비유</span><b>분재</b> — 완성된 나무를 사 오는 게 아니라, 심고 자라는 대로 다듬는다. 첫 실행 실패는 버그가 아니라 학습의 입력이다.</div>
+        <div class="note warn"><span class="nlabel">흔한 오해</span>“첫 실행에서 안 되면 도구가 별로인 것” → 첫 실패는 설계된 과정이다.</div>
+        <div class="note check"><span class="nlabel">스스로 점검</span>
+          <ul class="qa">
+            <li class="q"><button class="q-ask">워크플로를 키우는 4단계를 순서대로 말할 수 있는가?</button><div class="q-ans"><span class="am">모범답안</span>① 프로토타입 → ② 2~3회 반복 교정 → ③ 전용 공간에서 파인튜닝 → ④ 스케줄(cron) 배포.</div></li>
+            <li class="q"><button class="q-ask">“첫 실행에서 틀리는 것”이 왜 문제가 아닌가?</button><div class="q-ans"><span class="am">모범답안</span>첫 실패는 버그가 아니라 학습 루프의 입력. 2~3회 교정이 곧 에이전트가 배우는 과정이기 때문.</div></li>
+          </ul>
+        </div>
+      </div>
+      <div class="pnote">"완벽한 에이전트를 한 번에 설계해 배포" — 불가능합니다. 워크플로는 돌려 보면서 발견됩니다. 운영자 Shann이 권하는 네 단계 — 프로토타입(첫 실행 틀려도 OK), 2~3회 반복 교정, 파인튜닝, 배포. 공식 Quickstart의 "한 겹씩"과 같은 이야기. 분재 같죠 — 심고 다듬는다. 첫 실패는 버그가 아니라 학습의 입력.</div>
+    </section>
+
+    <!-- 19 모듈 7 trade-off -->
+    <section class="slide" data-sec="8" data-ghost="07" data-time="1:20">
+      <div class="wrap">
+        <div class="kicker">Module 07 <span class="km">/ trade-off</span></div>
+        <h2>솔직한 trade-off 3가지</h2>
+        <div class="objective"><span class="ol">학습 목표</span><span class="ot">Hermes의 한계를 알고, 자신에게 맞는 도구인지 판단한다.</span></div>
+        <ul class="list">
+          <li><b>번들 기본값은 곧 “의견”이다.</b> 첫날부터 생산적이지만, 모든 단계를 직접 제어하고 싶은 사람에겐 무겁다.</li>
+          <li><b>협업·자동화 단계엔 실제 학습 곡선이 있다.</b> 에이전트 하나는 가볍지만, 여러 프로필을 Kanban으로 묶거나 VPS에서 24시간 돌리려면 Docker·서버 지식이 필요해 시간이 든다.</li>
+          <li><b>모델은 여전히 중요하다.</b> Hermes는 좋은 모델을 훌륭하게 만들 뿐, 작은 모델을 전략가로 만들지는 못한다. 창작·전략엔 강한 모델, 단순 반복엔 싼 모델 — 작업에 맞춰 고른다.</li>
+        </ul>
+        <div class="note plain"><span class="nlabel">쉽게 말하면 — 운영자 Shann의 비유</span>“Hermes는 <b>레일(rails)</b>” = 옵션이 미리 채워진 <b>패키지 여행</b>. 모든 걸 직접 조립하고 싶은 사람에겐 <b>자유 여행</b> 성향의 도구가 더 맞습니다. 둘 다 유효하니, 자기 취향에 맞는 쪽을 고르면 됩니다.</div>
+      </div>
+      <div class="pnote">좋은 교육자료는 단점도 말합니다. 운영자 Shann이 인정하는 셋 — ① 번들 기본값은 곧 '의견'(완전한 제어 원하면 무겁다). ② 협업·자동화 단계의 학습 곡선(Docker·서버 운영). ③ 모델은 여전히 중요 — 창작엔 강한 모델, 단순 작업엔 싼 모델. Hermes는 '레일'(패키지 여행), 반대는 '자유 여행' — 취향에 맞는 쪽.</div>
+    </section>
+
+    <!-- 20 모듈 7 맞는가 -->
+    <section class="slide" data-sec="8" data-ghost="07" data-time="1:05">
+      <div class="wrap">
+        <div class="kicker">Module 07 <span class="km">/ 자기 판단</span></div>
+        <h2>Hermes가 나에게 맞는가</h2>
+        <table class="vs">
+          <thead><tr><th>다시 생각해 볼 경우</th><th>잘 맞는 경우</th></tr></thead>
+          <tbody>
+            <tr><td>일회성·단발성 질문만 한다</td><td>반복되는 워크플로가 있다</td></tr>
+            <tr><td>지금 당장 완성형 결과만 원한다</td><td>오래 쓰며 시스템을 키울 의향이 있다</td></tr>
+            <tr><td>모든 단계를 직접 제어해야 마음이 놓인다</td><td>“첫 실행 실패”를 학습으로 받아들인다</td></tr>
+          </tbody>
+        </table>
+        <div class="note plain"><span class="nlabel">쉽게 말하면</span>왼쪽이라고 “틀린” 게 아닙니다. 설치하기 전에 자기가 어느 쪽인지 <b>정직하게 아는 것</b>이 핵심입니다. 왼쪽이면 “Hermes는 내 도구가 아니다”도 충분히 좋은 결론입니다. 게다가 Hermes 자체는 오픈소스(MIT)이고 무료라, 망설여지면 LLM 사용료만으로 — 로컬 모델이면 그마저 없이 — 직접 굴려 보고 정해도 됩니다.</div>
+        <div class="note check"><span class="nlabel">스스로 점검</span>
+          <ul class="qa">
+            <li class="q"><button class="q-ask">Hermes의 3가지 trade-off를 말할 수 있는가?</button><div class="q-ans"><span class="am">모범답안</span>① 번들 기본값은 곧 의견(완전한 제어를 원하면 무겁다) ② 협업·자동화 단계의 학습 곡선 ③ 모델은 여전히 중요하다.</div></li>
+            <li class="q"><button class="q-ask">이 표에서 나는 왼쪽인가, 오른쪽인가?</button><div class="q-ans"><span class="am">모범답안</span>개인 판단입니다 — 반복 워크플로가 있고, 오래 키울 의향이 있고, 첫 실패를 학습으로 받아들이면 오른쪽.</div></li>
+          </ul>
+        </div>
+      </div>
+      <div class="pnote">솔직하게 자기에게 대입. 오른쪽(잘 맞음) — 반복 워크플로 있음, 오래 키울 의향, 첫 실패를 학습으로 수용. 왼쪽(다시 생각) — 일회성 질문, 당장 완성형, 모든 단계 직접 제어. 어느 쪽이든 OK — 중요한 건 설치 전에 정직하게 아는 것. 게다가 Hermes 자체는 오픈소스(MIT)·무료라, LLM 사용료만으로 가볍게 굴려 보고 정해도 됩니다.</div>
+    </section>
+
+    <!-- 21 부록 · 한 운영자의 방식 -->
+    <section class="slide" data-sec="9" data-ghost="+" data-time="1:00">
+      <div class="wrap">
+        <div class="kicker">부록 A <span class="km">/ 한 운영자의 방식</span></div>
+        <h2>한 운영자의 운영 방식 — Shann Holmberg</h2>
+        <p class="lede">이 과정의 본문은 <b>공식 문서</b>를 따랐습니다. 그런데 출발점이 된 글이 있습니다 — 운영자 Shann Holmberg는 공식 기능 <em>위에</em> 자기만의 관례를 얹었습니다. 알아두면 유용하지만, <b>이것은 공식 기능이 아닙니다</b> — 공식 문서엔 아래 용어가 없습니다.</p>
+        <table>
+          <thead><tr><th>Shann의 용어</th><th>공식 Hermes에서는</th></tr></thead>
+          <tbody>
+            <tr><td><b>Control Room</b> — 에이전트 관리용 문서·거버넌스 폴더</td><td>별도 개념 없음 — 모든 것이 <b>HERMES_HOME</b>에. “관리 문서를 한곳에” 발상 자체는 합리적</td></tr>
+            <tr><td><b>Level 1 → 4</b> — 에이전트 1개→전문 에이전트들→오케스트레이터→자동화</td><td>공식 단계 taxonomy 없음 — 모듈 3~5의 “하나 → Profile → 협업·자동화” 흐름이 대응</td></tr>
+            <tr><td><b>Task Bus</b> — 오케스트레이터↔전문 에이전트 작업 전달 창구</td><td><b>Kanban</b>·<b>delegate_task</b>가 그 역할을 한다</td></tr>
+          </tbody>
+        </table>
+        <div class="note plain"><span class="nlabel">정리</span>그의 <b>마음가짐</b>(서두르지 마라·키워라·역할별로 격리하라)은 공식 문서와도 잘 통합니다. 하지만 그의 <b>구조 용어</b>(Control Room·Level·Task Bus)는 그의 것이지 Hermes의 것이 아닙니다. 공식 문서를 읽을 때 이 점을 기억하세요. — 그의 공개 템플릿: <a href="https://github.com/shannhk/hermes-agent-control-room" target="_blank" rel="noopener"><code>github.com/shannhk/hermes-agent-control-room</code></a></div>
+      </div>
+      <div class="pnote">부록입니다. 이 과정 본문은 공식 문서를 따랐는데, 출발점이 된 글의 저자 Shann은 공식 기능 위에 자기 관례를 얹었습니다 — Control Room, Level 1→4, Task Bus. 공식 문서엔 이 용어가 없어요. Control Room은 공식엔 없고 모든 게 HERMES_HOME에, Level은 모듈 3~5 흐름이 대응, Task Bus는 Kanban·delegate_task가 그 역할. 그의 마음가짐은 공식과 통하지만 구조 용어는 그의 것 — 공식 문서 읽을 때 헷갈리지 마세요. // 빠르게 짚고 넘어가세요.</div>
+    </section>
+
+    <!-- 부록 B · 도구 비교 -->
+    <section class="slide" data-sec="9" data-ghost="+" data-time="1:00">
+      <div class="wrap">
+        <div class="kicker">부록 B <span class="km">/ 도구 비교</span></div>
+        <h2>Hermes vs openclaw — 사용 관점</h2>
+        <p class="lede">“Hermes가 나에게 맞나”를 따질 때 자주 나오는 비교 상대가 <b>openclaw</b>(구 Clawdbot/Moltbot)입니다. 공식 <code>migrate-from-openclaw</code> 가이드를 근거로 사용 관점에서 정리합니다.</p>
+        <table>
+          <thead><tr><th>사용 관점</th><th>openclaw</th><th>Hermes</th></tr></thead>
+          <tbody>
+            <tr><td><b>핵심 에이전트 모델</b></td><td>persona·기억·스킬·MCP·메시징</td><td>거의 동일 — 마이그레이션이 1:1로 옮김</td></tr>
+            <tr><td><b>기본값</b></td><td>파일이 잘게 나뉨(IDENTITY·TOOLS·HEARTBEAT·BOOTSTRAP), 명시적</td><td>내장으로 통합 — 설정 적음, 첫날 생산적</td></tr>
+            <tr><td><b>시작 느낌</b></td><td>부품을 직접 조립</td><td>조립된 채로 와서 바로 사용</td></tr>
+          </tbody>
+        </table>
+        <div class="note plain"><span class="nlabel">전환</span>공식 <code>hermes claw migrate</code> 명령이 openclaw 설정(persona·기억·스킬·모델·메시징)을 Hermes로 가져옵니다 — <b>한쪽을 골라도 갇히지 않습니다.</b></div>
+        <div class="note analogy"><span class="nlabel">어느 쪽이 나에게 맞나</span>설정을 최소화하고 빠르게 생산적이고 싶으면 Hermes, 모든 단계를 직접 정의·제어하고 싶으면 openclaw 성향. <em>둘 다 유효합니다</em> — 모듈 7의 “레일 vs 자유 여행”과 같은 선택입니다.</div>
+      </div>
+      <div class="pnote">openclaw(구 Clawdbot/Moltbot)는 Hermes와 자주 비교되는 또 다른 에이전트 프레임워크입니다. 공식 migrate-from-openclaw 가이드 기준 — 핵심 에이전트 모델(persona·기억·스킬·MCP)은 거의 동일해 마이그레이션이 1:1. 차이는 기본값 — openclaw는 파일이 잘게 나뉘어 명시적, Hermes는 내장으로 통합. hermes claw migrate로 전환 가능해 한쪽을 골라도 갇히지 않습니다. 둘 다 유효 — 모듈 7의 레일 vs 자유 여행. // 공식 문서는 마이그레이션 절차 문서라 Hermes에 우호적 — 균형 잡아 전달하세요.</div>
+    </section>
+
+    <!-- 22 자가 진단 -->
+    <section class="slide" data-sec="10" data-ghost="✓" data-time="1:00">
+      <div class="wrap">
+        <div class="kicker">마무리 <span class="km">/ 자가 진단</span></div>
+        <h2>나는 시작할 준비가 됐는가</h2>
+        <p class="lede">각 항목에 막힘없이 답할 수 있다면 준비가 된 것입니다.</p>
+        <ul class="checklist">
+          <li><span class="ck">01</span><div>Hermes를 “챗봇”이 아닌 무엇이라 부르는지·왜인지 설명할 수 있다 <span class="cm">(M01)</span></div></li>
+          <li><span class="ck">02</span><div>닫힌 학습 루프가 무엇이고, 왜 Day 1에 Skill을 직접 만들면 안 되는지 안다 <span class="cm">(M02)</span></div></li>
+          <li><span class="ck">03</span><div>HERMES_HOME이 무엇이고, 비밀이 어디에 저장되는지 안다 <span class="cm">(M03)</span></div></li>
+          <li><span class="ck">04</span><div>Profile이 무엇이고, 언제 새 프로필을 만드는지 안다 <span class="cm">(M04)</span></div></li>
+          <li><span class="ck">05</span><div>delegate_task·Kanban·Cron의 차이를 알고, 협업·자동화를 서두르면 안 되는 이유를 안다 <span class="cm">(M05)</span></div></li>
+          <li><span class="ck">06</span><div>에이전트는 “키우는 것”이며 첫 실행 실패가 정상임을 받아들인다 <span class="cm">(M06)</span></div></li>
+          <li><span class="ck">07</span><div>Hermes의 trade-off를 알고, 이 도구가 나에게 맞는지 판단했다 <span class="cm">(M07)</span></div></li>
+        </ul>
+      </div>
+      <div class="pnote">마무리 — 일곱 항목, 모듈당 하나. 각 항목을 보며 속으로 답해 보세요. 전부 막힘없이 답하면 준비된 것. 걸리는 항목이 있으면 — 괜찮습니다, 그게 이 점검표의 목적입니다.</div>
+    </section>
+
+    <!-- 23 용어 사전 -->
+    <section class="slide" data-sec="10" data-ghost="✓" data-time="0:50">
+      <div class="wrap">
+        <div class="kicker">마무리 <span class="km">/ 보충</span></div>
+        <h2>용어 한눈에 정리</h2>
+        <p class="lede">발표 중 나온 낯선 단어들을, 일상어로 다시 모았습니다.</p>
+        <div class="grid2">
+          <div class="cell"><div class="ct">Operator</div><div class="cd">계속 옆에서 일을 처리해 주는 “직원” 같은 존재</div></div>
+          <div class="cell"><div class="ct">Skill</div><div class="cd">에이전트가 할 줄 아는 기술 한 개 — ‘절차’를 담음</div></div>
+          <div class="cell"><div class="ct">Memory</div><div class="cd">세션을 넘어 남는 기억 — ‘사실’을 담음 (MEMORY.md·USER.md)</div></div>
+          <div class="cell"><div class="ct">HERMES_HOME</div><div class="cd">에이전트 하나가 사는 폴더 (기본 ~/.hermes/)</div></div>
+          <div class="cell"><div class="ct">Profile</div><div class="cd">완전히 격리된 별도 에이전트 한 마리</div></div>
+          <div class="cell"><div class="ct">delegate_task</div><div class="cd">서브에이전트를 잠깐 띄워 일을 맡기는 것</div></div>
+          <div class="cell"><div class="ct">Kanban</div><div class="cd">여러 에이전트가 함께 보는 지속되는 작업 게시판</div></div>
+          <div class="cell"><div class="ct">Cron</div><div class="cd">정해진 시각에 자동 실행하는 예약 기능</div></div>
+          <div class="cell"><div class="ct">VPS</div><div class="cd">24시간 켜 두려고 빌리는 원격 컴퓨터</div></div>
+          <div class="cell"><div class="ct">Docker</div><div class="cd">프로그램을 격리된 “상자”에 담아 돌리는 것</div></div>
+        </div>
+      </div>
+      <div class="pnote">보충 한 장. 발표 내내 영어 용어가 나왔죠 — 일상어로 다시 모았습니다. 외울 필요 없어요, 나중에 막히면 이 페이지로. 하나만 — Memory는 '사실', Skill은 '절차'. 이 둘만 안 헷갈리면 됩니다. // 4~5초만 주고 빠르게.</div>
+    </section>
+
+    <!-- 24 다음 단계 -->
+    <section class="slide" data-sec="10" data-ghost="✓" data-time="0:45">
+      <div class="wrap">
+        <div class="kicker">마무리 <span class="km">/ 다음 단계</span></div>
+        <h2>준비가 됐다면 — 어디로 가는가</h2>
+        <p class="lede">자가 진단을 통과했다면, 이제 비로소 설치를 고려할 차례입니다.</p>
+        <div class="res">
+          <div class="ritem"><a href="https://hermes-agent.nousresearch.com/docs" target="_blank" rel="noopener"><b>공식 문서</b></a><span>hermes-agent.nousresearch.com/docs — 설치 가이드, 기능 페이지</span></div>
+          <div class="ritem"><a href="https://hermes-agent.nousresearch.com/docs/getting-started/learning-path" target="_blank" rel="noopener"><b>공식 Learning Path</b></a><span>설치 후 읽기 순서 — 초급(약 1시간)→중급→고급, 목적별 트랙. 이 과정의 자연스러운 다음 단계</span></div>
+          <div class="ritem"><a href="https://hermes-agent.nousresearch.com/docs/getting-started/quickstart" target="_blank" rel="noopener"><b>공식 Quickstart</b></a><span>설치부터 첫 대화까지 5분 — “깨끗한 대화 하나를 먼저”라는 모듈 5의 원칙이 여기서 나온다</span></div>
+          <div class="ritem"><a href="https://hermesatlas.com" target="_blank" rel="noopener"><b>커뮤니티 아틀라스</b></a><span>hermesatlas.com — 오픈소스 도구 지도, 입문자용 Hermes Handbook</span></div>
+        </div>
+        <div class="note warn"><span class="nlabel">막히는 곳이 있다면</span>자가 진단에서 답하지 못한 항목이 있다면 <b>설치를 미루고</b> 해당 모듈을 다시 보라. 개념이 흔들린 채 설치하면 “구조가 엉키는” 상태로 직행한다.</div>
+      </div>
+      <div class="pnote">설치·구축은 이 자료가 다루지 않습니다. 갈 곳 — 공식 문서, 공식 Learning Path(초급→중급→고급 읽기 순서), 공식 Quickstart(첫 대화까지 5분), 커뮤니티 아틀라스. 경고 박스가 핵심 — 자가 진단에서 답 못 한 항목이 있으면 설치를 미루고 그 모듈을 다시.</div>
+    </section>
+
+    <!-- 25 마치며 -->
+    <section class="slide" data-sec="10" data-ghost="" data-time="0:30">
+      <div class="wrap hero">
+        <div class="hk">기억할 한 문장</div>
+        <div class="rule"></div>
+        <h2 style="font-size:clamp(26px,3.8vw,42px);line-height:1.32;">설치는 10분이면 끝나지만,<br>잘 쓰는 것은 이 7개 모듈을 이해하는<br>데서 시작된다.</h2>
+        <p class="hl-lede" style="margin-top:18px;">이제 당신은 “무작정 설치”가 아니라 “이해한 뒤 시작”할 준비가 되었습니다.</p>
+        <p class="src">근거 — Hermes 공식 문서 · 운영 마음가짐 일부 — Shann Holmberg (2026-05-13)<br>기반 자료 · hermes-understanding-coursework.md</p>
+      </div>
+      <div class="pnote">오늘 딱 한 문장 — "설치는 10분이면 끝나지만, 잘 쓰는 것은 이 7개 모듈을 이해하는 데서 시작된다." 여러분은 이제 '무작정 설치'가 아니라 '이해한 뒤 시작'할 준비가 됐습니다. 감사합니다. // Q&A 단골: Profile은 언제 나누나 / VPS 꼭 필요한가 / 코딩 몰라도 되나 / 비용은.</div>
+    </section>
+
+  </div>
+
+  <div class="folio">SLIDE <b id="folioNow">01</b> — 25</div>
+  <div class="khint">← → 이동 · S 노트 · P 인쇄 · F 전체 · +/− 글자 크기</div>
+  <div class="controls">
+    <button class="nav-btn" id="prevBtn" aria-label="이전">‹</button>
+    <button class="nav-btn" id="nextBtn" aria-label="다음">›</button>
+  </div>
+
+  <!-- presenter panel -->
+  <div class="pp" id="pp">
+    <div class="pp-head">
+      <span class="pph">발표자 노트</span>
+      <span class="ppmeta" id="ppMeta">SLIDE 01 · ⏱ 0:30</span>
+      <button class="ppx" id="ppClose">닫기 ESC</button>
+    </div>
+    <div class="pp-body" id="ppBody"></div>
+  </div>
+</main>
+
+<script>
+(function(){
+  var slides = [].slice.call(document.querySelectorAll('.slide'));
+  var navitems = [].slice.call(document.querySelectorAll('.navitem'));
+  var total = slides.length;
+  var idx = 0;
+  var STORE = 'hermesDeck.v2';
+
+  var topline = document.getElementById('topline');
+  var ptrk = document.getElementById('ptrk');
+  var pnum = document.getElementById('pnum');
+  var folioNow = document.getElementById('folioNow');
+  var prevBtn = document.getElementById('prevBtn');
+  var nextBtn = document.getElementById('nextBtn');
+  var pp = document.getElementById('pp');
+  var ppBody = document.getElementById('ppBody');
+  var ppMeta = document.getElementById('ppMeta');
+  var tNote = document.getElementById('tNote');
+
+  function pad(n){ return (n<10?'0':'')+n; }
+
+  function renderNote(){
+    var note = slides[idx].querySelector('.pnote');
+    var raw = note ? note.textContent.trim() : '';
+    var time = slides[idx].getAttribute('data-time') || '';
+    ppMeta.textContent = 'SLIDE ' + pad(idx+1) + (time ? ' · ⏱ ' + time : '');
+    // split [스크립트] / // 발표 팁
+    var parts = raw.split('//');
+    var html = '<span class="cue">스크립트</span>' + parts[0].trim();
+    if(parts.length > 1){
+      html += '<span class="cue">발표 팁</span>' + parts.slice(1).join('//').trim();
+    }
+    ppBody.innerHTML = html;
+    ppBody.scrollTop = 0;
+  }
+
+  function show(n){
+    idx = Math.max(0, Math.min(total-1, n));
+    slides.forEach(function(s,i){ s.classList.toggle('active', i===idx); });
+    slides[idx].scrollTop = 0;
+    var pct = Math.round((idx+1)/total*100);
+    topline.style.width = pct+'%';
+    ptrk.style.width = pct+'%';
+    pnum.textContent = pad(idx+1)+'/'+total;
+    folioNow.textContent = pad(idx+1);
+    prevBtn.disabled = idx===0;
+    nextBtn.disabled = idx===total-1;
+    var sec = slides[idx].getAttribute('data-sec');
+    navitems.forEach(function(it){
+      var s = it.getAttribute('data-sec');
+      it.classList.toggle('current', s===sec);
+      it.classList.toggle('done', parseInt(s,10) < parseInt(sec,10));
+    });
+    if(pp.classList.contains('open')) renderNote();
+    try{ localStorage.setItem(STORE, String(idx+1)); }catch(e){}
+  }
+  function next(){ show(idx+1); }
+  function prev(){ show(idx-1); }
+
+  prevBtn.addEventListener('click', prev);
+  nextBtn.addEventListener('click', next);
+  navitems.forEach(function(it){
+    it.addEventListener('click', function(){ show(parseInt(it.getAttribute('data-start'),10)-1); });
+  });
+
+  // self-check reveal
+  document.querySelectorAll('.q-ask').forEach(function(b){
+    b.addEventListener('click', function(){ b.parentElement.classList.toggle('open'); });
+  });
+
+  // presenter panel
+  function toggleNote(){
+    pp.classList.toggle('open');
+    tNote.classList.toggle('on', pp.classList.contains('open'));
+    if(pp.classList.contains('open')) renderNote();
+  }
+  tNote.addEventListener('click', toggleNote);
+  document.getElementById('ppClose').addEventListener('click', toggleNote);
+
+  // tools
+  document.getElementById('tPrint').addEventListener('click', function(){ window.print(); });
+  document.getElementById('tFull').addEventListener('click', function(){
+    if(!document.fullscreenElement){ document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen(); }
+    else { document.exitFullscreen&&document.exitFullscreen(); }
+  });
+
+  // font scaling
+  var FS_STORE='hermesDeck.fs';
+  var fs=1;
+  try{ var sv=parseFloat(localStorage.getItem(FS_STORE)); if(sv) fs=sv; }catch(e){}
+  var fcVal=document.getElementById('fcVal');
+  function applyFs(){
+    fs=Math.max(0.8,Math.min(1.7,Math.round(fs*10)/10));
+    document.documentElement.style.setProperty('--fs',fs);
+    fcVal.textContent=Math.round(fs*100)+'%';
+    try{ localStorage.setItem(FS_STORE,String(fs)); }catch(e){}
+  }
+  function fsUp(){ fs+=0.1; applyFs(); }
+  function fsDown(){ fs-=0.1; applyFs(); }
+  function fsReset(){ fs=1; applyFs(); }
+  document.getElementById('fcUp').addEventListener('click',fsUp);
+  document.getElementById('fcDown').addEventListener('click',fsDown);
+  applyFs();
+
+  // keyboard
+  document.addEventListener('keydown', function(e){
+    if(e.key==='Escape' && pp.classList.contains('open')){ toggleNote(); return; }
+    switch(e.key){
+      case 'ArrowRight': case ' ': case 'PageDown': e.preventDefault(); next(); break;
+      case 'ArrowLeft': case 'PageUp': e.preventDefault(); prev(); break;
+      case 'Home': show(0); break;
+      case 'End': show(total-1); break;
+      case 's': case 'S': toggleNote(); break;
+      case 'p': case 'P': window.print(); break;
+      case 'f': case 'F':
+        if(!document.fullscreenElement){ document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen(); }
+        else { document.exitFullscreen&&document.exitFullscreen(); }
+        break;
+      case '+': case '=': e.preventDefault(); fsUp(); break;
+      case '-': case '_': e.preventDefault(); fsDown(); break;
+      case '0': fsReset(); break;
+    }
+  });
+
+  // touch swipe
+  var tx=0,ty=0;
+  document.addEventListener('touchstart',function(e){ tx=e.changedTouches[0].clientX; ty=e.changedTouches[0].clientY; });
+  document.addEventListener('touchend',function(e){
+    var dx=e.changedTouches[0].clientX-tx, dy=e.changedTouches[0].clientY-ty;
+    if(Math.abs(dx)>60 && Math.abs(dx)>Math.abs(dy)){ dx<0?next():prev(); }
+  });
+
+  // resume from saved progress
+  var saved = 0;
+  try{ saved = parseInt(localStorage.getItem(STORE),10) || 0; }catch(e){}
+  if(saved > 1 && saved <= total){
+    var resume = document.getElementById('resume');
+    document.getElementById('rNum').textContent = saved;
+    resume.classList.add('show');
+    document.getElementById('rGo').addEventListener('click', function(){ show(saved-1); resume.classList.remove('show'); });
+    document.getElementById('rX').addEventListener('click', function(){ resume.classList.remove('show'); });
+  }
+
+  show(0);
+})();
+</script>
+</body>
+</html>

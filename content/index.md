@@ -17,6 +17,7 @@ title: 4060미들스쿨
   <a href="./meeting-intro">모임 소개 보기</a>
   <a href="./topics">이번에 나눌 이야기</a>
   <a href="./after-notes">모임 후 정리 보기</a>
+  <a href="./lee-iksang-gallery">이익상 갤러리 보기</a>
 </div>
 
 ## 이 블로그에서 다루는 것
@@ -39,6 +40,12 @@ title: 4060미들스쿨
     <strong>모임 후 정리</strong>
     <span>모임에서 나온 생각과 남겨둘 문장, 다음에 다시 이어갈 질문을 모아둡니다.</span>
     <span class="hub-meta">요약 · 회고 · 다음 이야기</span>
+  </a>
+  <a class="hub-card" href="./lee-iksang-gallery">
+    <span class="hub-status">자료 보관</span>
+    <strong>이익상 갤러리</strong>
+    <span>이익상님이 보내주신 자료를 원문 그대로 모아두는 공간입니다. HTML 자료는 웹에서 바로 보이게 연결합니다.</span>
+    <span class="hub-meta">원문 보관 · 웹 보기 · 자료 모음</span>
   </a>
 </div>
 
