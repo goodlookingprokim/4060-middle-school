@@ -267,6 +267,56 @@ Hermes 세션 안에서 아래처럼 켭니다.
 /codex-runtime
 ```
 
+## 7-0. `/codex-runtime`은 정확히 무슨 명령일까
+
+이 부분도 한 번 분명히 짚고 가면 좋습니다.
+
+`/codex-runtime`은 제가 따로 설치한 요령이 아니라, <strong>Hermes 자체에 들어 있는 내장 슬래시 명령</strong>입니다.
+
+로컬 소스 기준으로도 아래 흔적을 확인할 수 있습니다.
+
+- `hermes_cli/commands.py`에 `codex-runtime` 명령 등록
+- `cli.py`에 `/codex-runtime` 핸들러 구현
+- `codex_runtime_switch.py`에 실제 전환 로직 정리
+
+즉,
+이 명령은 한마디로 말하면
+<strong>"Hermes가 OpenAI/Codex 작업을 자기 기본 runtime으로 돌릴지, Codex app-server runtime으로 넘길지 정하는 스위치"</strong>입니다.
+
+### 가장 자주 보는 형태
+
+- `/codex-runtime`
+  - 현재 상태 보여주기
+- `/codex-runtime on`
+  - `codex_app_server` 모드로 전환
+- `/codex-runtime off`
+  - 기본 Hermes 모드(`auto`)로 복귀
+- `/codex-runtime auto`
+  - 기본값으로 설정
+- `/codex-runtime codex_app_server`
+  - Codex app-server runtime으로 실제 작업 넘기기
+
+내부적으로는 결국 `model.openai_runtime` 값을 바꾸는 흐름으로 이해하면 됩니다.
+
+```text
+auto = Hermes 기본 실행
+codex_app_server = Codex subprocess / app-server 쪽으로 작업 위임
+```
+
+즉,
+겉으로는 슬래시 명령이지만,
+안쪽에서는 <strong>"OpenAI 계열 turn을 어떤 엔진에서 처리할지"를 고르는 설정 변경</strong>에 가깝습니다.
+
+### 같이 기억하면 좋은 특징
+
+- Codex CLI가 설치되어 있는지 먼저 검사합니다.
+- 켜더라도 보통 현재 진행 중인 세션이 아니라 <strong>다음 세션부터 적용</strong>되는 감각으로 보는 편이 안전합니다.
+- Codex 쪽에서 쓸 수 있도록 MCP 서버와 플러그인 이주 흐름도 함께 만집니다.
+
+한 줄로 다시 줄이면 이렇습니다.
+
+> `/codex-runtime`은 Codex를 Hermes 안에서 쓸지, Hermes 기본 runtime으로 쓸지 정하는 내장 스위치입니다.
+
 끄거나 자동으로 돌리는 별칭도 문서에 나와 있습니다.
 
 - `/codex-runtime on`
