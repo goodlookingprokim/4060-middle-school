@@ -45,6 +45,7 @@ title: 4060미들스쿨
 ## 지금 먼저 보면 좋은 글
 
 <ul class="note-list">
+  <li><a href="./topics/2026-05-26-hermes-codex-app-server-runtime-guide" class="internal">2026년 5월 26일(화) Hermes에서 Codex app-server runtime을 붙이면 무엇이 달라질까</a></li>
   <li><a href="./topics/2026-05-24-codex-computer-use-kakaotalk-checklist" class="internal">2026년 5월 24일(일) Codex App에서 Computer Use로 KakaoTalk이 안 보일 때 먼저 볼 체크리스트</a></li>
   <li><a href="./topics/2026-05-23-codegraph-practical-guide" class="internal">2026년 5월 23일(토) AI에게 소스코드 폴더를 통째로 던지지 말아야 하는 이유, 그리고 CodeGraph</a></li>
   <li><a href="./topics/2026-05-23-hermes-24h-assistant-five-points" class="internal">2026년 5월 23일(토) Hermes를 24시간 개인 비서처럼 굴릴 때 꼭 알아둘 5가지</a></li>

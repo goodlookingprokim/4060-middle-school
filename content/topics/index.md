@@ -16,6 +16,10 @@ cssclasses:
 ## 읽기 경로
 
 <div class="reading-path">
+  <a href="./2026-05-26-hermes-codex-app-server-runtime-guide" class="internal">
+    <strong>2026년 5월 26일(화) Hermes에서 Codex app-server runtime을 붙이면 무엇이 달라질까</strong>
+    <span>Hermes Agent 공식 문서의 Codex App-Server Runtime 설명을 바탕으로, 왜 이 기능이 생겼는지, 언제 쓰면 좋은지, 기존 Hermes 방식과 무엇이 다른지 초보자도 이해하기 쉽게 풀어쓴 정리입니다.</span>
+  </a>
   <a href="./2026-05-24-codex-computer-use-kakaotalk-checklist" class="internal">
     <strong>2026년 5월 24일(일) Codex App에서 Computer Use로 KakaoTalk이 안 보일 때 먼저 볼 체크리스트</strong>
     <span>Codex App에 Computer Use 플러그인을 설치했고 카카오톡 데스크톱도 깔았는데 @KakaoTalk이 보이지 않거나 제어되지 않을 때, 어디부터 차근차근 확인하면 되는지 초보자도 따라 하기 쉽게 정리한 점검 가이드입니다.</span>
