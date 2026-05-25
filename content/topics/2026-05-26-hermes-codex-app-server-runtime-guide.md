@@ -273,6 +273,88 @@ Hermes 세션 안에서 아래처럼 켭니다.
 - `/codex-runtime off`
 - `/codex-runtime auto`
 
+## 7-1. 켰다가 다시 Hermes 기본 runtime으로 돌아올 수 있을까
+
+네, 가능합니다.
+
+다만 여기서 한 가지를 꼭 기억해야 합니다.
+
+> `/codex-runtime codex_app_server`로 Codex runtime을 켠 뒤 코딩하고, 이후 `/codex-runtime auto`로 Hermes 기본 runtime으로 돌아올 수는 있지만, 이 전환은 보통 현재 세션에 즉시 덮어씌워지는 느낌보다 <strong>다음 세션부터 적용되는 흐름</strong>에 가깝습니다.
+
+즉, 이렇게 이해하는 편이 가장 안전합니다.
+
+1. Codex runtime 켜기
+2. 그 세션에서 코딩 작업하기
+3. 새 세션으로 넘어가거나 다시 시작하기
+4. `/codex-runtime auto`로 Hermes 기본 runtime 복귀시키기
+5. 그다음 Hermes 고유 기능 쓰기
+
+이 흐름이 왜 중요하냐면,
+많은 분들이 "작업 중간에 버튼 바꾸듯 즉시 왔다 갔다 할 수 있나?"를 먼저 떠올리기 때문입니다.
+
+그런데 실제 감각은 그보다는 <strong>세션 단위로 작업 모드를 바꿔 쓰는 것</strong>에 더 가깝습니다.
+
+## 7-2. 그러면 어떤 기능은 되고, 어떤 기능은 안 되나
+
+이 차이도 다시 한 번 짧게 잡고 가면 좋습니다.
+
+### Codex runtime에서 잘 되는 것
+- 코딩
+- 파일 수정
+- 셸 명령
+- `apply_patch`
+- Codex 플러그인
+- Hermes 도구의 일부(MCP callback 경유)
+
+### Codex runtime에서 바로 안 되는 것
+- `delegate_task`
+- `memory`
+- `session_search`
+- `todo`
+
+즉,
+<strong>"Codex로 코딩하고, 그다음 Hermes 고유 기능을 쓰고 싶다"는 흐름 자체는 가능</strong>합니다.
+
+다만 그걸 한 세션 안에서 즉시 스위칭하는 느낌으로 보기보다,
+<strong>코딩용 세션과 Hermes 운영용 세션을 나눠 쓰는 패턴</strong>으로 이해하는 편이 훨씬 덜 헷갈립니다.
+
+## 7-3. 실전에서는 어떻게 나눠 쓰면 좋을까
+
+실무 감각으로 가장 단순하게 줄이면 이렇게 쓸 수 있습니다.
+
+### 코딩 작업용 세션
+```text
+/codex-runtime codex_app_server
+```
+
+이 세션에서는 아래에 집중합니다.
+- 코드 읽기
+- 파일 수정
+- 패치 적용
+- 셸 명령 실행
+- Codex 플러그인 활용
+
+### Hermes 기능용 세션
+```text
+/codex-runtime auto
+```
+
+이 세션에서는 아래에 집중합니다.
+- delegate_task
+- memory
+- session_search
+- Hermes todo 성격의 운영 기능
+
+즉,
+작업대를 두 개 둔다고 생각하면 편합니다.
+
+- 한쪽 책상은 코딩용
+- 다른 한쪽 책상은 운영용
+
+같은 사람이라도,
+문서 정리할 때 앉는 자리와 공구 펼쳐놓고 손으로 작업할 때 앉는 자리가 다를 수 있듯이,
+Hermes와 Codex runtime도 그렇게 나눠 보는 편이 자연스럽습니다.
+
 ## 8. 승인과 권한은 어떻게 움직이나
 
 이 부분도 꽤 중요합니다.
