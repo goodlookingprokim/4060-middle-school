@@ -240,34 +240,7 @@ codex plugin marketplace add openai-curated
 그 뒤 Codex 쪽에서 원하는 플러그인을 설치해 두면,
 Hermes가 runtime 활성화 시 그것을 발견해 넘겨줍니다.
 
-## 7. 실제로 켜는 방법은 어렵지 않다
-
-Hermes 세션 안에서 아래처럼 켭니다.
-
-```text
-/codex-runtime codex_app_server
-```
-
-문서 기준으로 이 명령은 대략 아래 일을 합니다.
-
-- codex CLI 설치 확인
-- `config.yaml`에 runtime 설정 저장
-- Hermes 쪽 MCP 서버 설정을 Codex 쪽으로 이주
-- 설치된 Codex 플러그인 탐색 및 반영
-- Hermes 도구를 Codex에서 다시 부를 수 있게 MCP 서버 등록
-- workspace 쓰기 권한 기본값 정리
-
-즉,
-그냥 스위치 하나만 켜는 느낌이 아니라,
-<strong>Hermes와 Codex가 함께 일할 수 있게 배경 정리를 한 번 해주는 명령</strong>에 가깝습니다.
-
-현재 상태 확인은 이렇게 합니다.
-
-```text
-/codex-runtime
-```
-
-## 7-0. `/codex-runtime`은 정확히 무슨 명령일까
+## 7. `/codex-runtime`은 정확히 무슨 명령일까
 
 이 부분도 한 번 분명히 짚고 가면 좋습니다.
 
@@ -322,13 +295,49 @@ codex_app_server = Codex subprocess / app-server 쪽으로 작업 위임
 
 > `/codex-runtime`은 Codex를 Hermes 안에서 쓸지, Hermes 기본 runtime으로 쓸지 정하는 내장 스위치입니다.
 
-끄거나 자동으로 돌리는 별칭도 문서에 나와 있습니다.
+여기서 특히 헷갈리기 쉬운 부분을 아주 짧게 다시 정리하면 이렇습니다.
+
+- `on` = `codex_app_server`와 같은 뜻
+- `off` = `auto`와 같은 뜻
+- 즉, `off`가 별도의 세 번째 모드가 아니라 <strong>기본 Hermes 쪽으로 되돌리는 쉬운 표현</strong>입니다.
+
+그리고 이 명령은 CLI 쪽에만 따로 있는 것이 아니라, Hermes의 CLI와 gateway 쪽에서 같은 전환 로직을 공유하도록 만들어져 있습니다.
+즉, 표면은 달라도 핵심 동작은 같은 명령이라고 보면 됩니다.
+
+## 8. 실제로 켜는 방법은 어렵지 않다
+
+Hermes 세션 안에서 아래처럼 켭니다.
+
+```text
+/codex-runtime codex_app_server
+```
+
+문서 기준으로 이 명령은 대략 아래 일을 합니다.
+
+- codex CLI 설치 확인
+- `config.yaml`에 runtime 설정 저장
+- Hermes 쪽 MCP 서버 설정을 Codex 쪽으로 이주
+- 설치된 Codex 플러그인 탐색 및 반영
+- Hermes 도구를 Codex에서 다시 부를 수 있게 MCP 서버 등록
+- workspace 쓰기 권한 기본값 정리
+
+즉,
+그냥 스위치 하나만 켜는 느낌이 아니라,
+<strong>Hermes와 Codex가 함께 일할 수 있게 배경 정리를 한 번 해주는 명령</strong>에 가깝습니다.
+
+현재 상태 확인은 이렇게 합니다.
+
+```text
+/codex-runtime
+```
+
+끄거나 기본값으로 돌리는 쪽은 아래처럼 봅니다.
 
 - `/codex-runtime on`
 - `/codex-runtime off`
 - `/codex-runtime auto`
 
-## 7-1. 켰다가 다시 Hermes 기본 runtime으로 돌아올 수 있을까
+## 8-1. 켰다가 다시 Hermes 기본 runtime으로 돌아올 수 있을까
 
 네, 가능합니다.
 
@@ -349,7 +358,15 @@ codex_app_server = Codex subprocess / app-server 쪽으로 작업 위임
 
 그런데 실제 감각은 그보다는 <strong>세션 단위로 작업 모드를 바꿔 쓰는 것</strong>에 더 가깝습니다.
 
-## 7-2. 그러면 어떤 기능은 되고, 어떤 기능은 안 되나
+그리고 여기서 말하는 "다음 세션부터 적용"도 조금 더 풀면 오해가 줄어듭니다.
+
+이 뜻은 보통 <strong>지금 이미 진행 중인 작업 한가운데서 엔진이 즉시 갈아끼워진다기보다, 설정을 바꿔 두고 다음 대화/새 세션/재시작 뒤에 새 runtime 감각으로 들어간다</strong>는 쪽에 가깝습니다.
+
+즉,
+작업 도중에 바로 기어를 바꾸는 느낌보다,
+다음 출발부터 다른 차를 타는 느낌으로 이해하면 편합니다.
+
+## 8-2. 그러면 어떤 기능은 되고, 어떤 기능은 안 되나
 
 이 차이도 다시 한 번 짧게 잡고 가면 좋습니다.
 
@@ -373,7 +390,7 @@ codex_app_server = Codex subprocess / app-server 쪽으로 작업 위임
 다만 그걸 한 세션 안에서 즉시 스위칭하는 느낌으로 보기보다,
 <strong>코딩용 세션과 Hermes 운영용 세션을 나눠 쓰는 패턴</strong>으로 이해하는 편이 훨씬 덜 헷갈립니다.
 
-## 7-3. 실전에서는 어떻게 나눠 쓰면 좋을까
+## 8-3. 실전에서는 어떻게 나눠 쓰면 좋을까
 
 실무 감각으로 가장 단순하게 줄이면 이렇게 쓸 수 있습니다.
 
@@ -410,7 +427,7 @@ codex_app_server = Codex subprocess / app-server 쪽으로 작업 위임
 문서 정리할 때 앉는 자리와 공구 펼쳐놓고 손으로 작업할 때 앉는 자리가 다를 수 있듯이,
 Hermes와 Codex runtime도 그렇게 나눠 보는 편이 자연스럽습니다.
 
-## 8. 승인과 권한은 어떻게 움직이나
+## 9. 승인과 권한은 어떻게 움직이나
 
 이 부분도 꽤 중요합니다.
 
@@ -434,7 +451,7 @@ Codex 안에서 일이 벌어져도 사람 입장에서는 Hermes의 승인 흐�
 
 > 집 안에서는 메모해도 되지만, 집 밖 벽까지 뜯으려 하면 다시 물어보는 방식
 
-## 9. 메모리와 스킬 리뷰는 완전히 끊기는가
+## 10. 메모리와 스킬 리뷰는 완전히 끊기는가
 
 이건 좀 흥미롭습니다.
 
