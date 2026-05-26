@@ -16,6 +16,10 @@ cssclasses:
 ## 읽기 경로
 
 <div class="reading-path">
+  <a href="./2026-05-27-claude-prefix-prompt-guide" class="internal">
+    <strong>2026년 5월 27일(수) 클로드 100가지 비밀 코드? 숨은 명령보다 중요한 건 말머리 프롬프트 활용법</strong>
+    <span>클로드에서 /brief, /stepbystep, /eli5 같은 표현을 어떻게 이해하면 좋은지, 숨겨진 공식 명령어처럼 오해하지 않고 답변 스타일을 바꾸는 프롬프트 말머리로 활용하는 법을 쉽게 정리한 가이드입니다.</span>
+  </a>
   <a href="./2026-05-26-hermes-codex-app-server-runtime-guide" class="internal">
     <strong>2026년 5월 26일(화) Hermes에서 Codex app-server runtime을 붙이면 무엇이 달라질까</strong>
     <span>Hermes Agent 공식 문서의 Codex App-Server Runtime 설명을 바탕으로, 왜 이 기능이 생겼는지, 언제 쓰면 좋은지, 기존 Hermes 방식과 무엇이 다른지 초보자도 이해하기 쉽게 풀어쓴 정리입니다.</span>
