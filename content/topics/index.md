@@ -16,6 +16,10 @@ cssclasses:
 ## 읽기 경로
 
 <div class="reading-path">
+  <a href="./2026-05-30-openclaw-hermes-scrcpy-command-cheatsheet" class="internal">
+    <strong>2026년 5월 30일(토) OpenClaw, Hermes, scrcpy 자주 쓰는 명령어만 빠르게 보는 치트시트</strong>
+    <span>MacBook의 OpenClaw, Android Termux의 Hermes, 그리고 scrcpy를 함께 쓸 때 가장 자주 쓰는 터미널 명령만 골라 한눈에 다시 보기 쉽게 정리한 빠른 참고 글입니다.</span>
+  </a>
   <a href="./2026-05-27-claude-prefix-prompt-guide" class="internal">
     <strong>2026년 5월 27일(수) 클로드 100가지 비밀 코드? 숨은 명령보다 중요한 건 말머리 프롬프트 활용법</strong>
     <span>클로드에서 /brief, /stepbystep, /eli5 같은 표현을 어떻게 이해하면 좋은지, 숨겨진 공식 명령어처럼 오해하지 않고 답변 스타일을 바꾸는 프롬프트 말머리로 활용하는 법을 쉽게 정리한 가이드입니다.</span>
