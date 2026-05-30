@@ -16,6 +16,10 @@ cssclasses:
 ## 읽기 경로
 
 <div class="reading-path">
+  <a href="./2026-05-30-hermes-ai-employee-growth-guide" class="internal">
+    <strong>2026년 5월 30일(토) Hermes를 그냥 챗봇으로 두지 말고, 출근하고 보고하는 AI 직원처럼 키우는 법</strong>
+    <span>시민개발자 구씨의 Hermes 에이전트 성장법 영상을 바탕으로, AI를 실제 직원처럼 일하게 만들 때 왜 Soul.md, Agent.md, User.md, Memory.md, 스케줄링과 보고 채널이 중요한지 아주 쉽게 풀어쓴 정리입니다.</span>
+  </a>
   <a href="./2026-05-30-codex-multi-auth-management-guide" class="internal">
     <strong>2026년 5월 30일(토) Codex CLI를 쓸 때 계정이 하나라 답답했다면, codex-multi-auth는 무엇을 바꿔줄까</strong>
     <span>Codex CLI를 쓰는 사람이 여러 ChatGPT 계정을 명시적으로 로그인하고 바꿔 쓰고, 상태를 확인하고, 프로젝트별로 계정을 나눠 관리할 수 있게 돕는 codex-multi-auth를 아주 쉽게 풀어쓴 정리입니다.</span>
