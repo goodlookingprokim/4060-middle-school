@@ -52,6 +52,7 @@ title: 4060미들스쿨
 ## 지금 먼저 보면 좋은 글
 
 <ul class="note-list">
+  <li><a href="./topics/2026-05-30-codex-multi-auth-management-guide" class="internal">2026년 5월 30일(토) Codex CLI를 쓸 때 계정이 하나라 답답했다면, codex-multi-auth는 무엇을 바꿔줄까</a></li>
   <li><a href="./topics/2026-05-30-openclaw-hermes-scrcpy-command-cheatsheet" class="internal">2026년 5월 30일(토) OpenClaw, Hermes, scrcpy 자주 쓰는 명령어만 빠르게 보는 치트시트</a></li>
   <li><a href="./topics/2026-05-27-claude-prefix-prompt-guide" class="internal">2026년 5월 27일(수) 클로드 100가지 비밀 코드? 숨은 명령보다 중요한 건 말머리 프롬프트 활용법</a></li>
   <li><a href="./topics/2026-05-26-hermes-codex-app-server-runtime-guide" class="internal">2026년 5월 26일(화) Hermes에서 Codex app-server runtime을 붙이면 무엇이 달라질까</a></li>

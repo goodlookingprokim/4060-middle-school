@@ -16,6 +16,10 @@ cssclasses:
 ## 읽기 경로
 
 <div class="reading-path">
+  <a href="./2026-05-30-codex-multi-auth-management-guide" class="internal">
+    <strong>2026년 5월 30일(토) Codex CLI를 쓸 때 계정이 하나라 답답했다면, codex-multi-auth는 무엇을 바꿔줄까</strong>
+    <span>Codex CLI를 쓰는 사람이 여러 ChatGPT 계정을 명시적으로 로그인하고 바꿔 쓰고, 상태를 확인하고, 프로젝트별로 계정을 나눠 관리할 수 있게 돕는 codex-multi-auth를 아주 쉽게 풀어쓴 정리입니다.</span>
+  </a>
   <a href="./2026-05-30-openclaw-hermes-scrcpy-command-cheatsheet" class="internal">
     <strong>2026년 5월 30일(토) OpenClaw, Hermes, scrcpy 자주 쓰는 명령어만 빠르게 보는 치트시트</strong>
     <span>MacBook의 OpenClaw, Android Termux의 Hermes, 그리고 scrcpy를 함께 쓸 때 가장 자주 쓰는 터미널 명령만 골라 한눈에 다시 보기 쉽게 정리한 빠른 참고 글입니다.</span>
