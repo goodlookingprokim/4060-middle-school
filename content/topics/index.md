@@ -16,6 +16,10 @@ cssclasses:
 ## 읽기 경로
 
 <div class="reading-path">
+  <a href="./2026-05-31-obsidian-ai-wiki-setup-guide" class="internal">
+    <strong>2026년 5월 31일(일) 옵시디언 하나를 AI 공용 작업실로 바꾸는 법, 위키 세팅은 왜 이렇게 해야 할까</strong>
+    <span>김효율의 AI 개발단 채널의 옵시디언 위키 세팅 자료를 바탕으로, 4060 회원님들도 따라갈 수 있게 Obsidian을 AI 에이전트들의 공용 위키와 작업실처럼 쓰는 방법을 쉽고 자세하게 풀어쓴 안내 글입니다.</span>
+  </a>
   <a href="./2026-05-30-hermes-ai-employee-growth-guide" class="internal">
     <strong>2026년 5월 30일(토) Hermes를 그냥 챗봇으로 두지 말고, 출근하고 보고하는 AI 직원처럼 키우는 법</strong>
     <span>시민개발자 구씨의 Hermes 에이전트 성장법 영상을 바탕으로, AI를 실제 직원처럼 일하게 만들 때 왜 Soul.md, Agent.md, User.md, Memory.md, 스케줄링과 보고 채널이 중요한지 아주 쉽게 풀어쓴 정리입니다.</span>
