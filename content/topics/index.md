@@ -16,6 +16,14 @@ cssclasses:
 ## 읽기 경로
 
 <div class="reading-path">
+  <a href="./2026-06-06-codex-thread-agent-everyday-guide" class="internal">
+    <strong>2026년 6월 6일(토) 코덱스 스레드, 에이전트, 서브에이전트가 자꾸 헷갈릴 때 일상 비유로 이해하는 안내서</strong>
+    <span>Codex에서 thread, agent, subagent, parallel threads, worktree, workspace 같은 말이 왜 헷갈리는지 가족회의, 집안 청소, 여행 준비, 보고서 작성 같은 생활 비유로 쉽게 풀어쓴 안내 글입니다.</span>
+  </a>
+  <a href="./2026-06-06-local-llm-parameter-size-guide" class="internal">
+    <strong>2026년 6월 6일(토) 로컬 LLM에서 125M, 1B, 7B는 무슨 뜻일까</strong>
+    <span>로컬 LLM 이름 뒤에 붙는 125M, 1B, 7B, 14B가 무엇을 뜻하는지, 파라미터가 무엇인지, 맥북에서 체감 차이는 어떤지 4060 회원님들 눈높이로 아주 쉽게 풀어쓴 기본 안내입니다.</span>
+  </a>
   <a href="./2026-05-31-obsidian-ai-wiki-setup-guide" class="internal">
     <strong>2026년 5월 31일(일) 옵시디언 하나를 AI 공용 작업실로 바꾸는 법, 위키 세팅은 왜 이렇게 해야 할까</strong>
     <span>김효율의 AI 개발단 채널의 옵시디언 위키 세팅 자료를 바탕으로, 4060 회원님들도 따라갈 수 있게 Obsidian을 AI 에이전트들의 공용 위키와 작업실처럼 쓰는 방법을 쉽고 자세하게 풀어쓴 안내 글입니다.</span>
