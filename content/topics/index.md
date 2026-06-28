@@ -16,6 +16,10 @@ cssclasses:
 ## 읽기 경로
 
 <div class="reading-path">
+  <a href="./2026-06-28-hermes-platform-search-system-guide" class="internal">
+    <strong>2026년 6월 28일(일) Hermes에 검색 기능을 붙일 때 왜 플랫폼별 서랍부터 나눠야 할까</strong>
+    <span>Hermes나 OpenClaw에 검색 기능을 붙일 때 왜 하나의 거대한 검색기보다 플랫폼별 도구를 나눠 연결하는 방식이 현실적인지, 그리고 두 환경의 출발점이 어떻게 다른지 4060 회원분들 눈높이로 풀어쓴 안내 글입니다.</span>
+  </a>
   <a href="./2026-06-06-codex-thread-agent-everyday-guide" class="internal">
     <strong>2026년 6월 6일(토) 코덱스 스레드, 에이전트, 서브에이전트가 자꾸 헷갈릴 때 일상 비유로 이해하는 안내서</strong>
     <span>Codex에서 thread, agent, subagent, parallel threads, worktree, workspace 같은 말이 왜 헷갈리는지 가족회의, 집안 청소, 여행 준비, 보고서 작성 같은 생활 비유로 쉽게 풀어쓴 안내 글입니다.</span>
