@@ -16,6 +16,10 @@ cssclasses:
 ## 읽기 경로
 
 <div class="reading-path">
+  <a href="./2026-06-28-loop-engineering-easy-guide" class="internal">
+    <strong>2026년 6월 28일(일) 루프 엔지니어링이 뭐길래, AI가 스스로 고치며 일하게 된다는 걸까</strong>
+    <span>루프 엔지니어링을 장보기, 공부, 여행 계획 같은 생활 예시로 쉽게 설명하고, 4060 회원분들이 바로 써볼 수 있는 짧은 프롬프트 감각까지 담은 입문 글입니다.</span>
+  </a>
   <a href="./2026-06-28-hermes-platform-search-system-guide" class="internal">
     <strong>2026년 6월 28일(일) Hermes에 검색 기능을 붙일 때 왜 플랫폼별 서랍부터 나눠야 할까</strong>
     <span>Hermes나 OpenClaw에 검색 기능을 붙일 때 왜 하나의 거대한 검색기보다 플랫폼별 도구를 나눠 연결하는 방식이 현실적인지, 그리고 두 환경의 출발점이 어떻게 다른지 4060 회원분들 눈높이로 풀어쓴 안내 글입니다.</span>
