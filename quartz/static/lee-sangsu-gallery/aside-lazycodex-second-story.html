@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="ko"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aside · 레이지코덱스 — 두번째 이야기</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Noto+Serif+KR:wght@200;300;400;500;600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+ --paper:#FAF8F3; --ink:#1A1814; --gold:#A8884E; --gray:#8C887E;
+ --hair:rgba(26,24,20,.14);
+ --serif:"Playfair Display","Noto Serif KR",serif;
+ --korserif:"Noto Serif KR","Playfair Display",serif;
+ --cap:"Inter","Pretendard Variable",Pretendard,sans-serif;
+ --mono:"JetBrains Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:#E9E5DC;color:var(--ink);font-family:var(--korserif);overflow:hidden;-webkit-font-smoothing:antialiased}
+#stage{position:fixed;inset:0;overflow:hidden}
+#deck{width:1280px;height:720px;position:absolute;top:0;left:0;transform-origin:top left}
+.slide{position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity .6s ease;background:var(--paper)}
+.slide.active{opacity:1;visibility:visible;z-index:2}
+.pad{position:absolute;inset:0;padding:96px 150px 92px;display:flex;flex-direction:column;justify-content:center}
+
+/* 캡션 라벨 — 넉넉한 트래킹이 핵심 */
+.eyebrow{font-family:var(--cap);font-size:12px;font-weight:500;letter-spacing:.24em;
+ text-transform:uppercase;color:var(--gold)}
+
+/* 공통 룰 라인 */
+.srule,.crule,.drule{height:0;border-top:.8px solid var(--gold)}
+
+/* 표준 슬라이드 — 중앙 정렬 제목 + 좌측 본문 */
+.std{display:flex;flex-direction:column;align-items:center}
+.std .eyebrow{text-align:center}
+.stitle{font-family:var(--korserif);font-weight:400;font-size:35px;line-height:1.25;
+ color:var(--ink);text-align:center;letter-spacing:-.005em;margin:18px 0 0}
+.srule{width:54px;margin:20px 0 30px}
+.sbody{width:100%;max-width:880px;display:flex;flex-direction:column;gap:15px}
+
+.sbody p{font-family:var(--korserif);font-weight:300;font-size:21px;line-height:1.62;color:#2A2620}
+.sbody h2{font-family:var(--korserif);font-weight:400;font-size:23px;color:var(--ink);text-align:center}
+.sbody h3{font-family:var(--korserif);font-weight:400;font-size:22px;color:var(--ink)}
+.sbody strong{font-weight:600;color:var(--ink)}
+.sbody em{font-style:italic;color:#7C6433}
+.sbody code{font-family:var(--mono);font-size:.82em;color:#6E5828;letter-spacing:0}
+
+/* 리스트 — 박스 없음, 골드 헤어라인 마커 */
+.sbody ul,.sbody ol{list-style:none;display:flex;flex-direction:column;gap:13px;padding-left:4px}
+.sbody li{font-family:var(--korserif);font-weight:300;font-size:20px;line-height:1.5;
+ color:#2A2620;position:relative;padding-left:34px}
+.sbody ul:not(.tasks)>li::before{content:"";position:absolute;left:0;top:.66em;
+ width:18px;height:.8px;background:var(--gold)}
+.sbody ol{counter-reset:li}
+.sbody ol>li::before{counter-increment:li;content:counter(li);position:absolute;left:0;top:-.04em;
+ font-family:var(--serif);font-weight:400;font-size:20px;color:var(--gold)}
+.sbody li.task{padding-left:30px}
+.sbody li.task .ring{position:absolute;left:0;top:.04em;color:var(--gold);font-size:15px}
+
+
+.shot{width:100%;margin:0;display:flex;flex-direction:column;align-items:center;gap:7px}
+.shot img{display:block;max-width:100%;max-height:340px;object-fit:contain;border:1px solid var(--hair);background:#fff}
+.shot figcaption{font-family:var(--cap);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--gray)}
+
+/* 인용/노트 — 박스 없이 골드 헤어라인 한 줄 */
+blockquote{border-left:1px solid var(--gold);padding-left:24px;margin:4px 0}
+blockquote p{font-family:var(--korserif);font-style:italic;font-weight:300;
+ font-size:20px;line-height:1.55;color:#4A453C}
+blockquote p+p{margin-top:9px}
+
+/* 표 — 보더 박스 없음, 가는 수평 헤어라인만 */
+table{width:100%;border-collapse:collapse;margin:2px 0}
+thead th{font-family:var(--cap);font-size:11.5px;font-weight:600;letter-spacing:.2em;
+ text-transform:uppercase;color:var(--gray);text-align:left;padding:0 20px 13px 0;
+ border-bottom:1px solid var(--gold)}
+tbody td{font-family:var(--korserif);font-weight:300;font-size:18px;color:#2A2620;
+ padding:13px 20px 13px 0;border-bottom:1px solid var(--hair);vertical-align:top;line-height:1.45}
+tbody tr:last-child td{border-bottom:none}
+tbody td:first-child{color:var(--ink)}
+
+/* 코드 — 면 채움 없이 골드 헤어라인 */
+pre{border-left:1px solid var(--gold);padding:4px 0 4px 24px;margin:2px 0;overflow:auto}
+pre code{font-family:var(--mono);font-size:15px;line-height:1.58;color:#3A352C;white-space:pre}
+
+/* 커버 */
+.cover{display:flex;flex-direction:column;align-items:center;text-align:center}
+.ctitle{font-family:var(--korserif);font-weight:400;font-size:54px;line-height:1.16;
+ color:var(--ink);letter-spacing:-.01em;margin:26px 0 0}
+.crule{width:64px;margin:30px 0 22px}
+.clede{font-family:var(--korserif);font-weight:300;font-size:23px;color:#3A352C}
+.csub{font-family:var(--korserif);font-weight:300;font-style:italic;font-size:18px;
+ line-height:1.7;color:var(--gray);margin-top:30px;max-width:760px}
+
+/* 디바이더 */
+.divider{display:flex;flex-direction:column;align-items:center;text-align:center}
+.dnum{font-family:var(--serif);font-weight:400;font-size:150px;line-height:.9;color:var(--ink)}
+.drule{width:54px;margin:26px 0 22px}
+.dtitle{font-family:var(--korserif);font-weight:400;font-size:44px;line-height:1.2;
+ color:var(--ink);letter-spacing:-.01em;margin:16px 0 22px}
+.dsub{font-family:var(--korserif);font-weight:300;font-style:italic;font-size:18px;
+ line-height:1.7;color:var(--gray)}
+
+/* 풋 */
+.foot{position:absolute;left:150px;right:150px;bottom:42px;display:flex;
+ justify-content:space-between;align-items:center}
+.fbrand{font-family:var(--cap);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--gray)}
+.fno{font-family:var(--cap);font-size:11px;letter-spacing:.22em;color:var(--gold)}
+
+/* UI */
+#bar{position:fixed;top:0;left:0;height:2px;background:var(--gold);z-index:50;transition:width .5s ease}
+#hint{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);font-family:var(--cap);
+ font-size:11px;letter-spacing:.16em;color:#B7B1A4;z-index:50}
+
+@media print{
+ html,body{overflow:visible;background:#fff}
+ #stage{position:static;display:block}
+ #deck{transform:none!important}
+ .slide{position:relative;opacity:1!important;visibility:visible!important;page-break-after:always}
+ #bar,#hint{display:none}
+}
+</style>
+</head><body>
+<div id="bar"></div>
+<div id="stage"><div id="deck">
+<section class="slide slide--cover" data-n="1"><div class="pad"><div class="cover"><div class="eyebrow">SECOND STORY · 2026</div><h1 class="ctitle">Aside 브라우저 &amp; 레이지코덱스</h1><div class="crule"></div><div class="clede">두번째 이야기: 웹을 맡기는 손, 끝까지 검증하는 두뇌</div><div class="csub">1편이 "이 도구들이 뭔가요?" 였다면,<br>2편은 "내 일을 어디에 어떻게 얹나요?" 입니다.<br>오늘은 실제 가능한 장면을 더 많이 봅니다.</div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">01 / 80</span></div></section>
+<section class="slide slide--std" data-n="2"><div class="pad"><div class="std"><div class="eyebrow">PART 0 · 왜 2편인가</div><h2 class="stitle">1편에서 2편으로</h2><div class="srule"></div><div class="sbody"><blockquote><p>1편은 개념을 잡는 시간.<br>2편은 "내 업무에 붙이면 뭐가 달라지는가"를 보는 시간입니다.</p></blockquote>
+<ul><li>Aside는 웹을 대신 눌러주는 <strong>손</strong>입니다</li><li>레이지코덱스는 일을 끝까지 몰고 가는 <strong>현장 책임자</strong>입니다</li><li>둘을 같이 쓰면 <strong>자료 수집 → 제작 → 실제 화면 검증</strong>까지 이어집니다</li></ul>
+<blockquote><p>오늘의 목표: "신기하다"가 아니라 "내일 어디에 쓸지"까지 정하기.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">02 / 80</span></div></section>
+<section class="slide slide--std" data-n="3"><div class="pad"><div class="std"><div class="eyebrow">PART 0 · 왜 2편인가</div><h2 class="stitle">90분 여정 지도</h2><div class="srule"></div><div class="sbody"><table><thead><tr><th>파트</th><th>오늘 더 키우는 비중</th><th>시간</th></tr></thead><tbody><tr><td>0. 오프닝</td><td>손과 두뇌 비유 다시 잡기</td><td>8분</td></tr><tr><td>1. Aside 딥다이브</td><td>권한, 자동화, 예시를 쉽게 설명</td><td>25분</td></tr><tr><td>2. 가능한 실무 사례</td><td>사무실·영업·자료조사·QA 사례</td><td>25분</td></tr><tr><td>3. 레이지코덱스 최신 흐름</td><td>visual-qa, CodeGraph, v4.16.0</td><td>18분</td></tr><tr><td>4. 콤보 워크플로우</td><td>Aside + LazyCodex 조합 설계</td><td>17분</td></tr><tr><td>5. 실습</td><td>내 업무 1개에 적용</td><td>10분</td></tr></tbody></table>
+<blockquote><p>강의 전체 키워드는 <strong>위임</strong>, <strong>경계</strong>, <strong>증거</strong>입니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">03 / 80</span></div></section>
+<section class="slide slide--std" data-n="4"><div class="pad"><div class="std"><div class="eyebrow">PART 0 · 왜 2편인가</div><h2 class="stitle">끝나면 할 수 있는 것</h2><div class="srule"></div><div class="sbody"><ul><li>Aside에게 맡기기 좋은 웹 업무를 5개 이상 말할 수 있다</li><li>Read-only, Guard, Full access 차이를 생활 비유로 설명할 수 있다</li><li><code>exec</code>, <code>REPL</code>, <code>MCP</code>, <code>Ultrabrowse</code>, <code>Routines</code>를 겁내지 않는다</li><li>레이지코덱스가 왜 "검증하는 AI"인지 설명할 수 있다</li><li>Aside + 레이지코덱스 콤보 프롬프트를 직접 한 줄 쓸 수 있다</li></ul>
+<blockquote><p>도구 이름보다 중요한 건 <strong>일의 모양을 보는 눈</strong>입니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">04 / 80</span></div></section>
+<section class="slide slide--std" data-n="5"><div class="pad"><div class="std"><div class="eyebrow">PART 0 · 왜 2편인가</div><h2 class="stitle">가장 쉬운 비유: 손, 책임자, 공증인</h2><div class="srule"></div><div class="sbody"><table><thead><tr><th>역할</th><th>도구</th><th>하는 일</th></tr></thead><tbody><tr><td>손</td><td>Aside</td><td>웹사이트를 보고, 클릭하고, 다운로드한다</td></tr><tr><td>책임자</td><td>레이지코덱스</td><td>일을 계획하고, 빠뜨린 부분을 다시 챙긴다</td></tr><tr><td>공증인</td><td>증거 파일</td><td>진짜 열렸는지, 몇 장인지, 화면이 맞는지 남긴다</td></tr></tbody></table>
+<blockquote><p>AI 자동화는 "똑똑한 말"이 아니라 <strong>행동과 증거</strong>로 판단해야 합니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">05 / 80</span></div></section>
+<section class="slide slide--std" data-n="6"><div class="pad"><div class="std"><div class="eyebrow">PART 0 · 왜 2편인가</div><h2 class="stitle">재미있게 배우되, 안전하게 씁니다</h2><div class="srule"></div><div class="sbody"><blockquote><p>AI 브라우저는 편하지만, 로그인된 내 계정 위에서 움직입니다.</p></blockquote>
+<ul><li>처음엔 <strong>Read-only</strong>로 시작합니다</li><li>클릭이 필요한 일은 <strong>Guard</strong>로 둡니다</li><li>결제, 전송, 삭제, 게시 같은 행동은 사람이 다시 봅니다</li><li>"다 했습니다"보다 <strong>스크린샷, 파일, 로그</strong>를 믿습니다</li></ul>
+<blockquote><p>신입에게 금고 비밀번호를 통째로 맡기지 않듯, AI에게도 경계가 필요합니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">06 / 80</span></div></section>
+<section class="slide slide--divider" data-n="7"><div class="pad"><div class="divider"><div class="dnum">1</div><div class="drule"></div><div class="eyebrow">PART 1</div><h1 class="dtitle">웹을 대신 쓰는 손, Aside 딥다이브</h1><div class="dsub">AI 브라우저를 "무서운 자동화"가 아니라<br>"옆자리 신입에게 웹 업무를 맡기는 방법"으로 이해합니다.</div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">07 / 80</span></div></section>
+<section class="slide slide--std" data-n="8"><div class="pad"><div class="std"><div class="eyebrow">PART 1 · ASIDE 딥다이브</div><h2 class="stitle">Aside를 한 문장으로 말하면</h2><div class="srule"></div><div class="sbody"><blockquote><p>Aside는 <strong>내가 로그인한 웹을 AI가 대신 읽고 조작하는 브라우저</strong>입니다.</p></blockquote>
+<ul><li>크롬처럼 웹페이지를 엽니다</li><li>AI 에이전트가 화면의 버튼, 입력창, 링크를 이해합니다</li><li>필요하면 클릭하고 입력하고 다운로드합니다</li><li>결과를 글, 파일, 스크린샷으로 남길 수 있습니다</li></ul>
+<blockquote><p>그래서 "검색 도구"가 아니라 <strong>작업 도구</strong>에 가깝습니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">08 / 80</span></div></section>
+<section class="slide slide--std" data-n="9"><div class="pad"><div class="std"><div class="eyebrow">PART 1 · ASIDE 딥다이브</div><h2 class="stitle">그냥 브라우저와 뭐가 다른가요?</h2><div class="srule"></div><div class="sbody"><table><thead><tr><th>장면</th><th>그냥 브라우저</th><th>Aside 브라우저</th></tr></thead><tbody><tr><td>자료 찾기</td><td>내가 탭을 열고 복사</td><td>AI가 탭을 열고 비교</td></tr><tr><td>로그인 사이트</td><td>내가 계속 클릭</td><td>로그인 상태에서 대신 탐색</td></tr><tr><td>반복 다운로드</td><td>내가 날짜 바꾸며 저장</td><td>AI가 규칙대로 내려받음</td></tr><tr><td>QA</td><td>내가 하나씩 눌러봄</td><td>AI가 눌러보고 증거 저장</td></tr></tbody></table>
+<blockquote><p>차이는 "보는 것"이 아니라 <strong>대신 움직이는 것</strong>입니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">09 / 80</span></div></section>
+<section class="slide slide--std" data-n="10"><div class="pad"><div class="std"><div class="eyebrow">PART 1 · ASIDE 딥다이브</div><h2 class="stitle">핵심은 "내 계정 위에서" 입니다</h2><div class="srule"></div><div class="sbody"><blockquote><p>많은 업무는 공개 웹이 아니라 로그인 뒤에 숨어 있습니다.</p></blockquote>
+<ul><li>쇼핑몰 관리자 주문 목록</li><li>은행과 카드사의 거래내역</li><li>세무, 노무, 공공기관 포털</li><li>CRM, 메일, 캘린더, 고객센터 SaaS</li><li>내부 문서함과 드라이브</li></ul>
+<blockquote><p>Aside의 매력은 여기서 나옵니다.<br>AI가 인터넷 지식을 말하는 게 아니라 <strong>내 화면의 일을 처리</strong>합니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">10 / 80</span></div></section>
+<section class="slide slide--std" data-n="11"><div class="pad"><div class="std"><div class="eyebrow">PART 1 · ASIDE 딥다이브</div><h2 class="stitle">Aside 에이전트는 이렇게 움직입니다</h2><div class="srule"></div><div class="sbody"><ol><li>화면을 읽는다: 버튼, 표, 링크, 입력창을 찾음</li><li>계획한다: 다음에 누를 것과 피해야 할 것을 정함</li><li>실행한다: 클릭, 입력, 다운로드, 탭 이동</li><li>확인한다: 화면 변화와 파일 저장 여부를 봄</li><li>보고한다: 요약, 링크, 스크린샷, 파일 위치</li></ol>
+<blockquote><p>사람처럼 느리게 보일 때도 있습니다.<br>대신 그 느림은 <strong>화면을 실제로 확인하는 시간</strong>입니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">11 / 80</span></div></section>
+<section class="slide slide--std" data-n="12"><div class="pad"><div class="std"><div class="eyebrow">PART 1 · ASIDE 딥다이브</div><h2 class="stitle">권한은 세 단계로 생각하세요</h2><div class="srule"></div><div class="sbody"><table><thead><tr><th>모드</th><th>쉽게 말하면</th><th>추천 시작점</th></tr></thead><tbody><tr><td>Read-only</td><td>눈으로만 보기</td><td>처음 쓰는 사이트</td></tr><tr><td>Guard</td><td>위험하면 물어보기</td><td>대부분의 실무</td></tr><tr><td>Full access</td><td>전권 위임</td><td>반복·저위험 업무만</td></tr></tbody></table>
+<blockquote><p>처음부터 Full access로 달리는 건 초보 운전자가 고속도로 1차선에 들어가는 느낌입니다.<br>대부분은 Guard가 충분합니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">12 / 80</span></div></section>
+<section class="slide slide--std" data-n="13"><div class="pad"><div class="std"><div class="eyebrow">PART 1 · ASIDE 딥다이브</div><h2 class="stitle">비밀번호는 "보여주기"가 아니라 "자동입력"</h2><div class="srule"></div><div class="sbody"><blockquote><p>중요한 원칙: AI에게 비밀번호를 말로 알려주는 방식이 아닙니다.</p></blockquote>
+<ul><li>저장된 비밀번호 관리자가 자동입력합니다</li><li>AI는 별표 뒤의 실제 비밀번호를 몰라도 됩니다</li><li>로그인 뒤의 화면에서 필요한 업무만 진행합니다</li><li>계정 추가, 결제, 삭제는 사람 확인을 거칩니다</li></ul>
+<blockquote><p>비밀번호는 열쇠입니다.<br>Aside는 열쇠를 외우는 직원이 아니라, 문이 열린 뒤 일을 하는 직원에 가깝습니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">13 / 80</span></div></section>
+<section class="slide slide--std" data-n="14"><div class="pad"><div class="std"><div class="eyebrow">PART 1 · ASIDE 딥다이브</div><h2 class="stitle">Guard 모드는 "결재 올리는 대리"입니다</h2><div class="srule"></div><div class="sbody"><blockquote><p>대리가 자료는 잘 모으지만, 계약서 발송은 대표님 확인을 받는 상황과 같습니다.</p></blockquote>
+<ul><li>페이지 이동, 자료 읽기, 다운로드는 진행</li><li>결제, 메시지 전송, 게시, 삭제는 멈춤</li><li>"이 행동을 해도 될까요?"라고 사람에게 묻기</li><li>사람이 승인하면 이어서 실행</li></ul>
+<blockquote><p>처음 실무에 붙일 때 가장 편한 모드는 Guard입니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">14 / 80</span></div></section>
+<section class="slide slide--std" data-n="15"><div class="pad"><div class="std"><div class="eyebrow">PART 1 · ASIDE 딥다이브</div><h2 class="stitle">Read-only는 좋은 준비운동입니다</h2><div class="srule"></div><div class="sbody"><blockquote><p>"먼저 들어가서 뭐가 있는지만 봐줘"가 Read-only입니다.</p></blockquote>
+<ul><li>새 SaaS 관리자 화면 구조 파악</li><li>경쟁사 사이트 공개 페이지 요약</li><li>고객센터 티켓 분류만 보기</li><li>홈택스, 4대보험 같은 민감 포털에서 메뉴 위치만 확인</li></ul>
+<blockquote><p>Read-only로 지도를 만든 뒤, Guard로 행동을 맡기면 훨씬 안전합니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">15 / 80</span></div></section>
+<section class="slide slide--std" data-n="16"><div class="pad"><div class="std"><div class="eyebrow">PART 1 · ASIDE 딥다이브</div><h2 class="stitle">Full access는 자동운전이 아닙니다</h2><div class="srule"></div><div class="sbody"><blockquote><p>Full access는 "위험해도 일단 진행"에 가까운 모드입니다.</p></blockquote>
+<ul><li>매일 같은 보고서 다운로드처럼 실패 비용이 낮은 일</li><li>테스트 계정이나 샌드박스</li><li>삭제·발송·결제 없는 반복 클릭</li><li>사람이 곧바로 결과를 확인할 수 있는 일</li></ul>
+<blockquote><p>핵심 질문: 잘못 눌렀을 때 되돌릴 수 있는가?</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">16 / 80</span></div></section>
+<section class="slide slide--std" data-n="17"><div class="pad"><div class="std"><div class="eyebrow">PART 1 · ASIDE 딥다이브</div><h2 class="stitle">Aside를 부르는 세 가지 입구</h2><div class="srule"></div><div class="sbody"><figure class="shot"><img src="assets/aside-workflow-cheatsheet.png" alt="Aside CLI의 exec, repl, mcp 입구"><figcaption>Aside CLI의 exec, repl, mcp 입구</figcaption></figure>
+<blockquote><p><code>exec</code>는 통째 위임, <code>REPL</code>은 정밀 조작, <code>mcp</code>는 Codex 같은 도구가 Aside를 부르는 통로입니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">17 / 80</span></div></section>
+<section class="slide slide--std" data-n="18"><div class="pad"><div class="std"><div class="eyebrow">PART 1 · ASIDE 딥다이브</div><h2 class="stitle">Ultrabrowse는 "많은 페이지를 빠르게 훑는 눈"</h2><div class="srule"></div><div class="sbody"><figure class="shot"><img src="assets/aside-mcp-docs-llms.png" alt="Aside MCP로 연 공식 Help Center 색인"><figcaption>Aside MCP로 연 공식 Help Center 색인</figcaption></figure>
+<blockquote><p>이 화면을 Aside MCP로 직접 열어 캡처했습니다.<br>Routines, CLI/MCP/REPL, Password Manager, Security, Ultrabrowse가 공식 문서에서 한 줄로 연결됩니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">18 / 80</span></div></section>
+<section class="slide slide--std" data-n="19"><div class="pad"><div class="std"><div class="eyebrow">PART 1 · ASIDE 딥다이브</div><h2 class="stitle">Routines는 반복 업무를 "절차서"로 묶는 방식</h2><div class="srule"></div><div class="sbody"><blockquote><p>매주 같은 일을 한다면, 매번 새로 설명하지 말고 루틴으로 만듭니다.</p></blockquote>
+<ul><li>월요일 아침 SaaS 지표 내려받기</li><li>매월 카드 명세서와 세금계산서 수집</li><li>매주 경쟁사 공지 확인</li><li>매일 고객 문의 미처리 건 요약</li></ul>
+<blockquote><p>Routines는 "한 번 가르친 업무를 다음 달에도 반복"하게 만드는 장치입니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">19 / 80</span></div></section>
+<section class="slide slide--std" data-n="20"><div class="pad"><div class="std"><div class="eyebrow">PART 1 · ASIDE 딥다이브</div><h2 class="stitle">MCP와 CLI는 개발자용 출입문입니다</h2><div class="srule"></div><div class="sbody"><figure class="shot"><img src="assets/aside-cli-mcp-registration.png" alt="이 Mac에서 확인한 Aside MCP 등록 상태"><figcaption>이 Mac에서 확인한 Aside MCP 등록 상태</figcaption></figure>
+<blockquote><p><code>codex mcp get aside</code>에서 enabled, stdio, command, args가 확인됩니다.<br>강의 중에는 이 장면으로 "내 Codex가 Aside를 부를 수 있다"를 설명하면 됩니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">20 / 80</span></div></section>
+<section class="slide slide--std" data-n="21"><div class="pad"><div class="std"><div class="eyebrow">PART 1 · ASIDE 딥다이브</div><h2 class="stitle">Aside가 좋은 이유: 증거를 남길 수 있다</h2><div class="srule"></div><div class="sbody"><figure class="shot"><img src="assets/aside-mcp-annotated-docs.png" alt="Aside MCP 브라우저 캡처 예시"><figcaption>Aside MCP 브라우저 캡처 예시</figcaption></figure>
+<blockquote><p>"확인했습니다"보다 좋은 말은 "여기 캡처가 있습니다"입니다.<br>화면, URL, 파일, 클릭 전후 상태를 남기면 AI 업무가 다시 검토 가능한 일이 됩니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">21 / 80</span></div></section>
+<section class="slide slide--std" data-n="22"><div class="pad"><div class="std"><div class="eyebrow">PART 1 · ASIDE 딥다이브</div><h2 class="stitle">사람은 언제 끼어들어야 하나요?</h2><div class="srule"></div><div class="sbody"><blockquote><p>AI를 잘 쓰는 사람은 모든 걸 맡기는 사람이 아니라, 멈출 지점을 잘 정하는 사람입니다.</p></blockquote>
+<ul><li>돈이 나가는 순간</li><li>고객에게 메시지가 나가는 순간</li><li>파일이 삭제되거나 덮어써지는 순간</li><li>법적 신고, 세무 신고, 계약 제출 직전</li></ul>
+<blockquote><p>승인 지점이 명확하면 자동화는 무서운 도구가 아니라 든든한 조수입니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">22 / 80</span></div></section>
+<section class="slide slide--std" data-n="23"><div class="pad"><div class="std"><div class="eyebrow">PART 1 · ASIDE 딥다이브</div><h2 class="stitle">Aside 사례 1: 자료조사</h2><div class="srule"></div><div class="sbody"><blockquote><p>"이 주제로 공식 자료와 기사 5개를 비교해서 표로 정리해줘."</p></blockquote>
+<ul><li>검색 결과만 보지 않고 실제 페이지를 엽니다</li><li>공식 문서, 도움말, 가격표를 나눠 봅니다</li><li>출처 링크와 확인 날짜를 함께 남깁니다</li><li>서로 다른 주장이 있으면 증거 수준을 구분합니다</li></ul>
+<blockquote><p>강의 자료, 블로그, 제안서 리서치에 바로 붙일 수 있습니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">23 / 80</span></div></section>
+<section class="slide slide--std" data-n="24"><div class="pad"><div class="std"><div class="eyebrow">PART 1 · ASIDE 딥다이브</div><h2 class="stitle">Aside 사례 2: 로그인 포털 자료 수집</h2><div class="srule"></div><div class="sbody"><blockquote><p>"이번 달 거래내역 PDF와 CSV를 내려받아 정리해줘."</p></blockquote>
+<ul><li>로그인된 은행, 카드사, 쇼핑몰 관리자에 들어감</li><li>기간을 맞추고 다운로드 버튼을 누름</li><li>파일명과 저장 위치를 기록</li><li>빠진 월이 있는지 화면에서 다시 확인</li></ul>
+<blockquote><p>단, 이 흐름은 처음엔 Guard로 두고 파일 저장까지만 맡기는 것이 좋습니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">24 / 80</span></div></section>
+<section class="slide slide--std" data-n="25"><div class="pad"><div class="std"><div class="eyebrow">PART 1 · ASIDE 딥다이브</div><h2 class="stitle">Aside 사례 3: 경쟁사 가격과 패키지 비교</h2><div class="srule"></div><div class="sbody"><blockquote><p>"경쟁사 8곳의 가격, 무료체험, 고객지원 문구를 표로 비교해줘."</p></blockquote>
+<ul><li>가격 페이지를 직접 열어 확인</li><li>숨은 FAQ, 약관, 플랜 제한까지 탐색</li><li>스크린샷을 남겨 나중에 다시 검토</li><li>바뀔 수 있는 정보는 확인 날짜를 적음</li></ul>
+<blockquote><p>영업 자료를 만들 때 "감" 대신 <strong>페이지 근거</strong>를 쌓을 수 있습니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">25 / 80</span></div></section>
+<section class="slide slide--std" data-n="26"><div class="pad"><div class="std"><div class="eyebrow">PART 1 · ASIDE 딥다이브</div><h2 class="stitle">Part 1 정리 퀴즈</h2><div class="srule"></div><div class="sbody"><ol><li>처음 쓰는 사이트에 권한을 줄 때 가장 안전한 시작 모드는?</li><li>위험한 행동에서 사람 승인으로 멈추는 모드는?</li><li>증거 캡처와 한 단계 조작에 어울리는 방식은 <code>exec</code>일까, <code>REPL</code>일까?</li><li>반복 업무 절차서에 가까운 기능 이름은?</li></ol>
+<blockquote><p>답: Read-only, Guard, REPL, Routines.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">26 / 80</span></div></section>
+<section class="slide slide--divider" data-n="27"><div class="pad"><div class="divider"><div class="dnum">2</div><div class="drule"></div><div class="eyebrow">PART 2</div><h1 class="dtitle">실제 가능한 여러 사례</h1><div class="dsub">이제부터는 "우와"보다 "아, 저건 내 일인데?"가 목표입니다.</div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">27 / 80</span></div></section>
+<section class="slide slide--std" data-n="28"><div class="pad"><div class="std"><div class="eyebrow">PART 2 · 실제 가능한 사례</div><h2 class="stitle">Aside로 가능한 업무 지도</h2><div class="srule"></div><div class="sbody"><table><thead><tr><th>업무 종류</th><th>Aside가 특히 좋은 이유</th></tr></thead><tbody><tr><td>자료조사</td><td>페이지를 열고 출처를 남김</td></tr><tr><td>운영 다운로드</td><td>로그인 화면에서 반복 클릭</td></tr><tr><td>영업 준비</td><td>고객사, 경쟁사, 과거 기록 확인</td></tr><tr><td>QA</td><td>만든 페이지를 실제로 눌러봄</td></tr><tr><td>정기 점검</td><td>Routines로 반복 절차화</td></tr></tbody></table>
+<blockquote><p>핵심은 "브라우저에서 사람이 하던 일"입니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">28 / 80</span></div></section>
+<section class="slide slide--std" data-n="29"><div class="pad"><div class="std"><div class="eyebrow">PART 2 · 실제 가능한 사례</div><h2 class="stitle">실무 사례 1: 세무·노무 포털 자료 모으기</h2><div class="srule"></div><div class="sbody"><blockquote><p>월말마다 흩어진 자료를 모으는 장면을 떠올려보세요.</p></blockquote>
+<ul><li>홈택스, 4대보험, 은행, 카드사에서 자료 위치 확인</li><li>기간별 조회 조건을 맞춤</li><li>내려받은 파일명을 규칙대로 정리</li><li>누락된 항목을 표로 보고</li></ul>
+<blockquote><p>주의: 신고 제출은 사람 승인 지점으로 남깁니다.<br>Aside는 자료 수집 조수, 최종 판단은 전문가입니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">29 / 80</span></div></section>
+<section class="slide slide--std" data-n="30"><div class="pad"><div class="std"><div class="eyebrow">PART 2 · 실제 가능한 사례</div><h2 class="stitle">실무 사례 2: 인보이스와 영수증 수집</h2><div class="srule"></div><div class="sbody"><blockquote><p>"지난달 SaaS 결제 영수증을 다 모아줘."</p></blockquote>
+<ul><li>Slack, Notion, GitHub, Vercel, OpenAI 같은 서비스 결제 페이지 탐색</li><li>영수증 PDF 다운로드</li><li>금액, 결제일, 공급자명을 표로 추출</li><li>빠진 서비스가 있으면 목록화</li></ul>
+<blockquote><p>회계팀 입장에서는 한 달에 한 번 반복되는 손품을 줄일 수 있습니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">30 / 80</span></div></section>
+<section class="slide slide--std" data-n="31"><div class="pad"><div class="std"><div class="eyebrow">PART 2 · 실제 가능한 사례</div><h2 class="stitle">실무 사례 3: 쇼핑몰 관리자 반복 확인</h2><div class="srule"></div><div class="sbody"><blockquote><p>"미처리 주문과 배송 지연 건을 아침마다 요약해줘."</p></blockquote>
+<ul><li>관리자 페이지 로그인 상태에서 주문 목록 확인</li><li>상태 필터를 바꿔가며 지연 건 찾기</li><li>고객 문의와 주문번호를 연결</li><li>담당자가 봐야 할 것만 모아 보고</li></ul>
+<blockquote><p>실제 발송, 환불, 취소는 Guard 승인 지점으로 두면 됩니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">31 / 80</span></div></section>
+<section class="slide slide--std" data-n="32"><div class="pad"><div class="std"><div class="eyebrow">PART 2 · 실제 가능한 사례</div><h2 class="stitle">실무 사례 4: SaaS 리포트 내려받기</h2><div class="srule"></div><div class="sbody"><blockquote><p>"지난주 광고 지표와 매출 리포트를 받아서 한 표로 합쳐줘."</p></blockquote>
+<ul><li>광고 관리자, 결제 시스템, 분석 도구를 순서대로 방문</li><li>CSV 또는 PDF 리포트 다운로드</li><li>날짜 범위를 맞췄는지 화면에서 확인</li><li>레이지코덱스에게 넘길 원자료 폴더를 만듦</li></ul>
+<blockquote><p>Aside는 수집, 레이지코덱스는 분석과 보고서 작성에 강합니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">32 / 80</span></div></section>
+<section class="slide slide--std" data-n="33"><div class="pad"><div class="std"><div class="eyebrow">PART 2 · 실제 가능한 사례</div><h2 class="stitle">실무 사례 5: 세일즈 미팅 준비</h2><div class="srule"></div><div class="sbody"><blockquote><p>"내일 만날 고객사의 최근 뉴스, 제품, 채용공고를 1장으로 정리해줘."</p></blockquote>
+<ul><li>고객사 홈페이지와 뉴스룸 확인</li><li>LinkedIn, 채용 페이지, 보도자료를 비교</li><li>우리 제안과 연결될 만한 단서를 표시</li><li>회의 전에 읽을 요약본 생성</li></ul>
+<blockquote><p>Aside의 초기 뿌리가 세일즈 보조였다는 점과 잘 맞는 사례입니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">33 / 80</span></div></section>
+<section class="slide slide--std" data-n="34"><div class="pad"><div class="std"><div class="eyebrow">PART 2 · 실제 가능한 사례</div><h2 class="stitle">실무 사례 6: 고객센터 티켓 분류</h2><div class="srule"></div><div class="sbody"><blockquote><p>"미답변 티켓을 오류, 결제, 기능 요청, 환불 문의로 나눠줘."</p></blockquote>
+<ul><li>고객센터 SaaS에서 티켓 목록 읽기</li><li>본문을 열어 유형 분류</li><li>긴급도와 담당팀 추천</li><li>답변 초안은 작성하되, 발송은 사람 승인</li></ul>
+<blockquote><p>고객에게 나가는 말은 항상 마지막에 사람이 봅니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">34 / 80</span></div></section>
+<section class="slide slide--std" data-n="35"><div class="pad"><div class="std"><div class="eyebrow">PART 2 · 실제 가능한 사례</div><h2 class="stitle">실무 사례 7: 채용 후보와 회사 조사</h2><div class="srule"></div><div class="sbody"><blockquote><p>"지원자의 공개 포트폴리오와 GitHub, 블로그를 요약해줘."</p></blockquote>
+<ul><li>공개 링크만 확인</li><li>프로젝트, 기여도, 글의 주제를 요약</li><li>면접 질문 후보를 생성</li><li>민감하거나 사적인 정보는 제외</li></ul>
+<blockquote><p>자동화가 가능하더라도 윤리와 개인정보 경계는 사람이 정해야 합니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">35 / 80</span></div></section>
+<section class="slide slide--std" data-n="36"><div class="pad"><div class="std"><div class="eyebrow">PART 2 · 실제 가능한 사례</div><h2 class="stitle">실무 사례 8: 출장 준비 체크</h2><div class="srule"></div><div class="sbody"><blockquote><p>"다음 주 부산 출장 동선, 호텔 후보, 회의장 주변 카페를 정리해줘."</p></blockquote>
+<ul><li>지도와 예약 사이트를 열어 후보 비교</li><li>가격, 거리, 취소 조건을 표로 정리</li><li>캘린더 시간과 이동시간을 대조</li><li>예약 버튼 직전에는 사람에게 확인 요청</li></ul>
+<blockquote><p>여행 자동화도 결제 전 멈춤이 핵심입니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">36 / 80</span></div></section>
+<section class="slide slide--std" data-n="37"><div class="pad"><div class="std"><div class="eyebrow">PART 2 · 실제 가능한 사례</div><h2 class="stitle">실무 사례 9: 구매·조달 비교</h2><div class="srule"></div><div class="sbody"><blockquote><p>"강의용 마이크 5개를 가격, 배송, 후기 기준으로 비교해줘."</p></blockquote>
+<ul><li>쇼핑몰 여러 곳을 열어 실제 재고와 가격 확인</li><li>후기의 반복 불만을 요약</li><li>배송 예정일과 반품 조건을 표시</li><li>최종 구매는 사람 승인</li></ul>
+<blockquote><p>직원에게 "좀 찾아봐"라고 맡기던 일을 브라우저 에이전트에게 맡기는 방식입니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">37 / 80</span></div></section>
+<section class="slide slide--std" data-n="38"><div class="pad"><div class="std"><div class="eyebrow">PART 2 · 실제 가능한 사례</div><h2 class="stitle">실무 사례 10: 블로그와 강의안 리서치</h2><div class="srule"></div><div class="sbody"><blockquote><p>"이 주제로 초보자용 강의안을 만들 근거를 모아줘."</p></blockquote>
+<ul><li>공식 문서와 릴리스 노트 확인</li><li>신뢰도 높은 외부 기사만 분리</li><li>사용 사례를 쉬운 말로 바꿈</li><li>출처와 확인 날짜를 남김</li></ul>
+<blockquote><p>오늘 이 강의안도 같은 원리입니다. 자료를 읽고, 새 산출물을 만들고, 검증합니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">38 / 80</span></div></section>
+<section class="slide slide--std" data-n="39"><div class="pad"><div class="std"><div class="eyebrow">PART 2 · 실제 가능한 사례</div><h2 class="stitle">실무 사례 11: 공고·입찰·지원사업 모니터링</h2><div class="srule"></div><div class="sbody"><blockquote><p>"이번 주 새로 올라온 지원사업 중 우리와 맞는 것만 골라줘."</p></blockquote>
+<ul><li>공공기관 공고 페이지 방문</li><li>마감일, 대상, 제출서류 추출</li><li>자격이 애매한 항목은 보류 표시</li><li>제출은 사람 검토 후 진행</li></ul>
+<blockquote><p>날짜와 조건이 중요한 업무일수록 캡처와 링크가 필요합니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">39 / 80</span></div></section>
+<section class="slide slide--std" data-n="40"><div class="pad"><div class="std"><div class="eyebrow">PART 2 · 실제 가능한 사례</div><h2 class="stitle">실무 사례 12: 회의 전후 정리</h2><div class="srule"></div><div class="sbody"><blockquote><p>"회의 전 자료를 모으고, 회의 후 액션아이템을 업무도구에 정리해줘."</p></blockquote>
+<ul><li>캘린더와 관련 문서 찾기</li><li>참석자와 과거 메일 흐름 확인</li><li>회의 후 결정사항을 티켓 초안으로 정리</li><li>실제 등록·전송은 승인 뒤 실행</li></ul>
+<blockquote><p>Aside는 여러 SaaS를 넘나드는 사무 조수로 쓸 때 빛이 납니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">40 / 80</span></div></section>
+<section class="slide slide--std" data-n="41"><div class="pad"><div class="std"><div class="eyebrow">PART 2 · 실제 가능한 사례</div><h2 class="stitle">실무 사례 13: 만든 페이지 실제로 눌러보기</h2><div class="srule"></div><div class="sbody"><blockquote><p>"문의 폼을 열고, 이름과 이메일을 넣고, 오류 메시지가 맞는지 캡처해줘."</p></blockquote>
+<ul><li>실제 브라우저로 페이지 열기</li><li>버튼, 탭, 모달, 폼을 눌러봄</li><li>모바일과 데스크톱 화면 캡처</li><li>실패하면 재현 순서를 남김</li></ul>
+<blockquote><p>개발자가 만든 것을 사용자의 손으로 다시 확인하는 역할입니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">41 / 80</span></div></section>
+<section class="slide slide--std" data-n="42"><div class="pad"><div class="std"><div class="eyebrow">PART 2 · 실제 가능한 사례</div><h2 class="stitle">잘못 맡기면 생기는 일</h2><div class="srule"></div><div class="sbody"><blockquote><p>자동화는 만능이 아니라, 잘못 맡기면 빠르게 사고를 냅니다.</p></blockquote>
+<ul><li>"최신 정보"라고 했지만 확인 날짜가 없음</li><li>로그인된 계정에서 잘못된 고객을 클릭</li><li>다운로드는 했지만 파일이 비어 있음</li><li>결제나 전송 버튼을 승인 없이 누름</li></ul>
+<blockquote><p>그래서 모든 사례의 끝에는 <strong>경계와 증거</strong>가 붙어야 합니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">42 / 80</span></div></section>
+<section class="slide slide--std" data-n="43"><div class="pad"><div class="std"><div class="eyebrow">PART 2 · 실제 가능한 사례</div><h2 class="stitle">미니 실습: 내 업무를 한 줄로 바꾸기</h2><div class="srule"></div><div class="sbody"><table><thead><tr><th>질문</th><th>예시 답</th></tr></thead><tbody><tr><td>매번 여는 사이트는?</td><td>카드사, 쇼핑몰, 고객센터</td></tr><tr><td>반복 클릭은?</td><td>기간 선택, 다운로드, 필터</td></tr><tr><td>위험 버튼은?</td><td>결제, 전송, 삭제</td></tr><tr><td>남겨야 할 증거는?</td><td>파일, 캡처, 표, 링크</td></tr></tbody></table>
+<blockquote><p>이 네 칸을 채우면 Aside 업무 설계가 시작됩니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">43 / 80</span></div></section>
+<section class="slide slide--std" data-n="44"><div class="pad"><div class="std"><div class="eyebrow">PART 2 · 실제 가능한 사례</div><h2 class="stitle">사례의 끝은 증거 폴더입니다</h2><div class="srule"></div><div class="sbody"><blockquote><p>자동화가 끝난 뒤에는 "어디에 무엇이 남았는가"가 보여야 합니다.</p></blockquote>
+<pre><code>evidence/
+screenshots/
+downloads/
+source-links.md
+summary-table.md</code></pre>
+<ul><li>스크린샷은 화면 증거</li><li>다운로드는 원자료</li><li>링크 목록은 재확인 경로</li><li>요약표는 사람이 읽는 결론</li></ul>
+<blockquote><p>Aside가 모은 증거가 정리되어 있어야, 레이지코덱스가 다음 일을 정확히 이어받습니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">44 / 80</span></div></section>
+<section class="slide slide--divider" data-n="45"><div class="pad"><div class="divider"><div class="dnum">3</div><div class="drule"></div><div class="eyebrow">PART 3</div><h1 class="dtitle">레이지코덱스 최신 흐름</h1><div class="dsub">7월 3일 이후 자료를 넣어,<br>"끝까지 하는 AI"가 지금 어디로 가는지 봅니다.</div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">45 / 80</span></div></section>
+<section class="slide slide--std" data-n="46"><div class="pad"><div class="std"><div class="eyebrow">PART 3 · LAZYCODEX 최신 흐름</div><h2 class="stitle">레이지코덱스는 무엇인가요?</h2><div class="srule"></div><div class="sbody"><blockquote><p>Codex를 더 엄격하게 일하게 만드는 에이전트 하네스입니다.</p></blockquote>
+<ul><li>계획을 세우고</li><li>파일을 읽고</li><li>수정하고</li><li>검증하고</li><li>증거를 남기고</li><li>필요하면 다시 고칩니다</li></ul>
+<blockquote><p>그냥 "코드 써줘"가 아니라 <strong>끝났다는 말을 증명하게 만드는 장치</strong>입니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">46 / 80</span></div></section>
+<section class="slide slide--std" data-n="47"><div class="pad"><div class="std"><div class="eyebrow">PART 3 · LAZYCODEX 최신 흐름</div><h2 class="stitle">2026-07-03 이후 핵심: visual-qa</h2><div class="srule"></div><div class="sbody"><blockquote><p>v4.15.0 자료의 핵심은 "감으로 만든 UI"를 "브라우저 증거로 검증한 UI"로 바꾸는 것입니다.</p></blockquote>
+<ul><li>실제 브라우저에서 화면을 봄</li><li>375, 768, 1280px 같은 화면 크기를 확인</li><li>hover, focus, click, scroll 상태를 봄</li><li>의미 없는 장식 모션은 통과시키지 않음</li></ul>
+<blockquote><p>예쁜지보다 중요한 질문: <strong>사용자가 실제로 눌렀을 때 맞는가?</strong></p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">47 / 80</span></div></section>
+<section class="slide slide--std" data-n="48"><div class="pad"><div class="std"><div class="eyebrow">PART 3 · LAZYCODEX 최신 흐름</div><h2 class="stitle">DESIGN.md는 디자인 계약서입니다</h2><div class="srule"></div><div class="sbody"><blockquote><p>"대충 세련되게"라고 시키면 AI는 자기 취향을 섞습니다.</p></blockquote>
+<p>DESIGN.md에는 이런 내용을 적습니다.</p>
+<ul><li>색상, 폰트, 간격</li><li>버튼과 카드의 상태</li><li>모바일과 데스크톱 차이</li><li>움직임 규칙</li><li>참고 URL과 캡처 시점</li></ul>
+<blockquote><p>계약서를 먼저 쓰면, 구현자가 마음대로 꾸미는 일을 줄일 수 있습니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">48 / 80</span></div></section>
+<section class="slide slide--std" data-n="49"><div class="pad"><div class="std"><div class="eyebrow">PART 3 · LAZYCODEX 최신 흐름</div><h2 class="stitle">Live URL Cloner를 쉽게 말하면</h2><div class="srule"></div><div class="sbody"><blockquote><p>"이 사이트처럼 만들어줘"라고 할 때, 스크린샷만 보는 게 아닙니다.</p></blockquote>
+<ul><li>실제 URL을 브라우저로 엽니다</li><li>계산된 CSS와 반응형 레이아웃을 읽습니다</li><li>hover, focus, active 상태를 확인합니다</li><li>그 결과를 DESIGN.md 계약으로 정리합니다</li></ul>
+<blockquote><p>감상문이 아니라 <strong>실제 런타임에서 뽑은 디자인 재료</strong>입니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">49 / 80</span></div></section>
+<section class="slide slide--std" data-n="50"><div class="pad"><div class="std"><div class="eyebrow">PART 3 · LAZYCODEX 최신 흐름</div><h2 class="stitle">Existence-first: 새로 만들기 전에 먼저 찾기</h2><div class="srule"></div><div class="sbody"><blockquote><p>v4.15.0 자료에서 중요한 개발 철학입니다.</p></blockquote>
+<ol><li>지울 수 있나?</li><li>이미 있는 걸 재사용할 수 있나?</li><li>플랫폼 기본 기능으로 가능한가?</li><li>그래도 안 되면 최소한으로 만든다</li></ol>
+<blockquote><p>좋은 AI 작업은 코드를 많이 쓰는 것이 아니라, 불필요한 코드를 줄이는 것입니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">50 / 80</span></div></section>
+<section class="slide slide--std" data-n="51"><div class="pad"><div class="std"><div class="eyebrow">PART 3 · LAZYCODEX 최신 흐름</div><h2 class="stitle">v4.16.0 업데이트: 시작은 가볍게, 세션은 오래</h2><div class="srule"></div><div class="sbody"><blockquote><p>현재 LazyCodex v4.16.0 업데이트가 설치 중입니다.</p></blockquote>
+<ul><li>Codex 시작 때 ULTRAWORK 프롬프트를 더 작게 주입</li><li>긴 세션에서도 CodeGraph 상태가 새지 않도록 정리</li><li>임시 루트 제외, 고아 프로세스 정리, cleanup 실패 격리</li><li>OpenCode와 LazyCodex 사용자에게 큰 마이그레이션은 예상되지 않음</li></ul>
+<blockquote><p>쉽게 말하면: <strong>세션이 길어져도 덜 지저분하게 일하도록 다듬은 업데이트</strong>입니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">51 / 80</span></div></section>
+<section class="slide slide--std" data-n="52"><div class="pad"><div class="std"><div class="eyebrow">PART 3 · LAZYCODEX 최신 흐름</div><h2 class="stitle">CodeGraph를 쉬운 말로</h2><div class="srule"></div><div class="sbody"><blockquote><p>큰 코드베이스에서 "파일을 하나씩 뒤지는" 대신, 미리 만든 지도를 보는 방식입니다.</p></blockquote>
+<ul><li>어떤 파일이 어떤 역할인지 빠르게 파악</li><li>오래 작업해도 임시 파일 때문에 헷갈리지 않게 관리</li><li>죽은 프로세스와 청소 실패가 다른 작업을 망치지 않게 분리</li></ul>
+<blockquote><p>강의식 비유: 책상 위 서류 더미가 아니라 <strong>정리된 사무실 지도</strong>를 들고 일하는 것.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">52 / 80</span></div></section>
+<section class="slide slide--std" data-n="53"><div class="pad"><div class="std"><div class="eyebrow">PART 3 · LAZYCODEX 최신 흐름</div><h2 class="stitle">업데이트 후에는 새 세션이 안전합니다</h2><div class="srule"></div><div class="sbody"><blockquote><p>설치가 끝나도 이미 열린 대화는 예전 상태를 들고 있을 수 있습니다.</p></blockquote>
+<ul><li>플러그인 훅은 새 세션 시작 때 더 안정적으로 로드</li><li>새 버전의 프롬프트와 스킬이 반영됨</li><li>CodeGraph 초기화도 새 흐름에서 깨끗하게 시작</li></ul>
+<blockquote><p>그래서 오늘 작업이 끝난 뒤에는 새 Codex 세션을 여는 것을 권장합니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">53 / 80</span></div></section>
+<section class="slide slide--std" data-n="54"><div class="pad"><div class="std"><div class="eyebrow">PART 3 · LAZYCODEX 최신 흐름</div><h2 class="stitle"><code>ulw</code>는 언제 붙이나요?</h2><div class="srule"></div><div class="sbody"><blockquote><p>"대충 제안만"이 아니라 "끝까지 해줘"일 때 붙입니다.</p></blockquote>
+<ul><li>파일을 실제로 만들어야 할 때</li><li>테스트나 검증 증거가 필요할 때</li><li>여러 자료를 읽고 산출물을 정리해야 할 때</li><li>중간에 실패하면 다시 고쳐야 할 때</li></ul>
+<blockquote><p>오늘 요청 끝의 <code>ulw</code>도 같은 뜻입니다.<br>새 강의안을 만들고, 장수와 렌더까지 확인하라는 신호입니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">54 / 80</span></div></section>
+<section class="slide slide--std" data-n="55"><div class="pad"><div class="std"><div class="eyebrow">PART 3 · LAZYCODEX 최신 흐름</div><h2 class="stitle">레이지코덱스식 완료: RED → GREEN</h2><div class="srule"></div><div class="sbody"><blockquote><p>먼저 실패를 잡고, 그다음 고칩니다.</p></blockquote>
+<table><thead><tr><th>단계</th><th>뜻</th></tr></thead><tbody><tr><td>RED</td><td>산출물이 없거나 조건을 못 맞춰 실패</td></tr><tr><td>구현</td><td>파일 생성, 코드 수정, 내용 보강</td></tr><tr><td>GREEN</td><td>같은 검증이 통과</td></tr><tr><td>Real surface</td><td>실제 HTML을 열어 사람이 보는 표면 확인</td></tr></tbody></table>
+<blockquote><p>"잘 될 것 같아요"가 아니라 <strong>아까 실패한 기준이 이제 통과합니다</strong>라고 말하는 방식입니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">55 / 80</span></div></section>
+<section class="slide slide--std" data-n="56"><div class="pad"><div class="std"><div class="eyebrow">PART 3 · LAZYCODEX 최신 흐름</div><h2 class="stitle">TeamMode는 여러 사람에게 나눠 맡기는 느낌</h2><div class="srule"></div><div class="sbody"><blockquote><p>큰 조사를 혼자 하지 않고, 여러 관점으로 쪼개는 방식입니다.</p></blockquote>
+<ul><li>한 명은 공식 문서 확인</li><li>한 명은 경쟁사 조사</li><li>한 명은 오류 가능성 검토</li><li>한 명은 최종 보고서 정리</li></ul>
+<blockquote><p>실제 회사에서 업무를 나눠 맡기듯, AI 작업도 역할을 나눌 수 있습니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">56 / 80</span></div></section>
+<section class="slide slide--std" data-n="57"><div class="pad"><div class="std"><div class="eyebrow">PART 3 · LAZYCODEX 최신 흐름</div><h2 class="stitle">긴 작업에는 기억과 메모가 필요합니다</h2><div class="srule"></div><div class="sbody"><blockquote><p>사람이 긴 프로젝트에서 회의록을 남기듯, AI도 작업 메모가 필요합니다.</p></blockquote>
+<ul><li>목표와 성공 기준</li><li>어떤 자료를 읽었는지</li><li>실패한 검증과 통과한 검증</li><li>남은 위험과 후속 작업</li></ul>
+<blockquote><p>LazyCodex의 힘은 "열심히 한다"가 아니라 <strong>상태를 잃지 않는다</strong>에 있습니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">57 / 80</span></div></section>
+<section class="slide slide--std" data-n="58"><div class="pad"><div class="std"><div class="eyebrow">PART 3 · LAZYCODEX 최신 흐름</div><h2 class="stitle">초보자용 명령 예시</h2><div class="srule"></div><div class="sbody"><pre><code>이 폴더 안 문서를 읽고, 초보자용 강의안으로 다시 만들어줘. ulw</code></pre>
+<pre><code>이 웹앱을 실제 브라우저에서 눌러보고, 오류가 있으면 고쳐줘. ulw</code></pre>
+<pre><code>이 라이브 URL을 디자인 참고로 삼아 DESIGN.md를 먼저 만들고 구현해줘.</code></pre>
+<blockquote><p>좋은 요청은 목적, 입력, 산출물, 검증 기준이 들어 있습니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">58 / 80</span></div></section>
+<section class="slide slide--std" data-n="59"><div class="pad"><div class="std"><div class="eyebrow">PART 3 · LAZYCODEX 최신 흐름</div><h2 class="stitle">레이지코덱스가 안 어울리는 일도 있습니다</h2><div class="srule"></div><div class="sbody"><blockquote><p>모든 일에 큰 하네스를 켜면 오히려 무겁습니다.</p></blockquote>
+<ul><li>한 줄 번역</li><li>간단한 맞춤법 수정</li><li>단순 파일명 확인</li><li>사람이 바로 판단할 수 있는 짧은 질문</li></ul>
+<blockquote><p>작은 일은 작게, 큰 일은 끝까지.<br>이것이 도구를 오래 쓰는 요령입니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">59 / 80</span></div></section>
+<section class="slide slide--std" data-n="60"><div class="pad"><div class="std"><div class="eyebrow">PART 3 · LAZYCODEX 최신 흐름</div><h2 class="stitle">좋은 자동화는 비용도 관리합니다</h2><div class="srule"></div><div class="sbody"><blockquote><p>오래 생각하는 AI는 비쌉니다. 그래서 기준이 필요합니다.</p></blockquote>
+<ul><li>실패 비용이 큰 일인가?</li><li>반복해서 다시 쓸 산출물인가?</li><li>사람이 하면 오래 걸리는 일인가?</li><li>검증이 없으면 위험한 일인가?</li></ul>
+<blockquote><p>네 질문 중 두 개 이상이 "예"라면 LazyCodex를 켤 만합니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">60 / 80</span></div></section>
+<section class="slide slide--std" data-n="61"><div class="pad"><div class="std"><div class="eyebrow">PART 3 · LAZYCODEX 최신 흐름</div><h2 class="stitle">Part 3 정리</h2><div class="srule"></div><div class="sbody"><blockquote><p>레이지코덱스는 "AI를 더 똑똑하게 보이게" 하는 도구가 아닙니다.</p></blockquote>
+<ul><li>완료 기준을 강화합니다</li><li>브라우저 증거를 중요하게 봅니다</li><li>새 코드를 만들기 전에 기존 것을 찾습니다</li><li>긴 세션에서도 상태를 관리하려고 합니다</li><li><code>ulw</code>는 "끝까지 처리" 신호입니다</li></ul>
+<blockquote><p>Aside가 손이라면, 레이지코덱스는 <strong>검증하는 책임자</strong>입니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">61 / 80</span></div></section>
+<section class="slide slide--divider" data-n="62"><div class="pad"><div class="divider"><div class="dnum">4</div><div class="drule"></div><div class="eyebrow">PART 4</div><h1 class="dtitle">Aside + LazyCodex 콤보 워크플로우</h1><div class="dsub">손이 자료를 모으고, 두뇌가 만들고,<br>다시 손이 눌러보며 확인하는 이야기입니다.</div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">62 / 80</span></div></section>
+<section class="slide slide--std" data-n="63"><div class="pad"><div class="std"><div class="eyebrow">PART 4 · 콤보 워크플로우</div><h2 class="stitle">콤보 기본식</h2><div class="srule"></div><div class="sbody"><pre><code>Aside: 실제 웹에서 자료와 증거 수집
+LazyCodex: 자료를 바탕으로 산출물 제작
+Aside: 결과물을 실제 브라우저에서 조작 검증
+LazyCodex: 실패를 수정하고 증거 기록</code></pre>
+<blockquote><p>이 흐름이 강한 이유는, 처음과 끝이 모두 <strong>실제 화면</strong>에 닿기 때문입니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">63 / 80</span></div></section>
+<section class="slide slide--std" data-n="64"><div class="pad"><div class="std"><div class="eyebrow">PART 4 · 콤보 워크플로우</div><h2 class="stitle">콤보 사례 1: 경쟁사 조사 → 홈페이지 개선</h2><div class="srule"></div><div class="sbody"><blockquote><p>목표: 경쟁사 5곳을 보고 우리 서비스 페이지를 개선한다.</p></blockquote>
+<ol><li>Aside가 경쟁사 가격, CTA, FAQ를 캡처</li><li>LazyCodex가 차이표와 개선안을 작성</li><li>LazyCodex가 홈페이지 문구와 섹션을 수정</li><li>Aside가 실제 페이지에서 모바일·데스크톱 CTA를 눌러봄</li></ol>
+<blockquote><p>결과물은 보고서가 아니라 <strong>개선된 페이지와 검증 증거</strong>입니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">64 / 80</span></div></section>
+<section class="slide slide--std" data-n="65"><div class="pad"><div class="std"><div class="eyebrow">PART 4 · 콤보 워크플로우</div><h2 class="stitle">콤보 사례 2: 세무 포털 자료 → 고객 안내서</h2><div class="srule"></div><div class="sbody"><blockquote><p>목표: 고객에게 줄 월간 세무 준비 안내서를 만든다.</p></blockquote>
+<ol><li>Aside가 포털과 카드사에서 필요한 자료 위치 확인</li><li>내려받을 파일 목록과 누락 체크표 생성</li><li>LazyCodex가 고객용 쉬운 안내서 작성</li><li>Aside가 안내서 링크와 다운로드 파일이 열리는지 확인</li></ol>
+<blockquote><p>민감한 제출은 사람 승인, 자료 정리는 자동화로 나눕니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">65 / 80</span></div></section>
+<section class="slide slide--std" data-n="66"><div class="pad"><div class="std"><div class="eyebrow">PART 4 · 콤보 워크플로우</div><h2 class="stitle">콤보 사례 3: SaaS 리포트 → 주간 대시보드</h2><div class="srule"></div><div class="sbody"><blockquote><p>목표: 매주 반복되는 지표 보고를 줄인다.</p></blockquote>
+<ol><li>Aside가 광고, 결제, 분석 도구에서 CSV를 다운로드</li><li>LazyCodex가 데이터를 정리하고 그래프 생성</li><li>LazyCodex가 주간 코멘트를 초안 작성</li><li>Aside가 대시보드 링크와 필터가 실제로 작동하는지 QA</li></ol>
+<blockquote><p>손으로 모으던 파일이 <strong>자동 보고 루틴</strong>으로 바뀝니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">66 / 80</span></div></section>
+<section class="slide slide--std" data-n="67"><div class="pad"><div class="std"><div class="eyebrow">PART 4 · 콤보 워크플로우</div><h2 class="stitle">콤보 사례 4: 강의안 새 버전 만들기</h2><div class="srule"></div><div class="sbody"><blockquote><p>목표: 기존 강의안은 보존하고, 새 폴더에 2편을 만든다.</p></blockquote>
+<ol><li>Aside나 웹 도구가 최신 문서와 릴리스 노트를 확인</li><li>LazyCodex가 옵시디언 노트와 기존 HTML 구조를 읽음</li><li>같은 장수로 Markdown과 HTML 생성</li><li>브라우저에서 실제 슬라이드를 열어 1장과 80장을 확인</li></ol>
+<blockquote><p>지금 보고 있는 이 작업이 바로 그 예시입니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">67 / 80</span></div></section>
+<section class="slide slide--std" data-n="68"><div class="pad"><div class="std"><div class="eyebrow">PART 4 · 콤보 워크플로우</div><h2 class="stitle">콤보 사례 5: 제품 화면 visual-qa</h2><div class="srule"></div><div class="sbody"><blockquote><p>목표: "예뻐 보이는 페이지"가 아니라 "실제로 눌리는 페이지"를 만든다.</p></blockquote>
+<ol><li>Aside가 레퍼런스 URL의 화면과 상태를 확인</li><li>LazyCodex가 DESIGN.md 계약을 작성</li><li>구현 후 Aside가 hover, focus, click, scroll을 캡처</li><li>LazyCodex가 깨진 부분을 다시 고침</li></ol>
+<blockquote><p>v4.15.0 이후 흐름과 가장 잘 맞는 콤보입니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">68 / 80</span></div></section>
+<section class="slide slide--std" data-n="69"><div class="pad"><div class="std"><div class="eyebrow">PART 4 · 콤보 워크플로우</div><h2 class="stitle">콤보 사례 6: 고객지원 품질 개선</h2><div class="srule"></div><div class="sbody"><blockquote><p>목표: 반복 문의를 줄이는 FAQ와 답변 템플릿을 만든다.</p></blockquote>
+<ol><li>Aside가 고객센터 티켓을 유형별로 읽음</li><li>LazyCodex가 반복 질문과 원인을 분류</li><li>FAQ 초안과 답변 템플릿 작성</li><li>Aside가 고객센터 화면에서 템플릿 적용 위치를 확인</li></ol>
+<blockquote><p>발송은 사람 승인. 정리와 초안은 AI에게 맡깁니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">69 / 80</span></div></section>
+<section class="slide slide--std" data-n="70"><div class="pad"><div class="std"><div class="eyebrow">PART 4 · 콤보 워크플로우</div><h2 class="stitle">콤보 사례 7: 채용 페이지 개선</h2><div class="srule"></div><div class="sbody"><blockquote><p>목표: 지원자가 헷갈리지 않는 채용 페이지를 만든다.</p></blockquote>
+<ol><li>Aside가 경쟁사 채용 페이지와 공개 FAQ를 조사</li><li>LazyCodex가 우리 채용 페이지 구조를 개선</li><li>Aside가 지원 폼을 실제로 눌러보고 오류를 캡처</li><li>LazyCodex가 문구와 폼 검증 오류를 수정</li></ol>
+<blockquote><p>채용도 결국 웹 화면과 문서 경험의 문제입니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">70 / 80</span></div></section>
+<section class="slide slide--std" data-n="71"><div class="pad"><div class="std"><div class="eyebrow">PART 4 · 콤보 워크플로우</div><h2 class="stitle">콤보 사례 8: 월간 경영 루틴</h2><div class="srule"></div><div class="sbody"><blockquote><p>목표: 매월 반복되는 자료수집과 보고를 한 번의 루틴으로 묶는다.</p></blockquote>
+<ol><li>Aside Routines가 정해진 사이트에서 자료를 모음</li><li>LazyCodex가 표준 보고서와 체크리스트 작성</li><li>누락 파일이 있으면 Aside가 다시 확인</li><li>최종 보고서에는 출처, 날짜, 파일 경로를 남김</li></ol>
+<blockquote><p>매월 "어디까지 했더라"를 줄이는 방식입니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">71 / 80</span></div></section>
+<section class="slide slide--std" data-n="72"><div class="pad"><div class="std"><div class="eyebrow">PART 4 · 콤보 워크플로우</div><h2 class="stitle">콤보 레시피 한 장 요약</h2><div class="srule"></div><div class="sbody"><table><thead><tr><th>필요</th><th>먼저 쓸 도구</th><th>다음 도구</th></tr></thead><tbody><tr><td>웹 자료 수집</td><td>Aside</td><td>LazyCodex로 정리</td></tr><tr><td>문서·코드 제작</td><td>LazyCodex</td><td>Aside로 화면 검증</td></tr><tr><td>반복 루틴</td><td>Aside Routines</td><td>LazyCodex로 보고서</td></tr><tr><td>UI 품질 확인</td><td>Aside REPL</td><td>LazyCodex로 수정</td></tr></tbody></table>
+<blockquote><p>손이 먼저냐 두뇌가 먼저냐는 일의 시작점에 따라 달라집니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">72 / 80</span></div></section>
+<section class="slide slide--divider" data-n="73"><div class="pad"><div class="divider"><div class="dnum">5</div><div class="drule"></div><div class="eyebrow">PART 5</div><h1 class="dtitle">직접 해보기와 마무리</h1><div class="dsub">이제 내 업무 하나를 골라,<br>손과 두뇌를 어디에 둘지 정합니다.</div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">73 / 80</span></div></section>
+<section class="slide slide--std" data-n="74"><div class="pad"><div class="std"><div class="eyebrow">PART 5 · 실습 &amp; 참고 자료</div><h2 class="stitle">10분 실습: 내 업무 하나 고르기</h2><div class="srule"></div><div class="sbody"><blockquote><p>종이에 네 줄만 적어보세요.</p></blockquote>
+<ol><li>매번 여는 사이트:</li><li>반복해서 누르는 버튼:</li><li>절대 자동으로 누르면 안 되는 버튼:</li><li>남겨야 하는 증거:</li></ol>
+<blockquote><p>이 네 줄이 나오면 자동화 설계의 절반은 끝난 것입니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">74 / 80</span></div></section>
+<section class="slide slide--std" data-n="75"><div class="pad"><div class="std"><div class="eyebrow">PART 5 · 실습 &amp; 참고 자료</div><h2 class="stitle">Aside만 쓰는 요청 예시</h2><div class="srule"></div><div class="sbody"><pre><code>Read-only로 이 사이트 5곳을 열어 가격, 무료체험, 고객지원 문구를 표로 정리해줘.
+각 항목에는 확인한 URL과 확인 날짜를 남겨줘.
+결제, 가입, 문의 전송은 절대 하지 마.</code></pre>
+<blockquote><p>처음에는 읽기 전용, 출처 포함, 금지 행동 명시.<br>이 세 가지가 안전한 시작입니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">75 / 80</span></div></section>
+<section class="slide slide--std" data-n="76"><div class="pad"><div class="std"><div class="eyebrow">PART 5 · 실습 &amp; 참고 자료</div><h2 class="stitle">LazyCodex만 쓰는 요청 예시</h2><div class="srule"></div><div class="sbody"><pre><code>이 폴더의 기존 강의안을 읽고, 같은 장수의 새 버전을 만들어줘.
+원본은 수정하지 말고 새 폴더에 저장해줘.
+장수, 필수 키워드, HTML 렌더를 검증해서 증거 파일을 남겨줘. ulw</code></pre>
+<blockquote><p>파일 산출물과 검증 기준이 있을 때 잘 맞습니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">76 / 80</span></div></section>
+<section class="slide slide--std" data-n="77"><div class="pad"><div class="std"><div class="eyebrow">PART 5 · 실습 &amp; 참고 자료</div><h2 class="stitle">Aside + LazyCodex 콤보 요청 예시</h2><div class="srule"></div><div class="sbody"><pre><code>Aside로 경쟁사 5곳의 실제 페이지를 열어 캡처와 출처를 모아줘.
+그 자료를 바탕으로 LazyCodex가 우리 서비스 페이지 개선안을 만들고,
+수정 후 다시 Aside로 모바일과 데스크톱에서 CTA를 눌러 검증해줘. ulw</code></pre>
+<blockquote><p>수집, 제작, 검증이 모두 들어간 요청입니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">77 / 80</span></div></section>
+<section class="slide slide--std" data-n="78"><div class="pad"><div class="std"><div class="eyebrow">PART 5 · 실습 &amp; 참고 자료</div><h2 class="stitle">실행 전 안전 체크리스트</h2><div class="srule"></div><div class="sbody"><ul><li>Read-only로 시작할 수 있는가?</li><li>Guard 승인 지점이 정해졌는가?</li><li>결제, 전송, 삭제, 제출 버튼을 금지했는가?</li><li>저장 파일명과 위치가 정해졌는가?</li><li>성공 판정 증거가 명확한가?</li></ul>
+<blockquote><p>자동화는 "빨리"보다 <strong>되돌릴 수 있게</strong>가 먼저입니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">78 / 80</span></div></section>
+<section class="slide slide--std" data-n="79"><div class="pad"><div class="std"><div class="eyebrow">PART 5 · 실습 &amp; 참고 자료</div><h2 class="stitle">언제 뭘 쓰나</h2><div class="srule"></div><div class="sbody"><table><thead><tr><th>상황</th><th>추천</th></tr></thead><tbody><tr><td>웹사이트를 열고 자료를 모아야 함</td><td>Aside</td></tr><tr><td>파일과 코드를 만들고 검증해야 함</td><td>레이지코덱스</td></tr><tr><td>만든 웹 결과를 실제로 눌러봐야 함</td><td>Aside REPL</td></tr><tr><td>긴 작업을 끝까지 몰고 가야 함</td><td><code>ulw</code></td></tr><tr><td>매달 같은 절차를 반복해야 함</td><td>Aside Routines + LazyCodex</td></tr></tbody></table>
+<blockquote><p>짧게 말하면: <strong>손이 필요한가, 책임자가 필요한가, 둘 다 필요한가</strong>입니다.</p></blockquote></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">79 / 80</span></div></section>
+<section class="slide slide--std" data-n="80"><div class="pad"><div class="std"><div class="eyebrow">PART 5 · 실습 &amp; 참고 자료</div><h2 class="stitle">마지막 3줄</h2><div class="srule"></div><div class="sbody"><blockquote><p>Aside는 로그인된 웹을 대신 다루는 <strong>손</strong>입니다.</p></blockquote>
+<blockquote><p>레이지코덱스는 끝났다는 말을 증거로 확인하는 <strong>두뇌</strong>입니다.</p></blockquote>
+<blockquote><p>둘을 합치면 "자료를 모으고, 만들고, 실제로 눌러 검증하는" 업무 흐름이 됩니다.</p></blockquote>
+<h3>참고 자료</h3>
+<ul><li>Obsidian Aside 브리프: 2026-07-04 정리본</li><li>Obsidian oh-my-openagent v4.15.0 visual-qa 노트: 2026-07-03 이후 자료</li><li>Aside changelog/docs 확인: 2026-07-08</li><li>LazyCodex v4.16.0 업데이트 노트: 2026-07-08 세션 내 확인</li></ul></div></div></div><div class="foot"><span class="fbrand">Aside · LazyCodex · 두번째 이야기</span><span class="fno">80 / 80</span></div></section>
+</div></div>
+<div id="hint">← → · SPACE · F</div>
+<script>
+const slides=[...document.querySelectorAll('.slide')],deck=document.getElementById('deck');let cur=0;
+function fit(){const s=Math.min(innerWidth/1280,innerHeight/720);const x=(innerWidth-1280*s)/2,y=(innerHeight-720*s)/2;deck.style.transform='translate('+x+'px,'+y+'px) scale('+s+')';}
+function show(n){cur=Math.max(0,Math.min(slides.length-1,n));
+ slides.forEach((s,i)=>s.classList.toggle('active',i===cur));
+ document.getElementById('bar').style.width=((cur+1)/slides.length*100)+'%';location.hash=cur+1;}
+window.goToSlide=i=>show(i-1);
+addEventListener('keydown',e=>{
+ if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();show(cur+1);}
+ else if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();show(cur-1);}
+ else if(e.key==='Home')show(0); else if(e.key==='End')show(slides.length-1);
+ else if(e.key.toLowerCase()==='f'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();}
+});
+addEventListener('resize',fit);
+deck.addEventListener('click',e=>show(e.clientX/innerWidth>0.32?cur+1:cur-1));
+const h=parseInt(location.hash.replace('#',''));fit();show(isNaN(h)?0:h-1);
+</script></body></html>
