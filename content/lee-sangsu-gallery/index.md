@@ -24,8 +24,8 @@ cssclasses:
     <strong>Aside Browser 실전 매뉴얼북</strong>
     <span>설정, 작업 표면, MCP/CLI/REPL, 운영 원칙까지 묶은 원문 HTML 실전 매뉴얼입니다.</span>
   </a>
-  <a href="./aside-lazycodex-second-story" class="internal">
+  <a href="https://goodlookingprokim.github.io/4060-middle-school/static/lee-sangsu-gallery/aside-lazycodex-second-story.html">
     <strong>Aside 브라우저 &amp; 레이지코덱스 — 두번째 이야기</strong>
-    <span>이상수님이 보내주신 원문 HTML 슬라이드를 웹에서 바로 열어볼 수 있게 연결한 자료입니다.</span>
+    <span>이상수님이 보내주신 원문 HTML 슬라이드를 블로그 본문 없이 전체 화면으로 바로 여는 링크입니다.</span>
   </a>
 </div>
