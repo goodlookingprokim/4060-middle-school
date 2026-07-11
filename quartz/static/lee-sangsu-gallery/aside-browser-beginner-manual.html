@@ -1,0 +1,898 @@
+<!doctype html>
+<html lang="ko">
+<head>
+ <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+ <title>Aside Browser 완전초보 입문 매뉴얼북</title>
+ <style>
+ :root {
+ --ink: #15211d;
+ --muted: #66756f;
+ --paper: #fbfaf6;
+ --panel: #ffffff;
+ --line: #dce5df;
+ --green: #1f7a5b;
+ --blue: #2b6cb0;
+ --amber: #b56b1d;
+ --red: #b23b3b;
+ --mint: #e9f6ef;
+ --sky: #eaf3ff;
+ --butter: #fff4d8;
+ --rose: #fff0ee;
+ --shadow: 0 18px 46px rgba(20, 35, 29, 0.10);
+ }
+
+ * {
+ box-sizing: border-box;
+ }
+
+ html {
+ scroll-behavior: smooth;
+ }
+
+ body {
+ margin: 0;
+ color: var(--ink);
+ background:
+ linear-gradient(180deg, #f7fbf5 0%, var(--paper) 38%, #f8fbff 100%);
+ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+ line-height: 1.72;
+ word-break: keep-all;
+ overflow-wrap: anywhere;
+ }
+
+ a {
+ color: var(--blue);
+ text-decoration-thickness: 1px;
+ text-underline-offset: 3px;
+ }
+
+ img {
+ max-width: 100%;
+ display: block;
+ }
+
+ .hero {
+ min-height: 84vh;
+ display: grid;
+ align-items: end;
+ padding: 44px clamp(18px, 5vw, 72px) 34px;
+ background:
+ linear-gradient(140deg, rgba(10, 45, 35, 0.88), rgba(25, 74, 96, 0.68)),
+ url("assets/aside-workflow-cheatsheet.png") center / cover no-repeat;
+ color: #fff;
+ position: relative;
+ isolation: isolate;
+ }
+
+ .hero::after {
+ content: "";
+ position: absolute;
+ inset: auto 0 0 0;
+ height: 160px;
+ background: linear-gradient(180deg, transparent, var(--paper));
+ z-index: -1;
+ }
+
+ .hero-inner {
+ max-width: 1040px;
+ }
+
+ .kicker {
+ display: inline-flex;
+ align-items: center;
+ gap: 8px;
+ padding: 7px 12px;
+ border: 1px solid rgba(255,255,255,0.36);
+ border-radius: 999px;
+ background: rgba(255,255,255,0.14);
+ color: #ecfff7;
+ font-size: 14px;
+ font-weight: 700;
+ letter-spacing: 0;
+ }
+
+ h1 {
+ max-width: 920px;
+ margin: 22px 0 18px;
+ font-size: clamp(42px, 7vw, 86px);
+ line-height: 1.02;
+ letter-spacing: 0;
+ }
+
+ .hero p {
+ max-width: 780px;
+ margin: 0 0 24px;
+ color: #eefaf6;
+ font-size: clamp(17px, 2.2vw, 24px);
+ }
+
+ .hero-actions {
+ display: flex;
+ flex-wrap: wrap;
+ gap: 10px;
+ margin-top: 28px;
+ }
+
+ .btn {
+ display: inline-flex;
+ align-items: center;
+ justify-content: center;
+ min-width: 0;
+ min-height: 44px;
+ padding: 10px 16px;
+ border-radius: 8px;
+ border: 1px solid rgba(255,255,255,0.35);
+ background: #fff;
+ color: #153f31;
+ font-weight: 800;
+ text-decoration: none;
+ }
+
+ .btn.secondary {
+ background: rgba(255,255,255,0.12);
+ color: #fff;
+ }
+
+ .wrap {
+ width: min(1180px, calc(100% - 36px));
+ margin: 0 auto;
+ padding: 34px 0 72px;
+ }
+
+ .layout {
+ display: grid;
+ grid-template-columns: 260px minmax(0, 1fr);
+ gap: 28px;
+ align-items: start;
+ }
+
+ nav {
+ position: sticky;
+ top: 18px;
+ padding: 18px;
+ background: rgba(255,255,255,0.82);
+ border: 1px solid var(--line);
+ border-radius: 8px;
+ box-shadow: 0 10px 26px rgba(20,35,29,0.07);
+ backdrop-filter: blur(12px);
+ }
+
+ nav strong {
+ display: block;
+ margin-bottom: 9px;
+ font-size: 14px;
+ }
+
+ nav a {
+ display: block;
+ padding: 7px 0;
+ color: #29423a;
+ font-size: 14px;
+ text-decoration: none;
+ border-top: 1px solid #eef3ef;
+ }
+
+ main {
+ min-width: 0;
+ }
+
+ section {
+ margin: 0 0 22px;
+ padding: clamp(22px, 4vw, 36px);
+ border: 1px solid var(--line);
+ border-radius: 8px;
+ background: rgba(255,255,255,0.9);
+ box-shadow: var(--shadow);
+ }
+
+ section.plain {
+ background: transparent;
+ box-shadow: none;
+ border: 0;
+ padding: 12px 0;
+ }
+
+ h2 {
+ margin: 0 0 16px;
+ font-size: clamp(26px, 3.5vw, 42px);
+ line-height: 1.16;
+ letter-spacing: 0;
+ }
+
+ h3 {
+ margin: 26px 0 10px;
+ font-size: 22px;
+ line-height: 1.25;
+ letter-spacing: 0;
+ }
+
+ p {
+ margin: 0 0 14px;
+ }
+
+ .lead {
+ font-size: 19px;
+ color: #344a43;
+ }
+
+ .pill-row {
+ display: flex;
+ flex-wrap: wrap;
+ gap: 8px;
+ margin: 16px 0 0;
+ }
+
+ .pill {
+ padding: 7px 11px;
+ border-radius: 999px;
+ border: 1px solid var(--line);
+ background: #fff;
+ color: #2f4c43;
+ font-weight: 700;
+ font-size: 14px;
+ }
+
+ .rule {
+ margin: 20px 0;
+ padding: 18px;
+ border-left: 5px solid var(--green);
+ border-radius: 8px;
+ background: var(--mint);
+ font-size: 18px;
+ font-weight: 800;
+ }
+
+ .grid {
+ display: grid;
+ grid-template-columns: repeat(3, minmax(0, 1fr));
+ gap: 14px;
+ margin-top: 16px;
+ }
+
+ .grid.two {
+ grid-template-columns: repeat(2, minmax(0, 1fr));
+ }
+
+ .mini-card {
+ min-width: 0;
+ min-height: 142px;
+ padding: 18px;
+ border-radius: 8px;
+ border: 1px solid var(--line);
+ background: #fff;
+ }
+
+ .mini-card strong {
+ display: block;
+ margin-bottom: 8px;
+ font-size: 17px;
+ }
+
+ .mini-card p {
+ margin: 0;
+ color: var(--muted);
+ font-size: 15px;
+ }
+
+ .mini-card.green {
+ background: var(--mint);
+ border-color: #cce8d8;
+ }
+
+ .mini-card.blue {
+ background: var(--sky);
+ border-color: #ccddf7;
+ }
+
+ .mini-card.amber {
+ background: var(--butter);
+ border-color: #f0ddb0;
+ }
+
+ .mini-card.red {
+ background: var(--rose);
+ border-color: #f0c8c2;
+ }
+
+ .steps {
+ counter-reset: step;
+ display: grid;
+ gap: 12px;
+ margin-top: 18px;
+ }
+
+ .step {
+ counter-increment: step;
+ display: grid;
+ grid-template-columns: 44px minmax(0, 1fr);
+ gap: 12px;
+ align-items: start;
+ padding: 16px;
+ border: 1px solid var(--line);
+ border-radius: 8px;
+ background: #fff;
+ }
+
+ .step::before {
+ content: counter(step);
+ width: 36px;
+ height: 36px;
+ display: grid;
+ place-items: center;
+ border-radius: 50%;
+ background: #174b39;
+ color: #fff;
+ font-weight: 900;
+ }
+
+ .table-scroll {
+ overflow-x: auto;
+ max-width: 100%;
+ border: 1px solid var(--line);
+ border-radius: 8px;
+ background: #fff;
+ margin: 16px 0;
+ }
+
+ table {
+ width: 100%;
+ min-width: 680px;
+ border-collapse: collapse;
+ font-size: 15px;
+ }
+
+ th,
+ td {
+ padding: 13px 14px;
+ border-bottom: 1px solid #ecf1ee;
+ text-align: left;
+ vertical-align: top;
+ }
+
+ th {
+ background: #f2f7f3;
+ color: #203b33;
+ font-size: 14px;
+ }
+
+ tr:last-child td {
+ border-bottom: 0;
+ }
+
+ code,
+ pre {
+ font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+ }
+
+ pre {
+ margin: 14px 0;
+ padding: 16px;
+ overflow-x: auto;
+ border-radius: 8px;
+ background: #17231f;
+ color: #e8fff6;
+ font-size: 14px;
+ line-height: 1.65;
+ }
+
+ pre code {
+ display: block;
+ min-width: 0;
+ }
+
+ .copy-note {
+ display: inline-block;
+ margin: 6px 0 0;
+ padding: 5px 9px;
+ border-radius: 6px;
+ background: #eef6ff;
+ color: #2a5784;
+ font-size: 13px;
+ font-weight: 800;
+ }
+
+ figure {
+ margin: 20px 0;
+ overflow: hidden;
+ border: 1px solid var(--line);
+ border-radius: 8px;
+ background: #fff;
+ box-shadow: 0 14px 32px rgba(20,35,29,0.08);
+ }
+
+ figure img {
+ width: 100%;
+ background: #f5f7f8;
+ }
+
+ figcaption {
+ padding: 12px 15px;
+ color: #53625d;
+ font-size: 14px;
+ border-top: 1px solid var(--line);
+ }
+
+ .mission {
+ border: 1px solid #d7e8dd;
+ background:
+ linear-gradient(90deg, rgba(233,246,239,0.86), rgba(234,243,255,0.82));
+ }
+
+ .stop {
+ border-color: #f0c8c2;
+ background: #fff8f6;
+ }
+
+ .stop h2 {
+ color: var(--red);
+ }
+
+ .week {
+ display: grid;
+ grid-template-columns: repeat(7, minmax(0, 1fr));
+ gap: 10px;
+ margin-top: 16px;
+ }
+
+ .day {
+ min-width: 0;
+ min-height: 132px;
+ padding: 13px;
+ border-radius: 8px;
+ border: 1px solid var(--line);
+ background: #fff;
+ }
+
+ .day strong {
+ display: block;
+ color: var(--green);
+ margin-bottom: 7px;
+ }
+
+ .day span {
+ color: var(--muted);
+ font-size: 14px;
+ }
+
+ .sources {
+ display: grid;
+ grid-template-columns: repeat(2, minmax(0, 1fr));
+ gap: 10px;
+ padding: 0;
+ list-style: none;
+ }
+
+ .sources a {
+ display: block;
+ min-width: 0;
+ min-height: 54px;
+ padding: 13px;
+ border: 1px solid var(--line);
+ border-radius: 8px;
+ background: #fff;
+ text-decoration: none;
+ font-weight: 800;
+ }
+
+ footer {
+ padding: 28px 0 10px;
+ color: var(--muted);
+ font-size: 14px;
+ }
+
+ @media (max-width: 980px) {
+ .layout {
+ grid-template-columns: 1fr;
+ }
+
+ nav {
+ position: static;
+ }
+
+ nav a {
+ display: inline-block;
+ margin-right: 12px;
+ border-top: 0;
+ }
+
+ .grid,
+ .grid.two,
+ .week,
+ .sources {
+ grid-template-columns: 1fr 1fr;
+ }
+ }
+
+ @media (max-width: 640px) {
+ .hero {
+ min-height: 76vh;
+ padding: 34px 18px 28px;
+ }
+
+ .wrap {
+ width: min(100% - 24px, 1180px);
+ padding-top: 18px;
+ }
+
+ section {
+ padding: 20px 16px;
+ }
+
+ .grid,
+ .grid.two,
+ .week,
+ .sources {
+ grid-template-columns: 1fr;
+ }
+
+ .step {
+ grid-template-columns: 38px minmax(0, 1fr);
+ }
+
+ table {
+ min-width: 100%;
+ table-layout: auto;
+ }
+
+ th,
+ td {
+ padding: 10px 9px;
+ overflow-wrap: anywhere;
+ }
+
+ pre {
+ font-size: 13px;
+ white-space: pre-wrap;
+ overflow-wrap: anywhere;
+ }
+
+ pre code {
+ white-space: pre-wrap;
+ overflow-wrap: anywhere;
+ }
+ }
+ </style>
+</head>
+<body>
+ <header class="hero">
+ <div class="hero-inner">
+ <span class="kicker">처음 켠 날 바로 쓰는 Aside Browser</span>
+ <h1>Aside Browser 완전초보 입문 매뉴얼북</h1>
+ <p>웹페이지 요약, 비교표, 이메일 초안, 자료 조사까지 작은 미션으로 익히는 쉬운 시작 안내서입니다.</p>
+ <div class="hero-actions">
+ <a class="btn" href="#mission-5">5분 미션부터 시작</a>
+ <a class="btn secondary" href="#prompt-card">복사용 주문 카드</a>
+ </div>
+ </div>
+ </header>
+
+ <div class="wrap">
+ <div class="layout">
+ <nav aria-label="목차">
+ <strong>빠른 이동</strong>
+ <a href="#what">Aside 한 줄 설명</a>
+ <a href="#safety">시작 전 안전벨트</a>
+ <a href="#map">화면 지도</a>
+ <a href="#mission-5">첫날 5분 미션</a>
+ <a href="#compare">비교표 미션</a>
+ <a href="#login">로그인 사이트</a>
+ <a href="#prompt">좋은 부탁 공식</a>
+ <a href="#stop">멈춤표</a>
+ <a href="#week">7일 연습 코스</a>
+ <a href="#ultrabrowse">Ultrabrowse</a>
+ <a href="#mcp">CLI/MCP</a>
+ <a href="#troubleshooting">문제 해결</a>
+ </nav>
+
+ <main>
+ <section id="what">
+ <h2>0. Aside를 한 문장으로 말하면</h2>
+ <p class="lead">Aside는 웹페이지를 함께 보면서 정리, 비교, 확인, 반복 작업을 도와주는 브라우저입니다.</p>
+ <p>일반 AI 채팅은 대화를 중심으로 움직입니다. Aside는 브라우저 화면, 열린 페이지, 로그인된 사이트, 파일, 작업 기록까지 함께 다루는 쪽에 가깝습니다. 그래서 처음에는 큰 자동화보다 작은 부탁부터 시작하는 편이 좋습니다.</p>
+ <div class="rule">읽고, 정리하고, 초안을 만들게 하되, 결제ㆍ발송ㆍ게시ㆍ삭제ㆍ계정 변경은 사람이 마지막에 확인합니다.</div>
+ <div class="pill-row" aria-label="핵심 키워드">
+ <span class="pill">작게 시작</span>
+ <span class="pill">읽기 전용 먼저</span>
+ <span class="pill">출처 요청</span>
+ <span class="pill">버튼은 직접 확인</span>
+ </div>
+ </section>
+
+ <section id="safety">
+ <h2>1. 시작 전 3가지 안전벨트</h2>
+ <div class="grid">
+ <div class="mini-card green">
+ <strong>Read only</strong>
+ <p>읽기만 시키는 모드입니다. 첫 실습은 항상 여기서 시작합니다.</p>
+ </div>
+ <div class="mini-card blue">
+ <strong>Guard</strong>
+ <p>필요한 접근은 물어보고 진행합니다. 파일을 만들 때 기본 선택입니다.</p>
+ </div>
+ <div class="mini-card amber">
+ <strong>Full access</strong>
+ <p>넓은 권한으로 진행합니다. 익숙해진 뒤 낮은 위험 작업에만 씁니다.</p>
+ </div>
+ </div>
+ <h3>바로 기억할 문장</h3>
+ <div class="grid two">
+ <div class="mini-card"><strong>버튼 금지</strong><p>"아무 버튼도 누르지 마."</p></div>
+ <div class="mini-card"><strong>실행 금지</strong><p>"제출, 결제, 발송, 삭제는 하지 마."</p></div>
+ <div class="mini-card"><strong>초안만</strong><p>"초안까지만 만들고 멈춰."</p></div>
+ <div class="mini-card"><strong>근거 포함</strong><p>"근거 링크를 같이 보여줘."</p></div>
+ </div>
+ </section>
+
+ <section id="map">
+ <h2>2. Aside 화면을 간단히 나누기</h2>
+ <div class="table-scroll">
+ <table>
+ <thead>
+ <tr><th>이름</th><th>쉬운 설명</th><th>잘 맞는 일</th></tr>
+ </thead>
+ <tbody>
+ <tr><td>브라우저 기본 질문</td><td>지금 보는 페이지에 바로 질문</td><td>페이지 요약, 단어 설명, 핵심 찾기</td></tr>
+ <tr><td>사이드 패널</td><td>옆에서 페이지를 보며 도와주는 창</td><td>현재 글 검토, 이메일 초안, 체크리스트</td></tr>
+ <tr><td>작업 페이지</td><td>여러 사이트와 파일을 오가며 일하는 공간</td><td>가격 비교, 자료 조사, 파일 정리</td></tr>
+ <tr><td>Ultrabrowse</td><td>출처가 많이 필요한 깊은 조사</td><td>제품 비교, 공식 문서 모으기, 경쟁사 조사</td></tr>
+ <tr><td>Routines</td><td>반복되는 일을 정해진 흐름으로 실행</td><td>매주 뉴스 요약, 매일 알림 정리</td></tr>
+ <tr><td>CLI/MCP</td><td>개발 도구와 연결하는 통로</td><td>Codex 같은 도구에서 Aside 조작</td></tr>
+ </tbody>
+ </table>
+ </div>
+ <figure>
+ <img src="assets/aside-workflow-cheatsheet.png" alt="Aside 작업 흐름을 한 화면에 정리한 치트시트">
+ <figcaption>처음에는 읽기 전용으로 확인하고, 필요할 때만 권한을 올리는 흐름이 안전합니다.</figcaption>
+ </figure>
+ </section>
+
+ <section id="mission-5" class="mission">
+ <h2>3. 첫날 5분 미션: 웹페이지 요약하기</h2>
+ <div class="steps">
+ <div class="step"><div><strong>웹페이지 열기</strong><p>뉴스, 블로그, 도움말 같은 글 하나를 엽니다.</p></div></div>
+ <div class="step"><div><strong>Aside 질문창 열기</strong><p>질문창이나 사이드 패널을 엽니다.</p></div></div>
+ <div class="step"><div><strong>아래 문장 붙여넣기</strong><p>처음에는 페이지 밖으로 이동하지 않게 막아둡니다.</p></div></div>
+ </div>
+ <span class="copy-note">복사해서 사용</span>
+ <pre><code>이 페이지를 바탕으로만 정리해줘.
+핵심 내용 5개, 중요한 근거 3개, 더 확인해야 할 점 3개를 표로 만들어줘.
+페이지 밖으로 이동하지 말고, 버튼도 누르지 마.</code></pre>
+ <div class="table-scroll">
+ <table>
+ <thead>
+ <tr><th>확인할 것</th><th>보면 좋은 기준</th></tr>
+ </thead>
+ <tbody>
+ <tr><td>핵심 내용</td><td>원문에 실제로 있는 내용인가</td></tr>
+ <tr><td>근거</td><td>링크나 문장 근처를 찾기 쉬운가</td></tr>
+ <tr><td>더 확인할 점</td><td>과장, 빠진 정보, 날짜 문제가 잡혔는가</td></tr>
+ </tbody>
+ </table>
+ </div>
+ </section>
+
+ <section id="compare">
+ <h2>4. 둘째 미션: 비교표 만들기</h2>
+ <p>Aside가 잘하는 일 중 하나는 여러 정보를 표로 정리하는 일입니다. 가격, 요금제, 정책은 자주 바뀌므로 확인 날짜를 함께 넣게 하세요.</p>
+ <span class="copy-note">복사해서 사용</span>
+ <pre><code>노트 앱 3개를 비교해줘.
+비교 기준은 가격, 장점, 단점, 오프라인 사용, 팀 공유, 추천 대상이야.
+공식 페이지를 우선 확인하고, 출처 링크를 표 안에 넣어줘.
+가입, 구매, 다운로드는 하지 마.</code></pre>
+ <div class="table-scroll">
+ <table>
+ <thead>
+ <tr><th>제품</th><th>가격</th><th>장점</th><th>단점</th><th>추천 대상</th><th>출처</th></tr>
+ </thead>
+ <tbody>
+ <tr><td>A</td><td>확인 날짜 포함</td><td>짧게</td><td>짧게</td><td>누구에게 맞는지</td><td>공식 링크</td></tr>
+ </tbody>
+ </table>
+ </div>
+ </section>
+
+ <section id="login">
+ <h2>5. 셋째 미션: 로그인 사이트에서 초안만 만들기</h2>
+ <p>로그인 사이트에서는 더 조심해야 합니다. Aside가 계정을 볼 수 있는 상황이라면 편리하지만 위험도 같이 커집니다.</p>
+ <div class="grid two">
+ <div class="mini-card green">
+ <strong>좋은 사용</strong>
+ <p>메일 초안, 답변 문장 다듬기, 문의 분류, 주문 내역 확인 목록, 게시글 초안 작성.</p>
+ </div>
+ <div class="mini-card red">
+ <strong>멈춰야 하는 사용</strong>
+ <p>결제, 환불 제출, 계약 동의, 실제 발송, 게시, 비밀번호나 보안 설정 변경.</p>
+ </div>
+ </div>
+ <span class="copy-note">복사해서 사용</span>
+ <pre><code>이 화면을 보고 답변 초안만 만들어줘.
+실제 발송, 저장, 게시, 삭제, 결제, 계정 변경은 하지 마.
+완성 문장 아래에 내가 직접 확인할 체크리스트를 붙여줘.</code></pre>
+ </section>
+
+ <section id="prompt">
+ <h2>6. 좋은 부탁 공식</h2>
+ <p>Aside에게 일을 맡길 때는 네 칸으로 말하면 훨씬 안정적입니다.</p>
+ <div class="table-scroll">
+ <table>
+ <thead>
+ <tr><th>칸</th><th>넣을 내용</th><th>예시</th></tr>
+ </thead>
+ <tbody>
+ <tr><td>목표</td><td>무엇을 끝내고 싶은지</td><td>이 글의 핵심을 정리해줘</td></tr>
+ <tr><td>범위</td><td>어디까지 봐야 하는지</td><td>현재 페이지와 링크된 공식 문서만</td></tr>
+ <tr><td>금지</td><td>하면 안 되는 행동</td><td>가입, 제출, 결제, 삭제 금지</td></tr>
+ <tr><td>결과 모양</td><td>어떤 형태로 받을지</td><td>표와 5줄 요약</td></tr>
+ </tbody>
+ </table>
+ </div>
+ <span class="copy-note">기본 주문</span>
+ <pre><code>목표: [하고 싶은 일]
+범위: [볼 자료]
+금지: 제출, 결제, 발송, 삭제, 계정 변경 금지
+결과: 표로 정리하고, 마지막에 내가 확인할 체크리스트를 붙여줘</code></pre>
+ </section>
+
+ <section id="stop" class="stop">
+ <h2>7. 버튼 누르기 전 멈춤표</h2>
+ <p>아래 단어가 보이면 Aside에게 맡기지 말고 직접 확인합니다.</p>
+ <div class="table-scroll">
+ <table>
+ <thead>
+ <tr><th>화면에 보이는 말</th><th>해야 할 일</th></tr>
+ </thead>
+ <tbody>
+ <tr><td>결제, 구매, 구독</td><td>사람이 직접 확인</td></tr>
+ <tr><td>전송, 발송, 제출</td><td>초안만 만들고 멈춤</td></tr>
+ <tr><td>삭제, 초기화, 해지</td><td>직접 백업 후 판단</td></tr>
+ <tr><td>동의, 서명, 계약</td><td>법적 의미 확인</td></tr>
+ <tr><td>비밀번호, 2단계 인증</td><td>AI에게 입력 요청 금지</td></tr>
+ <tr><td>세금, 금융, 대출, 보험</td><td>자료 정리까지만 사용</td></tr>
+ </tbody>
+ </table>
+ </div>
+ </section>
+
+ <section id="week">
+ <h2>8. 재미있게 연습하는 7일 코스</h2>
+ <div class="week">
+ <div class="day"><strong>1일차</strong><span>웹페이지 1개 요약. 핵심 5개와 근거가 맞으면 성공.</span></div>
+ <div class="day"><strong>2일차</strong><span>긴 글을 10줄 안의 메모로 바꾸기.</span></div>
+ <div class="day"><strong>3일차</strong><span>제품 3개 비교표 만들기. 출처와 날짜 포함.</span></div>
+ <div class="day"><strong>4일차</strong><span>이메일 초안 만들기. 발송 없이 초안만 완성.</span></div>
+ <div class="day"><strong>5일차</strong><span>일정이나 할 일 목록 정리. 변경 없이 목록만 생성.</span></div>
+ <div class="day"><strong>6일차</strong><span>Ultrabrowse로 공식 문서 모으기.</span></div>
+ <div class="day"><strong>7일차</strong><span>위험 낮은 반복 업무 아이디어 3개 고르기.</span></div>
+ </div>
+ </section>
+
+ <section id="examples">
+ <h2>9. 업무별 쉬운 사용 예시</h2>
+ <div class="grid two">
+ <div class="mini-card"><strong>공부와 자료 정리</strong><p>핵심 개념, 예시, 헷갈리는 단어를 표로 정리하게 합니다.</p></div>
+ <div class="mini-card"><strong>쇼핑 비교</strong><p>공식 판매 페이지와 제조사 정보를 우선 보고 비교하게 합니다.</p></div>
+ <div class="mini-card"><strong>블로그 글 쓰기</strong><p>출처가 필요한 문장 옆에 링크를 붙인 초안을 만듭니다.</p></div>
+ <div class="mini-card"><strong>고객 문의 정리</strong><p>불만, 질문, 요청, 긴급으로 나누고 답장 초안을 만듭니다.</p></div>
+ </div>
+ </section>
+
+ <section id="ultrabrowse">
+ <h2>10. Ultrabrowse는 언제 쓰나</h2>
+ <p>Ultrabrowse는 자료가 많이 필요한 조사에 어울립니다. 공식 문서 여러 개 모으기, 가격 정책 비교, 제품 기능 비교, 보안/개인정보 문서 확인에 좋습니다.</p>
+ <span class="copy-note">처음 쓰는 주문</span>
+ <pre><code>공식 문서를 우선해서 조사해줘.
+확인된 사실, 해석, 아직 부족한 근거를 나눠서 정리해줘.
+출처 링크를 빠뜨리지 말고, 오래된 자료는 날짜를 표시해줘.</code></pre>
+ </section>
+
+ <section id="routine">
+ <h2>11. Routines는 언제 쓰나</h2>
+ <div class="grid two">
+ <div class="mini-card green">
+ <strong>좋은 루틴</strong>
+ <p>매주 뉴스 요약, 매일 읽을 링크 정리, 가격 페이지 변화 확인, 고객 문의 분류 초안.</p>
+ </div>
+ <div class="mini-card red">
+ <strong>처음에는 피할 루틴</strong>
+ <p>자동 결제, 자동 게시, 자동 발송, 자동 삭제, 계정 변경.</p>
+ </div>
+ </div>
+ </section>
+
+ <section id="mcp">
+ <h2>12. CLI/MCP는 쉽게 말해 무엇인가</h2>
+ <p>CLI는 터미널에서 Aside를 부르는 방법입니다. MCP는 Codex 같은 도구가 Aside 브라우저와 연결되는 통로입니다.</p>
+ <p>대부분의 사용자는 처음부터 몰라도 됩니다. 다만 Codex와 함께 쓰면 웹페이지를 열고, 화면을 찍고, 문서를 읽고, 결과를 정리하는 일을 더 강하게 연결할 수 있습니다.</p>
+ <figure>
+ <img src="assets/aside-mcp-annotated-docs.png" alt="Aside MCP 문서 화면">
+ <figcaption>MCP는 Codex 같은 도구와 Aside 브라우저 사이의 연결 통로라고 보면 됩니다.</figcaption>
+ </figure>
+ <pre><code>aside --version
+aside --help</code></pre>
+ <figure>
+ <img src="assets/aside-cli-mcp-registration.png" alt="Aside CLI MCP 등록 화면">
+ <figcaption>개발자나 자동화 작업자는 CLI와 MCP 등록 상태를 먼저 확인합니다.</figcaption>
+ </figure>
+ </section>
+
+ <section id="troubleshooting">
+ <h2>13. 잘 안 될 때 확인할 것</h2>
+ <div class="table-scroll">
+ <table>
+ <thead>
+ <tr><th>증상</th><th>먼저 볼 것</th><th>쉬운 해결</th></tr>
+ </thead>
+ <tbody>
+ <tr><td>페이지 내용을 못 읽음</td><td>권한 또는 현재 탭</td><td>탭을 다시 열고 읽기 전용으로 재시도</td></tr>
+ <tr><td>결과가 이상함</td><td>범위가 너무 넓음</td><td>"현재 페이지 기준"이라고 다시 지시</td></tr>
+ <tr><td>출처가 없음</td><td>출처 요청을 안 함</td><td>"출처 링크를 표에 넣어줘" 추가</td></tr>
+ <tr><td>로그인 사이트가 막힘</td><td>MFA, 보안 정책, 캡차</td><td>사람이 직접 로그인 후 요약만 요청</td></tr>
+ <tr><td>파일 작업이 불안함</td><td>폴더 권한이 넓음</td><td>별도 작업 폴더를 만들고 Guard 사용</td></tr>
+ <tr><td>너무 많이 실행함</td><td>금지 행동이 빠짐</td><td>제출/결제/삭제/발송 금지를 명시</td></tr>
+ </tbody>
+ </table>
+ </div>
+ </section>
+
+ <section id="prompt-card">
+ <h2>14. 처음 쓰는 사람용 치트시트</h2>
+ <div class="grid two">
+ <div>
+ <span class="copy-note">한 줄 요약</span>
+ <pre><code>이 페이지를 5줄로 요약하고, 중요한 근거 3개를 붙여줘. 아무 버튼도 누르지 마.</code></pre>
+ </div>
+ <div>
+ <span class="copy-note">표 만들기</span>
+ <pre><code>이 정보를 표로 정리해줘. 확인된 사실과 의견을 분리하고, 출처를 넣어줘.</code></pre>
+ </div>
+ <div>
+ <span class="copy-note">초안 만들기</span>
+ <pre><code>답장 초안만 작성해줘. 실제 발송이나 저장은 하지 마. 마지막에 확인 목록을 붙여줘.</code></pre>
+ </div>
+ <div>
+ <span class="copy-note">안전하게 멈추기</span>
+ <pre><code>여기서 멈추고 내가 직접 확인해야 할 항목만 목록으로 보여줘.</code></pre>
+ </div>
+ </div>
+ </section>
+
+ <section id="remember">
+ <h2>15. 마지막 기억 카드</h2>
+ <div class="table-scroll">
+ <table>
+ <thead>
+ <tr><th>기억할 말</th><th>이유</th></tr>
+ </thead>
+ <tbody>
+ <tr><td>작게 시작</td><td>처음부터 큰 자동화는 실수도 커집니다.</td></tr>
+ <tr><td>읽기 전용 먼저</td><td>브라우저 상태를 바꾸지 않고 연습합니다.</td></tr>
+ <tr><td>출처를 요구</td><td>사실과 추정을 나눕니다.</td></tr>
+ <tr><td>버튼은 사람이</td><td>결제, 발송, 게시, 삭제는 최종 확인이 필요합니다.</td></tr>
+ <tr><td>반복은 천천히</td><td>루틴은 낮은 위험 작업부터 시작합니다.</td></tr>
+ </tbody>
+ </table>
+ </div>
+ </section>
+
+ <section id="sources">
+ <h2>16. 참고 링크</h2>
+ <ul class="sources">
+ <li><a href="https://docs.aside.com/llms.txt">Aside 공식 문서 인덱스</a></li>
+ <li><a href="https://docs.aside.com/help/get-started.md">시작하기</a></li>
+ <li><a href="https://docs.aside.com/help/browser-basics.md">Browser Basics</a></li>
+ <li><a href="https://docs.aside.com/help/tasks.md">Tasks</a></li>
+ <li><a href="https://docs.aside.com/help/side-panel.md">Side Panel</a></li>
+ <li><a href="https://docs.aside.com/help/automation/routines.md">Routines</a></li>
+ <li><a href="https://docs.aside.com/help/developers.md">개발자 문서</a></li>
+ </ul>
+ </section>
+
+ <footer>
+ 확인일: 2026-07-08. 이 문서는 처음 사용하는 사람을 위한 입문 안내서이며, 결제ㆍ발송ㆍ게시ㆍ삭제ㆍ계정 변경은 사람이 직접 최종 확인하는 운영을 기준으로 작성했습니다.
+ </footer>
+ </main>
+ </div>
+ </div>
+</body>
+</html>
