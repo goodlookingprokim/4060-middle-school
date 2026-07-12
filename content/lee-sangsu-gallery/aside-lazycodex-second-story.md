@@ -1,17 +1,19 @@
 ---
 title: Aside 브라우저 & 레이지코덱스 — 두번째 이야기
-description: 이상수님 원문 HTML 슬라이드를 블로그 본문 없이 전체 화면으로 바로 여는 연결 페이지입니다.
+description: 이상수님 원문 HTML 슬라이드(80장)를 원문 그대로, 전체 화면으로 볼 수 있게 연결한 갤러리 항목입니다.
 publish: true
 cssclasses:
   - field-note
 ---
 
-<script>
-  window.location.replace("https://goodlookingprokim.github.io/4060-middle-school/static/lee-sangsu-gallery/aside-lazycodex-second-story.html");
-</script>
-
 # Aside 브라우저 & 레이지코덱스 — 두번째 이야기
 
-이 페이지는 블로그 본문 대신 원본 HTML 슬라이드 전체 화면으로 바로 이동하도록 바꿨습니다.
+이 자료는 이상수님이 보내주신 원문 HTML 슬라이드를 그대로 보존한 것입니다.
+만든 분이 의도한 화면 그대로 보실 수 있게 전체 화면으로 열립니다.
 
-<p><a href="https://goodlookingprokim.github.io/4060-middle-school/static/lee-sangsu-gallery/aside-lazycodex-second-story.html"><strong>바로 열리지 않으면 여기로 이동</strong></a></p>
+<div class="gallery-item">
+  <a class="gallery-open" href="https://goodlookingprokim.github.io/4060-middle-school/static/lee-sangsu-gallery/aside-lazycodex-second-story.html" target="_blank" rel="noopener">
+    <strong>원문 전체 화면으로 보기</strong>
+  </a>
+  <p>"웹을 맡기는 손, 끝까지 검증하는 두뇌" — 1편이 도구 소개였다면, 2편은 내 일에 어떻게 얹는지를 실제 장면 중심으로 다루는 80장 슬라이드입니다. 화살표 키 또는 스페이스로 넘겨 보세요.</p>
+</div>

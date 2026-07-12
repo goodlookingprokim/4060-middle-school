@@ -13,6 +13,8 @@ title: 4060미들스쿨
 이곳은 4060미들스쿨 모임을 위해 만든 작업형 블로그입니다.  
 모임 전에는 공지와 읽을거리를 정리하고, 모임 후에는 나눈 이야기와 남겨둘 질문을 다시 꺼내 쓸 수 있게 정리합니다.
 
+글자가 작게 느껴지면 화면 위쪽의 **리더 모드** 버튼(책 모양)을 눌러 보세요. 본문만 크고 넓게 볼 수 있습니다.
+
 <div class="action-row">
   <a href="./meeting-intro">모임 소개 보기</a>
   <a href="./topics">이번에 나눌 이야기</a>
@@ -72,25 +74,9 @@ title: 4060미들스쿨
   <li><a href="./topics/2026-05-30-hermes-ai-employee-growth-guide" class="internal">2026년 5월 30일(토) Hermes를 그냥 챗봇으로 두지 말고, 출근하고 보고하는 AI 직원처럼 키우는 법</a></li>
   <li><a href="./topics/2026-05-30-codex-multi-auth-management-guide" class="internal">2026년 5월 30일(토) Codex CLI를 쓸 때 계정이 하나라 답답했다면, codex-multi-auth는 무엇을 바꿔줄까</a></li>
   <li><a href="./topics/2026-05-30-openclaw-hermes-scrcpy-command-cheatsheet" class="internal">2026년 5월 30일(토) OpenClaw, Hermes, scrcpy 자주 쓰는 명령어만 빠르게 보는 치트시트</a></li>
-  <li><a href="./topics/2026-05-27-claude-prefix-prompt-guide" class="internal">2026년 5월 27일(수) 클로드 100가지 비밀 코드? 숨은 명령보다 중요한 건 말머리 프롬프트 활용법</a></li>
-  <li><a href="./topics/2026-05-26-hermes-codex-app-server-runtime-guide" class="internal">2026년 5월 26일(화) Hermes에서 Codex app-server runtime을 붙이면 무엇이 달라질까</a></li>
-  <li><a href="./topics/2026-05-24-codex-computer-use-kakaotalk-checklist" class="internal">2026년 5월 24일(일) Codex App에서 Computer Use로 KakaoTalk이 안 보일 때 먼저 볼 체크리스트</a></li>
-  <li><a href="./topics/2026-05-23-codegraph-practical-guide" class="internal">2026년 5월 23일(토) AI에게 소스코드 폴더를 통째로 던지지 말아야 하는 이유, 그리고 CodeGraph</a></li>
-  <li><a href="./topics/2026-05-23-hermes-24h-assistant-five-points" class="internal">2026년 5월 23일(토) Hermes를 24시간 개인 비서처럼 굴릴 때 꼭 알아둘 5가지</a></li>
-  <li><a href="./topics/2026-05-23-playmcp-claude-cowork-automation" class="internal">2026년 5월 23일(토) PlayMCP와 Claude, 코워크를 붙이면 코딩 없이 어디까지 자동화할 수 있을까</a></li>
-  <li><a href="./topics/2026-05-23-kakao-playmcp-three-ways-overview" class="internal">2026년 5월 23일(토) Kakao PlayMCP를 Claude, Codex, OpenClaw에서 어떻게 나눠 쓰면 좋을까</a></li>
-  <li><a href="./topics/2026-05-23-claude-kakao-playmcp-guide" class="internal">2026년 5월 23일(토) Claude에서 Kakao PlayMCP 설치부터 카카오톡 메모 활용까지</a></li>
-  <li><a href="./topics/2026-05-23-openclaw-kakao-playmcp-guide" class="internal">2026년 5월 23일(토) OpenClaw에 Kakao PlayMCP 붙이고 실제로 써보는 방법</a></li>
-  <li><a href="./topics/2026-05-23-codex-kakao-playmcp-guide" class="internal">2026년 5월 23일(토) Codex에서 Kakao PlayMCP 설치부터 카카오톡 활용까지</a></li>
-  <li><a href="./topics/2026-05-17-hermes-supertonic-free-voice-guide" class="internal">2026년 5월 17일(일) Hermes + Supertonic으로 완전 무료 음성 대화 만들기</a></li>
-  <li><a href="./topics/2026-05-17-jarvis-voice-assistant-progress-log" class="internal">2026년 5월 17일(일) 자비스형 음성 비서, 여기까지 실제로 만들어보니</a></li>
-  <li><a href="./topics/2026-05-16-claude-code-codex-hybrid-workflow" class="internal">2026년 5월 16일(토) Claude Code와 Codex를 같이 쓸 때 일이 편해지는 순간</a></li>
-  <li><a href="./topics/2026-05-16-plaud-mcp-for-members" class="internal">2026년 5월 16일(토) PLAUD MCP로 내 회의 내용을 다른 AI에 연결하는 법</a></li>
-  <li><a href="./topics/2026-05-11-hermes-android-part-1" class="internal">2026년 5월 11일(월) Android 폰에서 Hermes Agent 설치하고 Telegram + Discord 연결하기 1편</a></li>
-  <li><a href="./topics/2026-05-11-hermes-android-part-2" class="internal">2026년 5월 11일(월) Android 폰에서 Hermes Agent와 OpenClaw 팀 운영 연결하기 2편</a></li>
-  <li><a href="./topics/2026-05-10-claude-md-setup-guide" class="internal">2026년 5월 10일(일) CLAUDE.md 완벽 세팅 가이드</a></li>
-  <li><a href="./meeting-intro/what-is-4060-middle-school" class="internal">4060미들스쿨은 어떤 모임인가</a></li>
 </ul>
+
+<p>지난 글 전체는 <a href="./topics" class="internal">이번에 나눌 이야기</a>와 <a href="./after-notes" class="internal">모임 후 정리</a>에 모여 있습니다.</p>
 
 ## 이 블로그의 기준
 

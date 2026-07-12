@@ -51,7 +51,18 @@ export const defaultContentPageLayout: PageLayout = {
         { Component: Component.ReaderMode() },
       ],
     }),
-    Component.Explorer(),
+    Component.Explorer({
+      sortFn: (a, b) => {
+        // 갤러리 폴더를 맨 위에, 그다음 일반 폴더, 그다음 파일
+        const rank = (n: any) =>
+          n.isFolder && n.slugSegment.endsWith("-gallery") ? 0 : n.isFolder ? 1 : 2
+        if (rank(a) !== rank(b)) return rank(a) - rank(b)
+        return a.displayName.localeCompare(b.displayName, undefined, {
+          numeric: true,
+          sensitivity: "base",
+        })
+      },
+    }),
   ],
   right: [
     Component.DesktopOnly(Component.TableOfContents()),
@@ -77,7 +88,18 @@ export const defaultListPageLayout: PageLayout = {
         { Component: Component.Darkmode() },
       ],
     }),
-    Component.Explorer(),
+    Component.Explorer({
+      sortFn: (a, b) => {
+        // 갤러리 폴더를 맨 위에, 그다음 일반 폴더, 그다음 파일
+        const rank = (n: any) =>
+          n.isFolder && n.slugSegment.endsWith("-gallery") ? 0 : n.isFolder ? 1 : 2
+        if (rank(a) !== rank(b)) return rank(a) - rank(b)
+        return a.displayName.localeCompare(b.displayName, undefined, {
+          numeric: true,
+          sensitivity: "base",
+        })
+      },
+    }),
   ],
   right: [Component.DesktopOnly(Component.TableOfContents())],
 }

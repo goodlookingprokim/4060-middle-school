@@ -1,6 +1,6 @@
 ---
 title: Aside Browser 완전초보 입문 매뉴얼북
-description: 이상수님 원문 HTML 입문 매뉴얼을 웹에서 바로 열어보고, 같은 페이지에서 미리볼 수 있게 연결한 갤러리 항목입니다.
+description: 이상수님 원문 HTML 입문 매뉴얼을 원문 그대로, 전체 화면으로 볼 수 있게 연결한 갤러리 항목입니다.
 publish: true
 cssclasses:
   - field-note
@@ -8,16 +8,12 @@ cssclasses:
 
 # Aside Browser 완전초보 입문 매뉴얼북
 
-이 자료는 이상수님이 보내주신 원문 HTML 입문 매뉴얼을 그대로 연결한 것입니다.
-별도로 다듬지 않았고, 웹에서 바로 열어볼 수 있게만 구성했습니다.
+이 자료는 이상수님이 보내주신 원문 HTML 입문 매뉴얼을 그대로 보존한 것입니다.
+만든 분이 의도한 화면 그대로 보실 수 있게 전체 화면으로 열립니다.
 
-<p><a href="https://goodlookingprokim.github.io/4060-middle-school/static/lee-sangsu-gallery/aside-browser-beginner-manual.html" target="_blank" rel="noopener"><strong>원문 HTML 새 창으로 열기</strong></a></p>
-
-<div style="margin-top: 1.2rem; border: 1px solid #d8d8d8; background: #fff; overflow: hidden;">
-  <iframe
-    src="https://goodlookingprokim.github.io/4060-middle-school/static/lee-sangsu-gallery/aside-browser-beginner-manual.html"
-    title="Aside Browser 완전초보 입문 매뉴얼북"
-    style="width: 100%; height: 82vh; border: 0; background: #fff;"
-    loading="lazy"
-  ></iframe>
+<div class="gallery-item">
+  <a class="gallery-open" href="https://goodlookingprokim.github.io/4060-middle-school/static/lee-sangsu-gallery/aside-browser-beginner-manual.html" target="_blank" rel="noopener">
+    <strong>원문 전체 화면으로 보기</strong>
+  </a>
+  <p>웹페이지 요약, 비교표, 이메일 초안, 자료 조사까지 작은 미션으로 익히는 입문 안내서입니다. 첫날 5분 미션, 7일 연습 코스, 복사해서 바로 쓰는 주문 카드가 담겨 있습니다.</p>
 </div>
