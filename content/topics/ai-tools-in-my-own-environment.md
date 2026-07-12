@@ -201,7 +201,7 @@ LLM이 만들어준 마크다운 글을 Quartz 블로그에 넣고 GitHub Pages�
 
 예:
 
-- 블로그 홈: [https://goodlookingprokim.github.io](https://goodlookingprokim.github.io/)
+- 블로그 홈 주소 형식: `https://사용자명.github.io` (실습 예시 주소입니다. 링크로 걸면 다른 블로그로 이동하게 되어 주소만 표기합니다)
 - 새 글 주소 예시: `https://goodlookingprokim.github.io/my-first-post` (실제 주소가 아닌 형식 예시입니다)
 
 ## 2. 윈도우에서는 WSL 없이도 OpenClaw를 붙여볼 수 있습니다
@@ -210,7 +210,7 @@ LLM이 만들어준 마크다운 글을 Quartz 블로그에 넣고 GitHub Pages�
 
 이번에 같이 볼 오픈소스는 바로 그 지점을 건드립니다. WSL을 따로 세팅하지 않고도 OpenClaw를 윈도우에 붙여보려는 시도입니다.
 
-- 소개 페이지: [openclaw-windows-native](https://goodlookingprokim.github.io/openclaw-windows-native/)
+- 소개 페이지: <a href="https://goodlookingprokim.github.io/openclaw-windows-native/" target="_blank" rel="noopener">openclaw-windows-native</a> (4060 블로그 밖의 별도 페이지 · 새 창에서 열립니다)
 - GitHub 저장소: [goodlookingprokim/openclaw-windows-native](https://github.com/goodlookingprokim/openclaw-windows-native)
 
 특히 OMX(Oh My Codex)는 설치했지만 아직 무슨 대화를 시작할지 막막한 분이라면, 이런 식으로 자기 컴퓨터에 오픈소스를 내려받아 직접 만져보는 쪽이 훨씬 감이 빨리 올 수 있습니다.
