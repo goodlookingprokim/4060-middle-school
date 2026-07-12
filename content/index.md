@@ -19,9 +19,7 @@ title: 4060미들스쿨
   <a href="./meeting-intro">모임 소개 보기</a>
   <a href="./topics">이번에 나눌 이야기</a>
   <a href="./after-notes">모임 후 정리 보기</a>
-  <a href="./lee-iksang-gallery">이익상 갤러리 보기</a>
-  <a href="./lee-sangsu-gallery">이상수 갤러리 보기</a>
-  <a href="./yoon-youngmi-gallery">윤영미 갤러리 보기</a>
+  <a href="./galleries">자료 갤러리 보기</a>
 </div>
 
 ## 이 블로그에서 다루는 것

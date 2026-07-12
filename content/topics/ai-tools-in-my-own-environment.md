@@ -202,7 +202,7 @@ LLM이 만들어준 마크다운 글을 Quartz 블로그에 넣고 GitHub Pages�
 예:
 
 - 블로그 홈: [https://goodlookingprokim.github.io](https://goodlookingprokim.github.io/)
-- 새 글 주소 예시: https://goodlookingprokim.github.io/my-first-post
+- 새 글 주소 예시: `https://goodlookingprokim.github.io/my-first-post` (실제 주소가 아닌 형식 예시입니다)
 
 ## 2. 윈도우에서는 WSL 없이도 OpenClaw를 붙여볼 수 있습니다
 

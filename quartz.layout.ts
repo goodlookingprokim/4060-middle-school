@@ -12,6 +12,7 @@ export const sharedPageComponents: SharedLayout = {
         { label: "모임 소개", href: "meeting-intro" },
         { label: "이번 주제", href: "topics" },
         { label: "모임 후 정리", href: "after-notes" },
+        { label: "자료 갤러리", href: "galleries" },
         { label: "RSS", href: "index.xml" },
         { label: "GitHub", href: "https://github.com/goodlookingprokim/4060-middle-school" },
       ],
