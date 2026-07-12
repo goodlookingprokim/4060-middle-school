@@ -15,5 +15,8 @@ cssclasses:
   <a class="gallery-open" href="https://goodlookingprokim.github.io/4060-middle-school/static/lee-sangsu-gallery/aside-browser-beginner-manual.html" target="_blank" rel="noopener">
     <strong>원문 전체 화면으로 보기</strong>
   </a>
+  <a href="https://goodlookingprokim.github.io/4060-middle-school/static/lee-sangsu-gallery/aside-browser-beginner-manual.html" target="_blank" rel="noopener">
+    <img src="./aside-browser-beginner-manual-preview.png" alt="Aside Browser 완전초보 입문 매뉴얼북 첫 화면 미리보기" loading="lazy" />
+  </a>
   <p>웹페이지 요약, 비교표, 이메일 초안, 자료 조사까지 작은 미션으로 익히는 입문 안내서입니다. 첫날 5분 미션, 7일 연습 코스, 복사해서 바로 쓰는 주문 카드가 담겨 있습니다.</p>
 </div>
