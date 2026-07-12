@@ -43,6 +43,10 @@
 - 준비 중인 카드는 `<a>`가 아니라 `<div class="hub-card is-pending">`을 사용합니다. 발행 후에만 실제 링크 카드로 바꿉니다.
 - CTA는 강하게 판매하지 않습니다. RSS, GitHub, 대표 글, 다음에 발행될 시리즈를 조용히 안내합니다.
 
+## 원시 HTML 링크 규칙 (중요)
+
+`hub-card`, `reading-path`, `action-row`, `topic-card`, `cta-panel` 등 원시 HTML 블록 안의 `href`는 **항상 전체 URL**(예: `https://goodlookingprokim.github.io/4060-middle-school/topics/글이름`)로 씁니다. 상대경로(`./`, `../`)나 베이스 없는 절대경로(`/topics/...`)를 쓰면 Quartz가 서브 경로 배포에서 베이스를 빠뜨려 다른 블로그(루트 도메인)로 이동하는 링크가 됩니다. 마크다운 링크(`[제목](경로)`)는 Quartz가 올바르게 변환하므로 상대경로를 써도 됩니다.
+
 ## 임베드 규칙
 
 - 고정 높이 iframe(`height: 82vh` 같은 고정 높이 임베드)은 사용하지 않습니다. 데스크톱 폭으로 설계된 외부 문서를 좁은 본문 컬럼에 넣으면 글자 겹침, 표 잘림, 이중 스크롤이 발생합니다.

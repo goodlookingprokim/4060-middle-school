@@ -27,15 +27,15 @@ cssclasses:
 ## 먼저 열어둘 기록 자리
 
 <div class="reading-path">
-  <a href="./2026-05-10-hermes-meetup-learning-note" class="internal">
+  <a href="https://goodlookingprokim.github.io/4060-middle-school/after-notes/2026-05-10-hermes-meetup-learning-note" class="internal">
     <strong>2026년 5월 10일(일) Hermes 서울 밋업 학습 자료를 다시 본 기록</strong>
     <span>현장의 소리를 담아 정리한 페이지와 Hermes GitHub 소스 검증 포인트를 함께 정리한 기록입니다.</span>
   </a>
-  <a href="./2026-05-09-relearning-speed-review" class="internal">
+  <a href="https://goodlookingprokim.github.io/4060-middle-school/after-notes/2026-05-09-relearning-speed-review" class="internal">
     <strong>5월 9일 모임 후 기록</strong>
     <span>이번 모임이 끝난 뒤 바로 이어 적을 수 있게 미리 열어둔 기록 페이지입니다.</span>
   </a>
-  <a href="./meeting-review-template" class="internal">
+  <a href="https://goodlookingprokim.github.io/4060-middle-school/after-notes/meeting-review-template" class="internal">
     <strong>모임 후 기록 템플릿</strong>
     <span>모임 직후 운영자가 바로 정리할 수 있게 만든 기본 틀입니다.</span>
   </a>

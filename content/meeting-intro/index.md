@@ -18,7 +18,7 @@ cssclasses:
 ## 읽기 경로
 
 <div class="reading-path">
-  <a href="./what-is-4060-middle-school" class="internal">
+  <a href="https://goodlookingprokim.github.io/4060-middle-school/meeting-intro/what-is-4060-middle-school" class="internal">
     <strong>4060미들스쿨은 어떤 모임인가</strong>
     <span>처음 보는 분에게 가장 먼저 보여줄 소개 글입니다.</span>
   </a>

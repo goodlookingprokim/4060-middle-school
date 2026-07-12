@@ -16,7 +16,7 @@ cssclasses:
 ## 자료 보기
 
 <div class="reading-path">
-  <a href="./lazycodex-omo-technical-report-v2" class="internal">
+  <a href="https://goodlookingprokim.github.io/4060-middle-school/yoon-youngmi-gallery/lazycodex-omo-technical-report-v2" class="internal">
     <strong>LazyCodex &amp; OmO 기술 문서 보고서 v2</strong>
     <span>윤영미님이 보내주신 원문 HTML 보고서를 웹에서 바로 열어볼 수 있게 연결한 자료입니다.</span>
   </a>

@@ -16,11 +16,11 @@ cssclasses:
 ## 자료 보기
 
 <div class="reading-path">
-  <a href="./aside-browser-beginner-manual" class="internal">
+  <a href="https://goodlookingprokim.github.io/4060-middle-school/lee-sangsu-gallery/aside-browser-beginner-manual" class="internal">
     <strong>Aside Browser 완전초보 입문 매뉴얼북</strong>
     <span>처음 켠 날 바로 써볼 수 있게 정리된 원문 HTML 입문 매뉴얼입니다.</span>
   </a>
-  <a href="./aside-browser-practical-manual" class="internal">
+  <a href="https://goodlookingprokim.github.io/4060-middle-school/lee-sangsu-gallery/aside-browser-practical-manual" class="internal">
     <strong>Aside Browser 실전 매뉴얼북</strong>
     <span>설정, 작업 표면, MCP/CLI/REPL, 운영 원칙까지 묶은 원문 HTML 실전 매뉴얼입니다.</span>
   </a>

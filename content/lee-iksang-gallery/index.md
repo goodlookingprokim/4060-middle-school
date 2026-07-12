@@ -16,7 +16,7 @@ cssclasses:
 ## 자료 보기
 
 <div class="reading-path">
-  <a href="./hermes-understanding-slides" class="internal">
+  <a href="https://goodlookingprokim.github.io/4060-middle-school/lee-iksang-gallery/hermes-understanding-slides" class="internal">
     <strong>Hermes 이해하기 — 교육 슬라이드</strong>
     <span>원문 HTML 파일을 웹에서 바로 열어볼 수 있게 연결한 자료입니다.</span>
   </a>
