@@ -55,9 +55,11 @@ export const defaultContentPageLayout: PageLayout = {
     Component.Explorer({
       sortFn: (a, b) => {
         // 갤러리 폴더를 맨 위에, 그다음 일반 폴더, 그다음 파일
-        const rank = (n: any) =>
-          n.isFolder && n.slugSegment.endsWith("-gallery") ? 0 : n.isFolder ? 1 : 2
-        if (rank(a) !== rank(b)) return rank(a) - rank(b)
+        // 주의: 이 함수는 문자열로 직렬화되어 브라우저에서 실행된다.
+        // slugSegment가 없는 노드(루트 등)가 있으므로 반드시 ?? 로 방어한다.
+        const rankA = a.isFolder ? ((a.slugSegment ?? "").endsWith("-gallery") ? 0 : 1) : 2
+        const rankB = b.isFolder ? ((b.slugSegment ?? "").endsWith("-gallery") ? 0 : 1) : 2
+        if (rankA !== rankB) return rankA - rankB
         return a.displayName.localeCompare(b.displayName, undefined, {
           numeric: true,
           sensitivity: "base",
@@ -92,9 +94,11 @@ export const defaultListPageLayout: PageLayout = {
     Component.Explorer({
       sortFn: (a, b) => {
         // 갤러리 폴더를 맨 위에, 그다음 일반 폴더, 그다음 파일
-        const rank = (n: any) =>
-          n.isFolder && n.slugSegment.endsWith("-gallery") ? 0 : n.isFolder ? 1 : 2
-        if (rank(a) !== rank(b)) return rank(a) - rank(b)
+        // 주의: 이 함수는 문자열로 직렬화되어 브라우저에서 실행된다.
+        // slugSegment가 없는 노드(루트 등)가 있으므로 반드시 ?? 로 방어한다.
+        const rankA = a.isFolder ? ((a.slugSegment ?? "").endsWith("-gallery") ? 0 : 1) : 2
+        const rankB = b.isFolder ? ((b.slugSegment ?? "").endsWith("-gallery") ? 0 : 1) : 2
+        if (rankA !== rankB) return rankA - rankB
         return a.displayName.localeCompare(b.displayName, undefined, {
           numeric: true,
           sensitivity: "base",
