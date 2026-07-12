@@ -16,3 +16,6 @@ cssclasses:
 <div class="gallery-scale-preview">
   <iframe src="https://goodlookingprokim.github.io/4060-middle-school/static/lee-iksang-gallery/hermes-understanding-slides.html" loading="lazy" title="Hermes 이해하기 교육 슬라이드 미리보기"></iframe>
 </div>
+
+> [!tip] 화면이 비어 보이면
+> 전체 화면으로 열었는데 자료가 보이지 않을 때는 **새로고침을 한 번** 해주세요 (컴퓨터: F5 또는 Cmd+R, 휴대폰: 화면을 아래로 당기기). 블로그 글자가 잘 안 보일 때는 화면 위쪽의 해·달 버튼으로 라이트/다크 모드를 바꿔 보세요.
