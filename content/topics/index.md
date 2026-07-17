@@ -16,6 +16,10 @@ cssclasses:
 ## 읽기 경로
 
 <div class="reading-path">
+  <a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-07-17-orca-git-worktree-guide" class="internal">
+    <strong>2026년 7월 17일(금) Git worktree와 Orca를 같이 배우면, AI 에이전트를 여러 명 붙일 때 왜 일이 풀릴까</strong>
+    <span>브랜치 전환이 왜 자꾸 일을 끊는지, Git worktree가 무엇을 바꾸는지, Orca가 그 위에서 여러 AI 에이전트를 어떻게 지휘하게 해주는지 4060미들스쿨 눈높이로 풀어쓴 입문 안내입니다.</span>
+  </a>
   <a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-06-28-loop-engineering-easy-guide" class="internal">
     <strong>2026년 6월 28일(일) 루프 엔지니어링이 뭐길래, AI가 스스로 고치며 일하게 된다는 걸까</strong>
     <span>루프 엔지니어링을 장보기, 공부, 여행 계획 같은 생활 예시로 쉽게 설명하고, 4060 회원분들이 바로 써볼 수 있는 짧은 프롬프트 감각까지 담은 입문 글입니다.</span>
