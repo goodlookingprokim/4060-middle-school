@@ -8,7 +8,7 @@ tags:
   - orca
   - ai-agent
 created: "2026-07-17"
-modified: "2026-07-17"
+modified: "2026-07-18"
 publish: true
 cssclasses:
   - field-note
@@ -229,5 +229,5 @@ Git worktree는 예전부터 있던 기능이지만, AI 에이전트를 여러 �
   <li><a href="https://www.onorca.dev" target="_blank" rel="noopener">Orca 공식 홈페이지</a> (블로그 밖 · 새 창)</li>
   <li><a href="https://www.onorca.dev/docs" target="_blank" rel="noopener">Orca 공식 문서</a> (블로그 밖 · 새 창)</li>
   <li><a href="https://github.com/stablyai/orca" target="_blank" rel="noopener">Orca GitHub 저장소</a> (블로그 밖 · 새 창)</li>
-  <li>참고 영상: `무조건 쓰세요. 다른 터미널 툴을 압도하는 현존 최고의 IDE Orca의 특징은?`</li>
+  <li><a href="https://youtu.be/T9mypKihAeY?si=YmxotWqm2UjC6WtQ" target="_blank" rel="noopener">참고 영상: 무조건 쓰세요. 다른 터미널 툴을 압도하는 현존 최고의 IDE Orca의 특징은?</a> (블로그 밖 · 새 창)</li>
 </ul>
