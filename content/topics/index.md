@@ -16,6 +16,10 @@ cssclasses:
 ## 읽기 경로
 
 <div class="reading-path">
+  <a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-07-23-orca-orchestration-beginner-guide" class="internal">
+    <strong>2026년 7월 23일(목) Orca 오케스트레이션은 AI를 많이 돌리는 기술이 아니라, 일을 잃어버리지 않는 기술이다</strong>
+    <span>`terminal send`와 오케스트레이션의 차이, `worker_done`과 `decision gate`의 의미, `reallygood83/orca` 모드 팩을 어떻게 이해하면 좋은지까지 초보자 눈높이로 풀어쓴 Orca 실전 입문 글입니다.</span>
+  </a>
   <a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-07-17-orca-git-worktree-guide" class="internal">
     <strong>2026년 7월 17일(금) Git worktree와 Orca를 같이 배우면, AI 에이전트를 여러 명 붙일 때 왜 일이 풀릴까</strong>
     <span>브랜치 전환이 왜 자꾸 일을 끊는지, Git worktree가 무엇을 바꾸는지, Orca가 그 위에서 여러 AI 에이전트를 어떻게 지휘하게 해주는지 4060미들스쿨 눈높이로 풀어쓴 입문 안내입니다.</span>

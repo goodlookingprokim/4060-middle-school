@@ -66,12 +66,12 @@ title: 4060미들스쿨
 ## 지금 먼저 보면 좋은 글
 
 <ul class="note-list">
+  <li><a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-07-23-orca-orchestration-beginner-guide" class="internal">2026년 7월 23일(목) Orca 오케스트레이션은 AI를 많이 돌리는 기술이 아니라, 일을 잃어버리지 않는 기술이다</a></li>
   <li><a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-07-17-orca-git-worktree-guide" class="internal">2026년 7월 17일(금) Git worktree와 Orca를 같이 배우면, AI 에이전트를 여러 명 붙일 때 왜 일이 풀릴까</a></li>
   <li><a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-06-06-codex-thread-agent-everyday-guide" class="internal">2026년 6월 6일(토) 코덱스 스레드, 에이전트, 서브에이전트가 자꾸 헷갈릴 때 일상 비유로 이해하는 안내서</a></li>
   <li><a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-06-06-local-llm-parameter-size-guide" class="internal">2026년 6월 6일(토) 로컬 LLM에서 125M, 1B, 7B는 무슨 뜻일까</a></li>
   <li><a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-05-31-obsidian-ai-wiki-setup-guide" class="internal">2026년 5월 31일(일) 옵시디언 하나를 AI 공용 작업실로 바꾸는 법, 위키 세팅은 왜 이렇게 해야 할까</a></li>
   <li><a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-05-30-hermes-ai-employee-growth-guide" class="internal">2026년 5월 30일(토) Hermes를 그냥 챗봇으로 두지 말고, 출근하고 보고하는 AI 직원처럼 키우는 법</a></li>
-  <li><a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-05-30-codex-multi-auth-management-guide" class="internal">2026년 5월 30일(토) Codex CLI를 쓸 때 계정이 하나라 답답했다면, codex-multi-auth는 무엇을 바꿔줄까</a></li>
 </ul>
 
 <p>지난 글 전체는 <a href="https://goodlookingprokim.github.io/4060-middle-school/topics" class="internal">이번에 나눌 이야기</a>와 <a href="https://goodlookingprokim.github.io/4060-middle-school/after-notes" class="internal">모임 후 정리</a>에 모여 있습니다.</p>
