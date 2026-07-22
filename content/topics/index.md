@@ -16,6 +16,10 @@ cssclasses:
 ## 읽기 경로
 
 <div class="reading-path">
+  <a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-07-23-graphify-obsidian-claude-code-guide" class="internal">
+    <strong>2026년 7월 23일(목) Graphify와 Obsidian을 같이 쓰면, Claude Code가 왜 같은 질문에 덜 헤매게 될까</strong>
+    <span>큰 코드베이스에서 Claude Code가 같은 구조를 매번 다시 읽느라 시간과 비용을 쓰는 문제를, Graphify와 Obsidian으로 어떻게 줄일 수 있는지 초보자 눈높이로 정리한 입문 글입니다.</span>
+  </a>
   <a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-07-23-orca-orchestration-beginner-guide" class="internal">
     <strong>2026년 7월 23일(목) Orca 오케스트레이션은 AI를 많이 돌리는 기술이 아니라, 일을 잃어버리지 않는 기술이다</strong>
     <span>`terminal send`와 오케스트레이션의 차이, `worker_done`과 `decision gate`의 의미, `reallygood83/orca` 모드 팩을 어떻게 이해하면 좋은지까지 초보자 눈높이로 풀어쓴 Orca 실전 입문 글입니다.</span>
