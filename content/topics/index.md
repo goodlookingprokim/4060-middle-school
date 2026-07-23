@@ -16,6 +16,10 @@ cssclasses:
 ## 읽기 경로
 
 <div class="reading-path">
+  <a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-07-23-excel-searchable-db-llm-guide" class="internal">
+    <strong>2026년 7월 23일(목) 엑셀 파일이 너무 많아 제목으로 못 찾겠다면, AI가 안의 글자를 뒤지게 만드는 법</strong>
+    <span>원본 출처를 분명히 밝힌 뒤, 엑셀 파일 안의 단어를 AI가 다시 찾게 만드는 구조를 회계표, 병원비, 명단 파일 같은 생활 예시로 풀어쓴 4060미들스쿨용 입문 글입니다.</span>
+  </a>
   <a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-07-23-graphify-obsidian-claude-code-guide" class="internal">
     <strong>2026년 7월 23일(목) Graphify와 Obsidian을 같이 쓰면, Claude Code가 왜 같은 질문에 덜 헤매게 될까</strong>
     <span>큰 코드베이스에서 Claude Code가 같은 구조를 매번 다시 읽느라 시간과 비용을 쓰는 문제를, Graphify와 Obsidian으로 어떻게 줄일 수 있는지 초보자 눈높이로 정리한 입문 글입니다.</span>
