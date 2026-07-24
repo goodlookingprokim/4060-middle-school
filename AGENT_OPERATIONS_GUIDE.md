@@ -28,6 +28,18 @@
 4. 커밋·푸시 — 커밋 메시지에 `[verified]` 태그를 붙여 검증을 마쳤음을 기록한다.
 5. 배포 확인 — 배포된 실제 URL을 한 번 열어 페이지가 존재하고 제목·설명이 맞는지 확인한다.
 
+### 검증 보조 명령 기본값
+
+직접 명령으로 같은 실수를 반복하지 않도록, 아래 두 명령을 기본값으로 사용한다.
+
+- 로컬 미리보기 서버: `bash blog/site/scripts/preview_server.sh`
+- 최근 Pages 배포 확인: `bash blog/site/scripts/pages_run_list.sh`
+
+금지 기본값:
+
+- `python3 -m http.server 4176`를 고정 포트로 바로 실행하지 않는다.
+- `gh run list --workflow pages.yml ...`처럼 저장소에 없는 워크플로 이름을 가정하지 않는다.
+
 ## 3. 발행 전 검증 체크리스트 (필수)
 
 새 페이지 또는 수정된 페이지에 대해 headless 브라우저로 스크린샷 3장을 찍는다: 라이트 모드 1280px, 다크 모드 1280px, 모바일 390px. 각 스크린샷에서 아래 5가지를 확인한다.
@@ -77,6 +89,8 @@
 | 4060 허브/읽기 경로 카드를 클릭하면 코너(루트 도메인)의 404로 이동 | Quartz가 원시 HTML(`<a href="./글이름">`) 상대 링크를 변환할 때 서브 경로 배포(baseUrl의 /4060-middle-school)를 반영하지 않고 루트 절대경로(`/topics/...`)로 출력함. 마크다운 링크는 정상 변환되지만 hub-card, reading-path, action-row 같은 원시 HTML 블록의 href가 당함. 루트 배포인 코너에서는 증상이 안 보임 | **원시 HTML 블록의 href는 항상 전체 URL**(https://...github.io/4060-middle-school/...)로 쓴다. 상대경로(./, ../)와 베이스 없는 절대경로(/) 금지. 2026-07-12에 두 블로그 13개 인덱스 파일 전량 전환 완료 | 2026-07-12 |
 | 탐색기(Explorer)가 갑자기 비어 보임 (데스크톱·모바일 공통) | Explorer의 커스텀 sortFn/filterFn/mapFn은 문자열로 직렬화되어 브라우저에서 실행되는데, slugSegment가 없는 노드(루트 등)에서 `.endsWith` 호출 → TypeError → 탐색기 렌더링 전체 중단. 빌드·tsc는 통과하므로 배포 후에만 드러남 | Explorer 옵션 함수 안에서는 모든 속성 접근을 방어한다: `(n.slugSegment ?? "")`. 수정 후 반드시 배포된 페이지에서 탐색기 항목 수를 확인한다. 브라우저 콘솔 오류 확인도 병행 | 2026-07-12 |
 | 푸시했는데 사이트에 반영 안 보임 | GitHub Pages 배포에 2~3분 소요 + 브라우저 캐시 | 몇 분 기다린 뒤 강력 새로고침(Cmd+Shift+R) | 2026-07-12 |
+| `⚠️ 🛠️ run python3 4176 ... failed` 메시지가 뜸 | 이미 같은 포트의 미리보기 서버가 떠 있는데 고정 포트로 다시 실행함 | `python3 -m http.server 4176`를 직접 실행하지 말고 `bash blog/site/scripts/preview_server.sh`를 사용한다. 이미 4176이 살아 있으면 재사용하고, 아니면 빈 포트를 찾아 띄운다 | 2026-07-24 |
+| `gh run list --workflow pages.yml ...`가 404로 실패 | 실제 저장소의 Pages 워크플로 파일명이 `pages.yml`이 아니라 `deploy.yml`임 | 워크플로 이름을 하드코딩하지 말고 `bash blog/site/scripts/pages_run_list.sh`를 사용한다. 스크립트가 `.github/workflows/`에서 `actions/deploy-pages`를 쓰는 파일을 찾아 준다 | 2026-07-24 |
 
 새 문제를 해결하면 이 표에 한 줄 추가한다. 두 저장소의 이 문서를 함께 갱신한다.
 
