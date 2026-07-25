@@ -1227,11 +1227,15 @@ from channels.layers import get_channel_layer
 from datetime import timedelta
 from django.utils import timezone
 
+# 문제별 제한 시간(초). 실제 서비스에서는 Question.duration_sec 같은 모델 필드로 빼면
+# 문제마다 다르게 줄 수 있고, 이 값 하나가 저장·방송·타이머의 단일 기준이 됩니다.
+QUESTION_DURATION_SEC = 30
+
 def start_question(quiz, question):
  # ① 먼저 칠판에 적는다 (상태 저장)
  quiz.current_question = question
  quiz.started_at = timezone.now()
- quiz.ends_at = quiz.started_at + timedelta(seconds=30)
+ quiz.ends_at = quiz.started_at + timedelta(seconds=QUESTION_DURATION_SEC)
  quiz.answer_revealed = False
  quiz.save()
 
