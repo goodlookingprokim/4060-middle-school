@@ -16,6 +16,10 @@ cssclasses:
 ## 읽기 경로
 
 <div class="reading-path">
+  <a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-07-25-realtime-service-beginner-guide" class="internal">
+    <strong>2026년 7월 25일(토) 실시간 퀴즈, 투표, 채팅은 어떻게 만들어질까</strong>
+    <span>웹소켓이라는 말에서 자꾸 멈추는 분들을 위해, HTTP와 WebSocket의 차이, 상태와 이벤트의 구분, Redis와 DB의 역할, 실시간 서비스가 자주 망가지는 지점을 학교와 자판기 같은 생활 비유로 차근차근 풀어쓴 입문 가이드입니다.</span>
+  </a>
   <a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-07-24-lazy-starter-kit-guide" class="internal">
     <strong>2026년 7월 24일(금) 새 컴퓨터를 받았을 때 무엇부터 깔아야 할지 막막하다면, lazy-starter-kit은 무엇을 줄여줄까</strong>
     <span>새 맥북이나 윈도우 PC를 받았을 때 Git, Python, Docker, Claude Code 같은 준비물을 어디서부터 깔아야 할지 막막한 사람을 위해, `lazy-starter-kit` 저장소가 무엇을 대신해 주는지 생활 비유와 체크리스트 중심으로 풀어쓴 입문 글입니다.</span>
