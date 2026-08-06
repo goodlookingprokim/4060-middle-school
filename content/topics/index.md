@@ -16,6 +16,10 @@ cssclasses:
 ## 읽기 경로
 
 <div class="reading-path">
+  <a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-08-06-officecli-install-review-guide" class="internal">
+    <strong>2026년 8월 6일(목) officecli는 오피스 문서를 코드처럼 다루고 싶을 때 어디까지 쓸 만할까</strong>
+    <span>officecli를 실제로 써 본 기준으로, 설치 방법과 첫 활용 흐름, 장점과 단점, 소개 슬라이드와 안내 자료 작업에서 어디에 잘 맞는지까지 차분하게 정리한 입문 글입니다.</span>
+  </a>
   <a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-07-25-realtime-service-beginner-guide" class="internal">
     <strong>2026년 7월 25일(토) 실시간 퀴즈, 투표, 채팅은 어떻게 만들어질까</strong>
     <span>웹소켓이라는 말에서 자꾸 멈추는 분들을 위해, HTTP와 WebSocket의 차이, 상태와 이벤트의 구분, Redis와 DB의 역할, 실시간 서비스가 자주 망가지는 지점을 학교와 자판기 같은 생활 비유로 차근차근 풀어쓴 입문 가이드입니다.</span>
