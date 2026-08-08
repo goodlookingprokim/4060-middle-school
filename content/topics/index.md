@@ -16,9 +16,9 @@ cssclasses:
 ## 읽기 경로
 
 <div class="reading-path">
-  <a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-08-08-ai-trends-obsidian-beginner-guide" class="internal">
-    <strong>2026년 8월 8일(토) AI 자료가 너무 많아 겁난다면, 옵시디언으로 어디서부터 붙들면 좋을까</strong>
-    <span>최근 AI·기술 동향 학습팩 40개를 바탕으로, 옵시디언을 쓰고 싶지만 아직 두려운 사람도 따라갈 수 있게 읽는 순서와 메모 방법, 바로 써볼 노트 구조를 쉽게 정리한 안내 글입니다.</span>
+  <a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-08-08-obsidian-knowledge-management-second-training-guide" class="internal">
+    <strong>2026년 8월 8일(토) 옵시디언이 메모장으로 끝나지 않게, 지식 창고로 바꾸는 가장 쉬운 시작법</strong>
+    <span>옵시디언을 쓰고 싶지만 아직 두려운 초보를 위해, 폴더 5개와 노트 3장, 링크와 태그, 검색과 QMD까지 한 번에 너무 어렵지 않게 정리한 2차 연수용 안내 글입니다.</span>
   </a>
   <a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-08-06-officecli-install-review-guide" class="internal">
     <strong>2026년 8월 6일(목) officecli는 오피스 문서를 코드처럼 다루고 싶을 때 어디까지 쓸 만할까</strong>

@@ -66,7 +66,7 @@ title: 4060미들스쿨
 ## 지금 먼저 보면 좋은 글
 
 <ul class="note-list">
-  <li><a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-08-08-ai-trends-obsidian-beginner-guide" class="internal">2026년 8월 8일(토) AI 자료가 너무 많아 겁난다면, 옵시디언으로 어디서부터 붙들면 좋을까</a></li>
+  <li><a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-08-08-obsidian-knowledge-management-second-training-guide" class="internal">2026년 8월 8일(토) 옵시디언이 메모장으로 끝나지 않게, 지식 창고로 바꾸는 가장 쉬운 시작법</a></li>
   <li><a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-08-06-officecli-install-review-guide" class="internal">2026년 8월 6일(목) officecli는 오피스 문서를 코드처럼 다루고 싶을 때 어디까지 쓸 만할까</a></li>
   <li><a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-07-25-realtime-service-beginner-guide" class="internal">2026년 7월 25일(토) 실시간 퀴즈, 투표, 채팅은 어떻게 만들어질까</a></li>
   <li><a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-07-24-lazy-starter-kit-guide" class="internal">2026년 7월 24일(금) 새 컴퓨터를 받았을 때 무엇부터 깔아야 할지 막막하다면, lazy-starter-kit은 무엇을 줄여줄까</a></li>
