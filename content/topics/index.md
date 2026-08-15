@@ -16,6 +16,10 @@ cssclasses:
 ## 읽기 경로
 
 <div class="reading-path">
+  <a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-08-15-minihergemma-solar-pro3-telegram-bot-guide" class="internal">
+    <strong>2026년 8월 15일(토) Hermes와 섞지 않고 Solar Pro 3 텔레그램 봇 하나만 따로 만들고 싶다면</strong>
+    <span>Hermes와 완전히 분리된 별도 텔레그램 봇을 Solar Pro 3로 운영하고 싶은 분을 위해, 폴더 구조와 환경변수, 실행 스크립트, 로그 확인 흐름까지 초보자도 따라가기 쉽게 다시 정리한 안내 글입니다.</span>
+  </a>
   <a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-08-08-obsidian-knowledge-management-second-training-guide" class="internal">
     <strong>2026년 8월 8일(토) 옵시디언이 메모장으로 끝나지 않게, 지식 창고로 바꾸는 가장 쉬운 시작법</strong>
     <span>옵시디언을 쓰고 싶지만 아직 두려운 초보를 위해, 폴더 5개와 노트 3장, 링크와 태그, 검색과 QMD까지 한 번에 너무 어렵지 않게 정리한 2차 연수용 안내 글입니다.</span>
