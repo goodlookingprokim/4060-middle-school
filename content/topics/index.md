@@ -16,6 +16,10 @@ cssclasses:
 ## 읽기 경로
 
 <div class="reading-path">
+  <a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-08-20-vibe-coding-security-checklist-part-1" class="internal">
+    <strong>2026년 8월 20일(목) AI로 만든 앱이 왜 이렇게 쉽게 털릴까, 4060미들스쿨용 바이브 코딩 보안 체크리스트 1부</strong>
+    <span>아는개발자 영상의 1부 내용을 바탕으로, 4060미들스쿨 중급반 회원분들이 스터디와 점검에 바로 써먹을 수 있게 API 키와 데이터베이스 보안 9가지를 쉬운 말로 다시 풀어 쓴 나눔용 정리 글입니다.</span>
+  </a>
   <a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-08-15-minihergemma-solar-pro3-telegram-bot-guide" class="internal">
     <strong>2026년 8월 15일(토) Hermes와 섞지 않고 Solar Pro 3 텔레그램 봇 하나만 따로 만들고 싶다면</strong>
     <span>Hermes와 완전히 분리된 별도 텔레그램 봇을 Solar Pro 3로 운영하고 싶은 분을 위해, 폴더 구조와 환경변수, 실행 스크립트, 로그 확인 흐름까지 초보자도 따라가기 쉽게 다시 정리한 안내 글입니다.</span>
