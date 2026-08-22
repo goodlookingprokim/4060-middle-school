@@ -16,6 +16,10 @@ cssclasses:
 ## 자료 보기
 
 <div class="reading-path">
+  <a href="https://goodlookingprokim.github.io/4060-middle-school/lee-iksang-gallery/omo-practical-prompt-playbook" class="internal">
+    <strong>OMO 실전 프롬프트 플레이북 전체판</strong>
+    <span>PDF 자료의 핵심 흐름과 대표 프롬프트를 글자 깨짐 없이 웹에서 읽기 쉽게 정리한 자료입니다.</span>
+  </a>
   <a href="https://goodlookingprokim.github.io/4060-middle-school/lee-iksang-gallery/hermes-understanding-slides" class="internal">
     <strong>Hermes 이해하기 — 교육 슬라이드</strong>
     <span>원문 HTML 파일을 웹에서 바로 열어볼 수 있게 연결한 자료입니다.</span>
