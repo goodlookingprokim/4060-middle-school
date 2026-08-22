@@ -16,6 +16,10 @@ cssclasses:
 ## 읽기 경로
 
 <div class="reading-path">
+  <a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-08-22-hackathon-github-collaboration-guide" class="internal">
+    <strong>2026년 8월 22일(토) 해커톤에서 깃허브 협업이 덜 무서워지는 가장 쉬운 순서</strong>
+    <span>해커톤이 처음인 분도 팀 리포, 브랜치, 커밋, PR, 충돌 해결까지 한 흐름으로 이해할 수 있도록, 회원 눈높이에 맞춰 깃허브 협업과 AI 활용 순서를 쉽게 풀어 쓴 나눔용 가이드입니다.</span>
+  </a>
   <a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-08-20-vibe-coding-security-checklist-part-1" class="internal">
     <strong>2026년 8월 20일(목) AI로 만든 앱이 왜 이렇게 쉽게 털릴까, 4060미들스쿨용 바이브 코딩 보안 체크리스트 1부</strong>
     <span>아는개발자 영상의 1부 내용을 바탕으로, 4060미들스쿨 중급반 회원분들이 스터디와 점검에 바로 써먹을 수 있게 API 키와 데이터베이스 보안 9가지를 쉬운 말로 다시 풀어 쓴 나눔용 정리 글입니다.</span>
