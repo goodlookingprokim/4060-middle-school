@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>깃허브 명령어, 단어 하나씩 뜯어보기</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+ :root{
+ --board-1:#16281d;
+ --board-2:#1e3a2b;
+ --board-3:#234431;
+ --chalk-white:#f4f1e8;
+ --chalk-white-dim:rgba(244,241,232,.62);
+ --chalk-yellow:#f2d675;
+ --chalk-pink:#f0a8a8;
+ --chalk-blue:#9ecbdb;
+ --chalk-green:#b9d9a8;
+ --frame-wood:#5a3d2b;
+ --frame-wood-light:#7a5238;
+ }
+ *{ box-sizing:border-box; }
+ html{ scroll-behavior:smooth; }
+ body{
+ margin:0;
+ background:
+ radial-gradient(ellipse at 20% 0%, rgba(255,255,255,.04), transparent 40%),
+ radial-gradient(ellipse at 80% 100%, rgba(255,255,255,.03), transparent 45%),
+ linear-gradient(160deg,var(--board-1),var(--board-2) 55%,var(--board-3));
+ color:var(--chalk-white);
+ font-family:'Noto Sans KR',sans-serif;
+ line-height:1.7;
+ padding-bottom:4rem;
+ }
+ .chalk{ font-family:'Gaegu',cursive; }
+
+ /* ---------- 액자 프레임 느낌의 헤더 ---------- */
+ header{
+ position:relative;
+ padding:3.2rem 1.2rem 3rem;
+ text-align:center;
+ border-bottom:6px solid var(--frame-wood);
+ box-shadow:0 6px 0 var(--frame-wood-light) inset;
+ overflow:hidden;
+ }
+ header::before{
+ content:"";
+ position:absolute; inset:0;
+ background-image:
+ radial-gradient(rgba(255,255,255,.05) 1px, transparent 1px);
+ background-size:14px 14px;
+ opacity:.5;
+ pointer-events:none;
+ }
+ .eyebrow{
+ display:inline-block;
+ font-family:'Gaegu',cursive;
+ font-size:1.05rem;
+ color:var(--chalk-yellow);
+ border:2px dashed var(--chalk-yellow);
+ border-radius:999px;
+ padding:.25rem 1rem;
+ margin-bottom:1.1rem;
+ }
+ h1{
+ font-family:'Gaegu',cursive;
+ font-weight:700;
+ font-size:clamp(2rem,5vw,3.1rem);
+ margin:.2rem 0 .6rem;
+ position:relative;
+ display:inline-block;
+ }
+ h1 svg.underline{
+ position:absolute; left:0; right:0; bottom:-14px; width:100%; height:18px;
+ }
+ .subtitle{
+ max-width:640px; margin:1.6rem auto 0;
+ color:var(--chalk-white-dim);
+ font-size:1.02rem;
+ }
+
+ /* ---------- 목차 (칩 형태) ---------- */
+ nav.toc{
+ max-width:960px; margin:1.6rem auto 0;
+ padding:0 1.2rem;
+ display:flex; flex-wrap:wrap; gap:.5rem; justify-content:center;
+ }
+ nav.toc a{
+ font-family:'Gaegu',cursive; font-size:1rem;
+ color:var(--chalk-white);
+ text-decoration:none;
+ border:2px solid rgba(244,241,232,.35);
+ border-radius:10px;
+ padding:.35rem .8rem;
+ transition:.15s;
+ white-space:nowrap;
+ }
+ nav.toc a:hover{ border-color:var(--chalk-yellow); color:var(--chalk-yellow); }
+
+ main{ max-width:960px; margin:0 auto; padding:2.6rem 1.2rem 0; }
+
+ section.intro-box, section.wrapup{
+ background:rgba(255,255,255,.045);
+ border:2px dashed rgba(244,241,232,.35);
+ border-radius:16px;
+ padding:1.6rem 1.6rem;
+ margin-bottom:2.6rem;
+ }
+ section.intro-box h2, section.wrapup h2{
+ font-family:'Gaegu',cursive; color:var(--chalk-yellow); margin-top:0;
+ font-size:1.5rem;
+ }
+ .analogy-table{ width:100%; border-collapse:collapse; margin-top:1rem; font-size:.94rem; }
+ .analogy-table th, .analogy-table td{
+ border:1px solid rgba(244,241,232,.25);
+ padding:.55rem .7rem; text-align:left;
+ }
+ .analogy-table th{ color:var(--chalk-yellow); font-family:'Gaegu',cursive; font-size:1.05rem; }
+
+ /* ---------- 명령어 카드 ---------- */
+ .cmd-card{
+ position:relative;
+ margin-bottom:3.4rem;
+ padding:1.8rem 1.6rem 1.6rem;
+ border-radius:18px;
+ background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+ border:1px solid rgba(244,241,232,.18);
+ }
+ .step-tag{
+ font-family:'Gaegu',cursive;
+ font-size:.95rem;
+ color:var(--board-1);
+ background:var(--chalk-yellow);
+ display:inline-block;
+ padding:.15rem .7rem;
+ border-radius:6px;
+ transform:rotate(-2deg);
+ margin-bottom:.7rem;
+ }
+ .cmd-title{
+ font-family:'Gaegu',cursive;
+ font-size:1.5rem;
+ margin:0 0 .3rem;
+ color:var(--chalk-white);
+ }
+ .cmd-desc{ color:var(--chalk-white-dim); margin-bottom:1.3rem; font-size:.96rem; }
+
+ /* 단어 분해 다이어그램 */
+ .breakdown{
+ display:flex; flex-wrap:wrap; gap:1.4rem 1rem;
+ padding:1.2rem 1rem 1.4rem;
+ background:rgba(0,0,0,.18);
+ border-radius:12px;
+ margin-bottom:1.3rem;
+ }
+ .word-unit{
+ display:flex; flex-direction:column; align-items:center;
+ min-width:88px; max-width:160px;
+ text-align:center;
+ }
+ .word-chip{
+ font-family:'Gaegu',cursive;
+ font-size:1.25rem;
+ padding:.25rem .5rem;
+ border-bottom:3px dashed currentColor;
+ white-space:nowrap;
+ }
+ .word-chip.role-tool{ color:var(--chalk-white-dim); }
+ .word-chip.role-verb{ color:var(--chalk-yellow); }
+ .word-chip.role-option{ color:var(--chalk-pink); }
+ .word-chip.role-arg{ color:var(--chalk-blue); }
+ .word-arrow{ color:var(--chalk-white-dim); font-size:1rem; margin:.3rem 0 .2rem; }
+ .word-caption{
+ font-size:.82rem; color:var(--chalk-white-dim); line-height:1.45;
+ }
+
+ /* 터미널 줄 */
+ .terminal{
+ background:#0d1712;
+ border:1px solid rgba(244,241,232,.15);
+ border-radius:10px;
+ padding:.9rem 1.1rem;
+ font-family:'Courier New',monospace;
+ font-size:.98rem;
+ overflow-x:auto;
+ margin-bottom:1.2rem;
+ }
+ .terminal .prompt{ color:var(--chalk-green); }
+ .terminal .tool{ color:var(--chalk-white-dim); }
+ .terminal .verb{ color:var(--chalk-yellow); font-weight:bold; }
+ .terminal .option{ color:var(--chalk-pink); }
+ .terminal .arg{ color:var(--chalk-blue); }
+
+ .full-meaning{
+ background:rgba(242,214,117,.08);
+ border-left:4px solid var(--chalk-yellow);
+ padding:.8rem 1rem;
+ border-radius:6px;
+ margin-bottom:1rem;
+ font-size:.95rem;
+ }
+ .full-meaning b{ color:var(--chalk-yellow); }
+
+ .real-example{
+ background:rgba(158,203,219,.08);
+ border-left:4px solid var(--chalk-blue);
+ padding:.8rem 1rem;
+ border-radius:6px;
+ font-size:.9rem;
+ color:var(--chalk-white-dim);
+ }
+ .real-example b{ color:var(--chalk-blue); }
+
+ /* 옵션 세부 표 */
+ .option-detail{ margin-top:1.2rem; }
+ .option-detail summary{
+ cursor:pointer; font-family:'Gaegu',cursive; font-size:1.1rem;
+ color:var(--chalk-pink); padding:.4rem 0;
+ }
+ .option-detail table{ width:100%; border-collapse:collapse; margin-top:.6rem; font-size:.88rem; }
+ .option-detail td, .option-detail th{
+ border:1px solid rgba(244,241,232,.2); padding:.5rem .6rem; text-align:left;
+ }
+ .option-detail th{ color:var(--chalk-pink); font-family:'Gaegu',cursive; }
+ .option-detail code{
+ background:rgba(0,0,0,.3); padding:.1rem .4rem; border-radius:4px; color:var(--chalk-blue);
+ }
+
+ /* 충돌 표시 블록 */
+ .conflict-block{
+ background:#0d1712; border:1px solid rgba(244,241,232,.15); border-radius:10px;
+ padding:1rem 1.1rem; font-family:'Courier New',monospace; font-size:.92rem;
+ margin-bottom:1rem; white-space:pre-wrap;
+ }
+ .conflict-block .mark{ color:var(--chalk-pink); }
+ .conflict-block .mine{ color:var(--chalk-yellow); }
+ .conflict-block .yours{ color:var(--chalk-blue); }
+
+ /* 요약 표 */
+ .cheat-table{ width:100%; border-collapse:collapse; font-size:.9rem; margin-top:1rem;}
+ .cheat-table th,.cheat-table td{ border:1px solid rgba(244,241,232,.25); padding:.5rem .65rem; text-align:left; vertical-align:top;}
+ .cheat-table th{ color:var(--chalk-yellow); font-family:'Gaegu',cursive; font-size:1.05rem;}
+
+ footer{
+ text-align:center; margin-top:3rem; color:var(--chalk-white-dim); font-size:.85rem;
+ }
+
+ @media (max-width:600px){
+ .breakdown{ gap:1.1rem .7rem; padding:1rem .7rem; }
+ .word-unit{ min-width:70px; }
+ .word-chip{ font-size:1.05rem; }
+ }
+</style>
+</head>
+<body>
+
+<header>
+ <span class="eyebrow chalk">초급 개발자용 · 단어별 완전분해</span>
+ <h1>
+ 깃허브 명령어, <br>단어 하나씩 뜯어보기
+ <svg class="underline" viewBox="0 0 300 18" preserveAspectRatio="none">
+ <path d="M2 10 Q 50 2, 100 10 T 200 9 T 298 11" stroke="#f2d675" stroke-width="4" fill="none" stroke-linecap="round"/>
+ </svg>
+ </h1>
+ <p class="subtitle chalk">명령어를 통째로 외우지 마세요. <b>단어 하나하나가 무슨 뜻인지</b> 알면, 조합은 저절로 이해됩니다. 칠판에 하나씩 뜯어서 적어드릴게요.</p>
+
+ <nav class="toc">
+ <a href="#intro">비유부터</a>
+ <a href="#clone">clone</a>
+ <a href="#checkout">checkout -b</a>
+ <a href="#add">add</a>
+ <a href="#commit">commit</a>
+ <a href="#push">push</a>
+ <a href="#pull">pull</a>
+ <a href="#status">status / branch</a>
+ <a href="#conflict">충돌 해결</a>
+ <a href="#cheat">전체 요약</a>
+ </nav>
+</header>
+
+<main>
+
+ <section class="intro-box" id="intro">
+ <h2 class="chalk">먼저, 명령어의 구조부터</h2>
+ <p>모든 깃 명령어는 <b>"도구 + 할 일 + 옵션 + 대상"</b> 순서로 조립된 하나의 문장입니다. 예를 들어 <code>git commit -m "메시지"</code>를 우리말 문장으로 바꾸면 이렇습니다.</p>
+ <table class="analogy-table">
+ <tr><th>영어 단어</th><th>우리말 뜻</th><th>역할</th></tr>
+ <tr><td><span class="chalk" style="color:var(--chalk-white-dim)">git</span></td><td>"깃 도구야,"</td><td>도구 부르기</td></tr>
+ <tr><td><span class="chalk" style="color:var(--chalk-yellow)">commit</span></td><td>"저장해줘"</td><td>할 일(동사)</td></tr>
+ <tr><td><span class="chalk" style="color:var(--chalk-pink)">-m</span></td><td>"메시지는 바로 적을게"</td><td>옵션(방식)</td></tr>
+ <tr><td><span class="chalk" style="color:var(--chalk-blue)">"메시지"</span></td><td>"로그인 화면 완성"</td><td>대상(내용)</td></tr>
+ </table>
+ <p style="margin-top:1rem;">이 문서에서는 색깔로 역할을 구분합니다. <span style="color:var(--chalk-white-dim)">■ 도구</span> · <span style="color:var(--chalk-yellow)">■ 동사(할 일)</span> · <span style="color:var(--chalk-pink)">■ 옵션</span> · <span style="color:var(--chalk-blue)">■ 대상</span></p>
+ </section>
+
+ <!-- ============ CLONE ============ -->
+ <div class="cmd-card" id="clone">
+ <span class="step-tag">STEP 01 · 시작할 때 딱 1번</span>
+ <h3 class="cmd-title chalk">git clone — "통째로 복사해와"</h3>
+ <p class="cmd-desc">쉬운 예시: 도서관 책을 복사기로 그대로 복사해서 집에 가져오는 것</p>
+
+ <div class="breakdown">
+ <div class="word-unit">
+ <span class="word-chip role-tool">git</span>
+ <span class="word-arrow">↓</span>
+ <span class="word-caption">"깃 도구야"<br>이 일을 시킬 도구 이름</span>
+ </div>
+ <div class="word-unit">
+ <span class="word-chip role-verb">clone</span>
+ <span class="word-arrow">↓</span>
+ <span class="word-caption">"복제해줘"<br>통째로 똑같이 베끼라는 뜻</span>
+ </div>
+ <div class="word-unit">
+ <span class="word-chip role-arg">(주소)</span>
+ <span class="word-arrow">↓</span>
+ <span class="word-caption">"어디서?"<br>복사해올 리포의 인터넷 주소</span>
+ </div>
+ </div>
+
+ <div class="terminal">
+ <span class="prompt">$</span> <span class="tool">git</span> <span class="verb">clone</span> <span class="arg">https://github.com/팀이름/프로젝트.git</span>
+ </div>
+
+ <div class="full-meaning">
+ <b>합쳐서 읽으면:</b> "깃 도구야, 이 주소에 있는 공책을 통째로 복사해줘."
+ </div>
+ <div class="real-example">
+ <b>실전에서는:</b> 해커톤 첫날, 팀장이 리포 주소를 단톡방에 올리면 팀원 전원이 이 명령어 한 줄만 자기 컴퓨터에서 실행하면 됩니다.
+ </div>
+
+ <details class="option-detail">
+ <summary>옵션 더 알아보기 (자주 쓰는 2가지)</summary>
+ <table>
+ <tr><th>옵션</th><th>단어 뜻</th><th>효과</th></tr>
+ <tr><td><code>git clone (주소) 폴더이름</code></td><td>맨 뒤에 이름 하나 더</td><td>복사할 폴더 이름을 내가 원하는 대로 지정</td></tr>
+ <tr><td><code>-b 브랜치이름</code></td><td>b = branch(노트)</td><td>복사할 때 특정 노트를 처음부터 펼쳐놓고 시작</td></tr>
+ </table>
+ </details>
+ </div>
+
+ <!-- ============ CHECKOUT -b ============ -->
+ <div class="cmd-card" id="checkout">
+ <span class="step-tag">STEP 02 · 작업 시작할 때마다</span>
+ <h3 class="cmd-title chalk">git checkout -b — "새 노트 꺼내서 바로 펼치기"</h3>
+ <p class="cmd-desc">쉬운 예시: 서랍에서 새 공책을 꺼내 표지에 이름 쓰고, 바로 펼쳐놓는 것</p>
+
+ <div class="breakdown">
+ <div class="word-unit">
+ <span class="word-chip role-tool">git</span>
+ <span class="word-arrow">↓</span>
+ <span class="word-caption">깃 도구야</span>
+ </div>
+ <div class="word-unit">
+ <span class="word-chip role-verb">checkout</span>
+ <span class="word-arrow">↓</span>
+ <span class="word-caption">"이동해줘"<br>펼쳐진 노트를 바꾸는 것</span>
+ </div>
+ <div class="word-unit">
+ <span class="word-chip role-option">-b</span>
+ <span class="word-arrow">↓</span>
+ <span class="word-caption">"새로 만들면서"<br>branch의 b, 없던 노트를 새로 만듦</span>
+ </div>
+ <div class="word-unit">
+ <span class="word-chip role-arg">feature/민수-로그인</span>
+ <span class="word-arrow">↓</span>
+ <span class="word-caption">새 노트의 이름표</span>
+ </div>
+ </div>
+
+ <div class="terminal">
+ <span class="prompt">$</span> <span class="tool">git</span> <span class="verb">checkout</span> <span class="option">-b</span> <span class="arg">feature/민수-로그인</span>
+ </div>
+
+ <div class="full-meaning">
+ <b>합쳐서 읽으면:</b> "깃 도구야, '민수-로그인'이라는 이름의 새 노트를 만들고, 그 노트로 바로 이동해줘."
+ </div>
+
+ <details class="option-detail">
+ <summary>사실 이 명령어는 2가지 일을 합친 단축키예요</summary>
+ <table>
+ <tr><th>따로 하면</th><th>뜻</th></tr>
+ <tr><td><code>git branch feature/민수-로그인</code></td><td>노트를 "만들기"만 함 (아직 안 펼침)</td></tr>
+ <tr><td><code>git checkout feature/민수-로그인</code></td><td>그 노트를 "펼치기"만 함</td></tr>
+ </table>
+ <p style="margin-top:.6rem; color:var(--chalk-white-dim);">이 2줄을 한 번에 하는 게 <code>checkout -b</code>입니다. 지금 어떤 노트가 펼쳐져 있는지 궁금하면 <code>git branch</code>로 확인하세요. <code>*</code> 표시가 붙은 게 지금 펼쳐진 노트입니다.</p>
+ </details>
+ </div>
+
+ <!-- ============ ADD ============ -->
+ <div class="cmd-card" id="add">
+ <span class="step-tag">STEP 03 · 작업 중 자주</span>
+ <h3 class="cmd-title chalk">git add — "장바구니에 담기"</h3>
+ <p class="cmd-desc">쉬운 예시: 편의점에서 물건 고를 때 계산 전에 장바구니에 먼저 담는 것</p>
+
+ <div class="breakdown">
+ <div class="word-unit">
+ <span class="word-chip role-tool">git</span>
+ <span class="word-arrow">↓</span>
+ <span class="word-caption">깃 도구야</span>
+ </div>
+ <div class="word-unit">
+ <span class="word-chip role-verb">add</span>
+ <span class="word-arrow">↓</span>
+ <span class="word-caption">"담아줘"<br>저장 전에 후보로 골라 담기</span>
+ </div>
+ <div class="word-unit">
+ <span class="word-chip role-arg">.</span>
+ <span class="word-arrow">↓</span>
+ <span class="word-caption">"전부 다"<br>점(.)은 지금 폴더 안의 전체</span>
+ </div>
+ </div>
+
+ <div class="terminal">
+ <span class="prompt">$</span> <span class="tool">git</span> <span class="verb">add</span> <span class="arg">.</span>
+ </div>
+
+ <div class="full-meaning">
+ <b>합쳐서 읽으면:</b> "깃 도구야, 지금 바뀐 것 전부 다 장바구니에 담아줘."
+ </div>
+ <div class="real-example">
+ <b>확인 방법:</b> <code>git status</code>를 치면 빨간 글씨(아직 안 담김)와 초록 글씨(담김)로 구분해서 보여줍니다.
+ </div>
+
+ <details class="option-detail">
+ <summary>옵션 3가지 비교</summary>
+ <table>
+ <tr><th>명령어</th><th>단어 뜻</th><th>효과</th></tr>
+ <tr><td><code>git add .</code></td><td>. = 전부</td><td>지금 폴더 안에서 바뀐 것 전부 담기</td></tr>
+ <tr><td><code>git add 파일이름.txt</code></td><td>파일 이름 직접 지정</td><td>그 파일 하나만 콕 집어서 담기</td></tr>
+ <tr><td><code>git add -A</code></td><td>-A = All</td><td><code>.</code>과 비슷하지만 <b>삭제한 파일까지</b> 포함해서 담음 (더 안전)</td></tr>
+ </table>
+ </details>
+ </div>
+
+ <!-- ============ COMMIT ============ -->
+ <div class="cmd-card" id="commit">
+ <span class="step-tag">STEP 04 · 작업 중 자주</span>
+ <h3 class="cmd-title chalk">git commit -m — "계산하고 영수증에 메모 남기기"</h3>
+ <p class="cmd-desc">쉬운 예시: 게임하다가 "저장하기" 누르고, 저장 파일 이름을 적는 것</p>
+
+ <div class="breakdown">
+ <div class="word-unit">
+ <span class="word-chip role-tool">git</span>
+ <span class="word-arrow">↓</span>
+ <span class="word-caption">깃 도구야</span>
+ </div>
+ <div class="word-unit">
+ <span class="word-chip role-verb">commit</span>
+ <span class="word-arrow">↓</span>
+ <span class="word-caption">"저장해줘"<br>장바구니 내용을 실제로 도장 찍기</span>
+ </div>
+ <div class="word-unit">
+ <span class="word-chip role-option">-m</span>
+ <span class="word-arrow">↓</span>
+ <span class="word-caption">"메시지는 바로 적을게"<br>message의 m</span>
+ </div>
+ <div class="word-unit">
+ <span class="word-chip role-arg">"로그인 화면 완성"</span>
+ <span class="word-arrow">↓</span>
+ <span class="word-caption">무엇을 했는지<br>한 줄 메모</span>
+ </div>
+ </div>
+
+ <div class="terminal">
+ <span class="prompt">$</span> <span class="tool">git</span> <span class="verb">commit</span> <span class="option">-m</span> <span class="arg">"feat: 로그인 화면 UI 추가"</span>
+ </div>
+
+ <div class="full-meaning">
+ <b>합쳐서 읽으면:</b> "깃 도구야, 장바구니에 담긴 걸 저장하는데, 메시지는 '로그인 화면 UI 추가'라고 적어줘."
+ </div>
+ <div class="real-example">
+ <b>나쁜 예 vs 좋은 예:</b><br>
+ ❌ <code>git commit -m "수정"</code> — 나중에 뭘 고쳤는지 알 수 없음<br>
+ ✅ <code>git commit -m "로그인 버튼 클릭 시 오류 수정"</code> — 한눈에 이해됨
+ </div>
+
+ <details class="option-detail">
+ <summary>옵션 더 알아보기</summary>
+ <table>
+ <tr><th>명령어</th><th>단어 뜻</th><th>주의할 점</th></tr>
+ <tr><td><code>git commit</code> (옵션 없이)</td><td>메시지를 나중에 씀</td><td>메모장 화면이 뜨는데 초보자는 헷갈림 → <code>-m</code> 추천</td></tr>
+ <tr><td><code>git commit -am "메시지"</code></td><td>-a = add 생략</td><td>이미 저장했던 적 있는 파일만 add 없이 바로 커밋. <b>새 파일은 안 잡힘</b></td></tr>
+ </table>
+ </details>
+ </div>
+
+ <!-- ============ PUSH ============ -->
+ <div class="cmd-card" id="push">
+ <span class="step-tag">STEP 05 · 다 됐을 때</span>
+ <h3 class="cmd-title chalk">git push -u origin — "인터넷에 업로드하고 주소 기억시키기"</h3>
+ <p class="cmd-desc">쉬운 예시: 핸드폰 사진을 구글 드라이브에 업로드하는 것</p>
+
+ <div class="breakdown">
+ <div class="word-unit">
+ <span class="word-chip role-tool">git</span>
+ <span class="word-arrow">↓</span>
+ <span class="word-caption">깃 도구야</span>
+ </div>
+ <div class="word-unit">
+ <span class="word-chip role-verb">push</span>
+ <span class="word-arrow">↓</span>
+ <span class="word-caption">"밀어 올려줘"<br>내 노트를 인터넷 서버로</span>
+ </div>
+ <div class="word-unit">
+ <span class="word-chip role-option">-u</span>
+ <span class="word-arrow">↓</span>
+ <span class="word-caption">"연결을 기억해줘"<br>upstream의 u</span>
+ </div>
+ <div class="word-unit">
+ <span class="word-chip role-arg">origin</span>
+ <span class="word-arrow">↓</span>
+ <span class="word-caption">"우리 팀 리포"<br>자동으로 붙는 별명</span>
+ </div>
+ <div class="word-unit">
+ <span class="word-chip role-arg">feature/민수-로그인</span>
+ <span class="word-arrow">↓</span>
+ <span class="word-caption">올릴 노트 이름</span>
+ </div>
+ </div>
+
+ <div class="terminal">
+ <span class="prompt">$</span> <span class="tool">git</span> <span class="verb">push</span> <span class="option">-u</span> <span class="arg">origin feature/민수-로그인</span>
+ </div>
+
+ <div class="full-meaning">
+ <b>합쳐서 읽으면:</b> "깃 도구야, '민수-로그인' 노트를 우리 팀 리포에 올리는데, 이 연결을 다음에도 기억해줘."
+ </div>
+ <div class="real-example">
+ <b>-u의 진짜 쓸모:</b> 택배 주소를 처음 한 번 저장해두면 다음부턴 안 써도 되는 것처럼, <code>-u</code>를 한 번 해두면 다음부턴 그냥 <code>git push</code>만 쳐도 알아서 같은 곳으로 올라갑니다.
+ </div>
+ </div>
+
+ <!-- ============ PULL ============ -->
+ <div class="cmd-card" id="pull">
+ <span class="step-tag">STEP 06 · 작업 시작 전, 매일</span>
+ <h3 class="cmd-title chalk">git pull origin main — "최신 내용 당겨오기"</h3>
+ <p class="cmd-desc">쉬운 예시: 단체 카톡방에서 안 읽은 메시지 새로고침하는 것</p>
+
+ <div class="breakdown">
+ <div class="word-unit">
+ <span class="word-chip role-tool">git</span>
+ <span class="word-arrow">↓</span>
+ <span class="word-caption">깃 도구야</span>
+ </div>
+ <div class="word-unit">
+ <span class="word-chip role-verb">pull</span>
+ <span class="word-arrow">↓</span>
+ <span class="word-caption">"당겨와줘"<br>push의 반대, 서버 → 내 컴퓨터</span>
+ </div>
+ <div class="word-unit">
+ <span class="word-chip role-arg">origin</span>
+ <span class="word-arrow">↓</span>
+ <span class="word-caption">우리 팀 리포에서</span>
+ </div>
+ <div class="word-unit">
+ <span class="word-chip role-arg">main</span>
+ <span class="word-arrow">↓</span>
+ <span class="word-caption">정본 공책 기준으로</span>
+ </div>
+ </div>
+
+ <div class="terminal">
+ <span class="prompt">$</span> <span class="tool">git</span> <span class="verb">pull</span> <span class="arg">origin main</span>
+ </div>
+
+ <div class="full-meaning">
+ <b>합쳐서 읽으면:</b> "깃 도구야, 우리 팀 리포의 정본 공책(main)에 새로 추가된 내용을 내 컴퓨터로 가져와줘."
+ </div>
+ <div class="real-example">
+ <b>왜 자주 해야 하냐면:</b> 내가 작업하는 동안 다른 팀원이 먼저 merge 했을 수 있습니다. 이걸 안 가져오고 계속 작업하면 나중에 충돌이 커집니다. <b>하루 시작 전, push 하기 직전</b> 두 타이밍에 꼭 pull하세요.
+ </div>
+ </div>
+
+ <!-- ============ STATUS / BRANCH ============ -->
+ <div class="cmd-card" id="status">
+ <span class="step-tag">확인용 · 언제든</span>
+ <h3 class="cmd-title chalk">git status / git branch — "지금 상태 물어보기"</h3>
+ <p class="cmd-desc">쉬운 예시: 장바구니에 뭐가 담겼는지, 지금 어느 노트가 펼쳐져 있는지 확인하는 것</p>
+
+ <div class="breakdown">
+ <div class="word-unit">
+ <span class="word-chip role-tool">git</span>
+ <span class="word-arrow">↓</span>
+ <span class="word-caption">깃 도구야</span>
+ </div>
+ <div class="word-unit">
+ <span class="word-chip role-verb">status</span>
+ <span class="word-arrow">↓</span>
+ <span class="word-caption">"지금 상태 보여줘"<br>담긴 것 / 안 담긴 것 구분</span>
+ </div>
+ </div>
+ <div class="terminal">
+ <span class="prompt">$</span> <span class="tool">git</span> <span class="verb">status</span>
+ </div>
+
+ <div class="breakdown">
+ <div class="word-unit">
+ <span class="word-chip role-tool">git</span>
+ <span class="word-arrow">↓</span>
+ <span class="word-caption">깃 도구야</span>
+ </div>
+ <div class="word-unit">
+ <span class="word-chip role-verb">branch</span>
+ <span class="word-arrow">↓</span>
+ <span class="word-caption">"노트 목록 보여줘"<br>*표시 = 지금 펼친 노트</span>
+ </div>
+ </div>
+ <div class="terminal">
+ <span class="prompt">$</span> <span class="tool">git</span> <span class="verb">branch</span>
+ </div>
+ </div>
+
+ <!-- ============ CONFLICT ============ -->
+ <div class="cmd-card" id="conflict">
+ <span class="step-tag">가끔 만나는 상황</span>
+ <h3 class="cmd-title chalk">충돌(conflict) — "누구 걸 남길지 정해줘"</h3>
+ <p class="cmd-desc">쉬운 예시: 두 사람이 같은 문장을 서로 다르게 고쳐놔서, 어느 걸 남길지 사람이 직접 정해야 하는 상황</p>
+
+ <p style="color:var(--chalk-white-dim); margin-bottom:.8rem;">이건 새 명령어가 아니라, <code>git pull</code> 하다가 화면에 나타나는 <b>표시</b>입니다. 이 표시 자체를 뜯어봅시다.</p>
+
+ <div class="conflict-block"><span class="mark">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</span>
+<span class="mine">민수가 쓴 코드</span>
+<span class="mark">=======</span>
+<span class="yours">영희가 쓴 코드</span>
+<span class="mark">&gt;&gt;&gt;&gt;&gt;&gt;&gt; feature/영희-메인화면</span></div>
+
+ <div class="breakdown">
+ <div class="word-unit">
+ <span class="word-chip role-option">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</span>
+ <span class="word-arrow">↓</span>
+ <span class="word-caption">"여기부터"<br>내가 지금 갖고 있던 코드 시작</span>
+ </div>
+ <div class="word-unit">
+ <span class="word-chip role-option">=======</span>
+ <span class="word-arrow">↓</span>
+ <span class="word-caption">"여기가 경계선"<br>내 코드와 상대 코드를 나누는 선</span>
+ </div>
+ <div class="word-unit">
+ <span class="word-chip role-option">&gt;&gt;&gt;&gt;&gt;&gt;&gt; (브랜치명)</span>
+ <span class="word-arrow">↓</span>
+ <span class="word-caption">"여기까지"<br>상대방 코드가 어디서 끝나는지 + 누구 노트인지</span>
+ </div>
+ </div>
+
+ <div class="full-meaning">
+ <b>이건 고장이 아닙니다.</b> 컴퓨터가 "둘 다 코드가 있는데 뭘 남겨야 할지 모르겠어요"라고 정직하게 물어보는 것뿐입니다.
+ </div>
+
+ <p style="color:var(--chalk-white-dim); margin:1rem 0 .5rem;">해결 순서: 남길 코드를 정하고, 표시 3줄(<code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>, <code>=======</code>, <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code>)을 직접 지운 뒤 저장합니다.</p>
+
+ <div class="terminal">
+ <span class="prompt">$</span> <span class="tool">git</span> <span class="verb">add</span> <span class="arg">.</span><br>
+ <span class="prompt">$</span> <span class="tool">git</span> <span class="verb">commit</span> <span class="option">-m</span> <span class="arg">"충돌 해결: 로그인과 메인화면 병합"</span><br>
+ <span class="prompt">$</span> <span class="tool">git</span> <span class="verb">push</span>
+ </div>
+ <div class="real-example">
+ <b>팁:</b> 커밋 메시지에 "충돌 해결"이라고 꼭 써두세요. 나중에 기록 볼 때 어디서 문제가 있었는지 바로 알 수 있습니다.
+ </div>
+ </div>
+
+ <!-- ============ 요약 ============ -->
+ <section class="wrapup" id="cheat">
+ <h2 class="chalk">칠판 지우기 전, 한 장 정리</h2>
+ <table class="cheat-table">
+ <tr><th>동사</th><th>뜻</th><th>비유</th></tr>
+ <tr><td>clone</td><td>통째로 복사해오기</td><td>도서관 책 복사기로 복사</td></tr>
+ <tr><td>checkout -b</td><td>새 노트 만들고 펼치기</td><td>새 공책 꺼내서 이름 쓰기</td></tr>
+ <tr><td>add</td><td>저장 후보로 담기</td><td>편의점 장바구니 담기</td></tr>
+ <tr><td>commit -m</td><td>실제 저장 + 한 줄 메모</td><td>게임 저장하고 파일명 적기</td></tr>
+ <tr><td>push -u</td><td>인터넷에 올리고 주소 기억</td><td>드라이브 업로드 + 주소 저장</td></tr>
+ <tr><td>pull</td><td>최신 내용 당겨오기</td><td>단톡방 새로고침</td></tr>
+ <tr><td>status / branch</td><td>지금 상태 확인</td><td>장바구니·펼친 노트 확인</td></tr>
+ </table>
+
+ <div class="terminal" style="margin-top:1.4rem;">
+<span class="prompt">#</span> 처음 한 번만<br>
+<span class="tool">git</span> <span class="verb">clone</span> <span class="arg">(리포 주소)</span><br><br>
+<span class="prompt">#</span> 작업 시작할 때마다<br>
+<span class="tool">git</span> <span class="verb">checkout</span> <span class="arg">main</span><br>
+<span class="tool">git</span> <span class="verb">pull</span> <span class="arg">origin main</span><br>
+<span class="tool">git</span> <span class="verb">checkout</span> <span class="option">-b</span> <span class="arg">feature/내이름-작업내용</span><br><br>
+<span class="prompt">#</span> 작업 중 자주<br>
+<span class="tool">git</span> <span class="verb">add</span> <span class="arg">.</span><br>
+<span class="tool">git</span> <span class="verb">commit</span> <span class="option">-m</span> <span class="arg">"무엇을 했는지 한 줄"</span><br><br>
+<span class="prompt">#</span> 다 됐을 때<br>
+<span class="tool">git</span> <span class="verb">push</span> <span class="option">-u</span> <span class="arg">origin feature/내이름-작업내용</span>
+ </div>
+
+ <p style="margin-top:1.2rem; color:var(--chalk-white-dim);">
+ <b class="chalk" style="color:var(--chalk-yellow); font-size:1.1rem;">딱 하나만 기억하세요 —</b>
+ add는 장바구니 담기, commit은 계산(저장), push는 업로드, pull은 새로고침. 이 4개 동사만 몸에 익으면, 옵션은 필요할 때 이 칠판을 다시 보면서 찾아 쓰시면 됩니다.
+ </p>
+ </section>
+
+</main>
+
+<footer>해커톤 팀 배포용 학습 자료 · 단어별 명령어 분해 가이드</footer>
+
+</body>
+</html>

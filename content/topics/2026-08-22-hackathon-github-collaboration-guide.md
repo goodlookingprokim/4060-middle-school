@@ -345,6 +345,15 @@ git push
 
 ## 발표 전날에는 이 묶음이 특히 유용합니다
 
+<div class="cta-panel">
+  <p>명령어가 아직 딱딱하게 느껴진다면</p>
+  <p><code>git clone</code>, <code>git checkout -b</code>, <code>git add</code>, <code>git commit -m</code>, <code>git push -u</code>, <code>git pull</code>을 단어 하나씩 쉽게 풀어 쓴 칠판형 안내를 따로 열어두었습니다. 발표 직전 복습용으로 바로 보기 좋습니다.</p>
+</div>
+
+<div class="action-row">
+  <a href="https://goodlookingprokim.github.io/4060-middle-school/static/topics/git-command-breakdown-guide.html" target="_blank" rel="noopener"><strong>깃허브 명령어, 단어 하나씩 뜯어보기</strong> · 새 창</a>
+</div>
+
 ### 명령어 치트시트
 
 ```bash
