@@ -66,12 +66,12 @@ title: 4060미들스쿨
 ## 지금 먼저 보면 좋은 글
 
 <ul class="note-list">
+  <li><a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-08-30-vibe-coding-security-checklist-part-2" class="internal">2026년 8월 30일(일) 로그인만 붙였다고 끝이 아니다, 4060미들스쿨용 바이브 코딩 보안 체크리스트 2부</a></li>
   <li><a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-08-22-hackathon-github-collaboration-guide" class="internal">2026년 8월 22일(토) 해커톤에서 깃허브 협업이 덜 무서워지는 가장 쉬운 순서</a></li>
   <li><a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-08-20-vibe-coding-security-checklist-part-1" class="internal">2026년 8월 20일(목) AI로 만든 앱이 왜 이렇게 쉽게 털릴까, 4060미들스쿨용 바이브 코딩 보안 체크리스트 1부</a></li>
   <li><a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-08-15-minihergemma-solar-pro3-telegram-bot-guide" class="internal">2026년 8월 15일(토) Hermes와 섞지 않고 Solar Pro 3 텔레그램 봇 하나만 따로 만들고 싶다면</a></li>
   <li><a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-08-08-obsidian-knowledge-management-second-training-guide" class="internal">2026년 8월 8일(토) 옵시디언이 메모장으로 끝나지 않게, 지식 창고로 바꾸는 가장 쉬운 시작법</a></li>
   <li><a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-08-06-officecli-install-review-guide" class="internal">2026년 8월 6일(목) officecli는 오피스 문서를 코드처럼 다루고 싶을 때 어디까지 쓸 만할까</a></li>
-  <li><a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-07-25-realtime-service-beginner-guide" class="internal">2026년 7월 25일(토) 실시간 퀴즈, 투표, 채팅은 어떻게 만들어질까</a></li>
 </ul>
 
 <p>지난 글 전체는 <a href="https://goodlookingprokim.github.io/4060-middle-school/topics" class="internal">이번에 나눌 이야기</a>와 <a href="https://goodlookingprokim.github.io/4060-middle-school/after-notes" class="internal">모임 후 정리</a>에 모여 있습니다.</p>
