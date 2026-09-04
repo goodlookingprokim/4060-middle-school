@@ -20,6 +20,10 @@ cssclasses:
     <strong>OMO 작업 체계</strong>
     <span>8월 22일 강의 노트 가운데 2장 내용을 바로 열어볼 수 있게 연결한 자료입니다. 조사, 계획, 실행, 검증의 흐름을 짧게 먼저 잡고 원문으로 이어집니다.</span>
   </a>
+  <a href="https://goodlookingprokim.github.io/4060-middle-school/kang-kyunghoon-gallery/idea-to-knowledge-and-apps" class="internal">
+    <strong>아이디어를 지식과 앱으로 연결하는 법</strong>
+    <span>8월 8일 강의 요약본 전체를 바로 볼 수 있게 연결한 자료입니다. 아이디어 구체화, 지식 관리, iOS·Android 포팅 흐름을 한 번에 훑을 수 있습니다.</span>
+  </a>
 </div>
 
 <div class="cta-panel">
