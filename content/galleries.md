@@ -15,6 +15,12 @@ cssclasses:
 # 자료 갤러리
 
 <div class="hub-grid">
+  <a class="hub-card" href="https://goodlookingprokim.github.io/4060-middle-school/kang-kyunghoon-gallery">
+    <span class="hub-status">자료 보관</span>
+    <strong>강경훈 갤러리</strong>
+    <span>강경훈님의 강의 노트 가운데 필요한 챕터를 바로 찾아볼 수 있게 연결한 공간입니다.</span>
+    <span class="hub-meta">원문 보관 · 강의 노트</span>
+  </a>
   <a class="hub-card" href="https://goodlookingprokim.github.io/4060-middle-school/lee-iksang-gallery">
     <span class="hub-status">자료 보관</span>
     <strong>이익상 갤러리</strong>
