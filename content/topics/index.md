@@ -16,6 +16,10 @@ cssclasses:
 ## 읽기 경로
 
 <div class="reading-path">
+  <a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-09-12-spark-beat-fireworks-project-lessons" class="internal">
+    <strong>화려한 불꽃놀이보다 더 어려운 것, 같은 작품을 다시 재생하는 구조</strong>
+    <span>스파크 비트 개발 기록을 바탕으로 불꽃놀이 앱을 만들 때 왜 재현성·소리·사용성·현장 운영을 함께 설계해야 하는지 4060 회원님 눈높이로 정리한 글입니다.</span>
+  </a>
   <a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-08-30-vibe-coding-security-checklist-part-2" class="internal">
     <strong>2026년 8월 30일(일) 로그인만 붙였다고 끝이 아니다, 4060미들스쿨용 바이브 코딩 보안 체크리스트 2부</strong>
     <span>아는개발자 영상의 완결편 내용을 바탕으로, 4060미들스쿨 중급반 회원분들이 인증·인가, 로그인 보호, HTTPS, 비밀번호 해시, 개인정보처리방침까지 실제 서비스 점검 순서로 다시 풀어 볼 수 있게 정리한 나눔용 글입니다.</span>
