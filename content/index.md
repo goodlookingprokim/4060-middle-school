@@ -66,6 +66,7 @@ title: 4060미들스쿨
 ## 지금 먼저 보면 좋은 글
 
 <ul class="note-list">
+  <li><a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-09-13-copy-ready-ai-development-prompts" class="internal">계획부터 배포·시연까지, AI 개발에 바로 복사해 쓰는 프롬프트 모음</a></li>
   <li><a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-09-12-spark-beat-fireworks-project-lessons" class="internal">화려한 불꽃놀이보다 더 어려운 것, 같은 작품을 다시 재생하는 구조</a></li>
   <li><a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-08-30-vibe-coding-security-checklist-part-2" class="internal">2026년 8월 30일(일) 로그인만 붙였다고 끝이 아니다, 4060미들스쿨용 바이브 코딩 보안 체크리스트 2부</a></li>
   <li><a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-08-22-hackathon-github-collaboration-guide" class="internal">2026년 8월 22일(토) 해커톤에서 깃허브 협업이 덜 무서워지는 가장 쉬운 순서</a></li>

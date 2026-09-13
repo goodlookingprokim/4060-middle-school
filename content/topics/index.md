@@ -16,6 +16,10 @@ cssclasses:
 ## 읽기 경로
 
 <div class="reading-path">
+  <a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-09-13-copy-ready-ai-development-prompts" class="internal">
+    <strong>계획부터 배포·시연까지, AI 개발에 바로 복사해 쓰는 프롬프트 모음</strong>
+    <span>프로젝트를 바로 코딩하지 않고 계획·문서·테스트·배포·시연까지 차근차근 진행하도록 돕는 재사용 프롬프트를 4060 회원님 눈높이로 정리했습니다.</span>
+  </a>
   <a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-09-12-spark-beat-fireworks-project-lessons" class="internal">
     <strong>화려한 불꽃놀이보다 더 어려운 것, 같은 작품을 다시 재생하는 구조</strong>
     <span>스파크 비트 개발 기록을 바탕으로 불꽃놀이 앱을 만들 때 왜 재현성·소리·사용성·현장 운영을 함께 설계해야 하는지 4060 회원님 눈높이로 정리한 글입니다.</span>
