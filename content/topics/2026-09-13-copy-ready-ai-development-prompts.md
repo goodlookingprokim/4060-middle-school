@@ -22,8 +22,8 @@ cssclasses:
 
 <p class="kicker">한 장으로 먼저 보기</p>
 <figure>
-  <a href="https://goodlookingprokim.github.io/4060-middle-school/static/infographics/2026-09-13-ai-development-prompt-map.svg" target="_blank" rel="noopener">
-    <img src="../static/infographics/2026-09-13-ai-development-prompt-map.png" alt="AI 개발 프롬프트 한 장 지도: 계획부터 배포와 시연까지의 일곱 단계와 공통 문장" loading="eager" />
+  <a href="https://goodlookingprokim.github.io/4060-middle-school/static/infographics/2026-09-13-ai-development-prompt-map-revised.svg" target="_blank" rel="noopener">
+    <img src="../static/infographics/2026-09-13-ai-development-prompt-map-revised.png" alt="AI 개발 프롬프트 한 장 지도 수정본: 계획부터 배포와 시연까지의 일곱 단계와 공통 문장" loading="eager" />
   </a>
   <figcaption>한 장으로 보는 AI 개발 순서입니다. 글자가 작게 보이면 이미지를 눌러 전체 화면으로 열어 보세요.</figcaption>
 </figure>
