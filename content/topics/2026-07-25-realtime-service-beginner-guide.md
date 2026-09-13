@@ -28,7 +28,7 @@ cssclasses:
 
 # 실시간은 어떻게 만들어지는가
 
-### 초보 개발자를 위한 실시간 서비스 구현 가이드북
+## 초보 개발자를 위한 실시간 서비스 구현 가이드북
 
 > **누구를 위한 책인가**
 > 실시간 퀴즈, 실시간 투표, 실시간 채팅 같은 걸 만들고 싶은데
@@ -44,7 +44,7 @@ cssclasses:
 
 **낯선 개념이 나오면, 반드시 여러분이 이미 아는 것으로 먼저 설명합니다.**
 
-자판기, 전화, 학교 방송, 냉장고 포스트잇, 등기우편, 놀이공원 시계 —
+자판기, 전화, 학교 방송, 냉장고 포스트잇, 등기우편, 놀이공원 대기 표지판 —
 여기 나오는 비유 20개는 전부 여러분이 이미 100% 이해하고 있는 것들입니다.
 그 위에 기술 용어를 하나씩 얹습니다.
 
@@ -54,6 +54,8 @@ cssclasses:
 2. 실시간 서비스를 **누군가에게 설명할 수 있게** 됩니다.
 
 두 번째가 더 중요합니다. 설명하지 못하는 건, 아직 이해한 게 아니니까요.
+
+참고로, 이 책은 장(部)마다 제일 큰 제목(H1)을 다시 쓰는 구조를 의도적으로 사용합니다. 장 구분을 위한 형식이니 오타가 아닙니다.
 
 ---
 
@@ -65,9 +67,9 @@ cssclasses:
 | 1부 | 두 가지 대화 방식 | HTTP와 WebSocket은 뭐가 다른가 |
 | 2부 | 서버라는 학교 | 서버 안에서는 무슨 일이 벌어지나 |
 | 3부 | 말이 통해야 코드가 보인다 | 용어 8개만 정확히 |
-| 4부 | 왜 자꾸 문제가 생길까 | 고장을 5종류로 나누기 |
+| 4부 | 왜 자꾸 문제가 생길까 | 고장을 6종류로 나누기 |
 | 5부 | 처음부터 다시, 제대로 | 설계 → 구현 → 배포 |
-| 부록 | 비유 20개 총정리 · 체크리스트 · 출처 | 꺼내 쓰는 도구함 |
+| 부록 | A 비유 20개 · B 세 문장 요약 · C FAQ · D 출처 · E 에이전트 기계 명세 | 꺼내 쓰는 도구함 |
 
 ---
 
@@ -385,16 +387,15 @@ Redis는 뭐고 Channel Layer는 뭐예요? DB랑 뭐가 다른데요?"
 ### 전체 그림
 
 ```text
- 교사 브라우저 ◀━━ WebSocket ━━▶ ┌──────────────┐
- │ 앱 서버 │◀━▶ Channel Layer ◀━▶ Redis
- 학생 브라우저 ◀━━ WebSocket ━━▶ │ / Consumer │ (방송 배선) (중계 장비)
- 학생 브라우저 ◀━━ WebSocket ━━▶ │ │
- 학생 브라우저 ◀━━ WebSocket ━━▶ └──────┬───────┘
- │
- ▼
- ┌─────────┐
- │ DB │ ← 문제, 답안, 점수, 진행 상태
- └─────────┘
+교사 브라우저 ◀━ WebSocket ━▶ ┌───────────────┐
+학생 브라우저 ◀━ WebSocket ━▶ │   앱 서버     │ ◀━▶ Channel Layer ◀━▶ Redis
+학생 브라우저 ◀━ WebSocket ━▶ │  / Consumer   │      (방송 배선)     (중계 장비)
+학생 브라우저 ◀━ WebSocket ━▶ └──────┬────────┘
+                                     │
+                                     ▼
+                              ┌─────────────┐
+                              │     DB      │ ← 문제, 답안, 점수, 진행 상태
+                              └─────────────┘
 ```
 
 > ⚠️ **가장 흔한 오해**:
@@ -434,27 +435,28 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 
 class QuizConsumer(AsyncWebsocketConsumer):
 
- async def connect(self):
- # ① 전화를 받는 순간
- self.quiz_id = self.scope["url_route"]["kwargs"]["quiz_id"]
- self.group_name = f"quiz_{self.quiz_id}" # 예: quiz_123
+    async def connect(self):
+        # ① 전화를 받는 순간
+        self.quiz_id = self.scope["url_route"]["kwargs"]["quiz_id"]
+        self.group_name = f"quiz_{self.quiz_id}" # 예: quiz_123
 
- # ② "2학년 3반 스피커 목록에 나를 넣어 주세요"
- await self.channel_layer.group_add(self.group_name, self.channel_name)
- await self.accept()
+        # ② "2학년 3반 스피커 목록에 나를 넣어 주세요"
+        await self.channel_layer.group_add(self.group_name, self.channel_name)
+        await self.accept()
 
- async def disconnect(self, close_code):
- # ③ 전화가 끊기면 스피커 목록에서 빠짐
- await self.channel_layer.group_discard(self.group_name, self.channel_name)
+    async def disconnect(self, close_code):
+        # ③ 전화가 끊기면 스피커 목록에서 빠짐
+        await self.channel_layer.group_discard(self.group_name, self.channel_name)
 
- async def receive(self, text_data):
- # ④ 학생이 보낸 메시지 처리
- data = json.loads(text_data)
- ...
+    async def receive(self, text_data):
+        # ④ 학생이 보낸 메시지 처리
+        data = json.loads(text_data)
+        ...
 
- async def question_started(self, event):
- # ⑤ 방송이 도착했을 때 → 내가 담당한 브라우저에게 전달
- await self.send(text_data=json.dumps(event["payload"]))
+    async def question_started(self, event):
+        # ⑤ 방송이 도착했을 때 → 내가 담당한 브라우저에게 전달
+        await self.send(text_data=json.dumps(event["payload"]))
+
 ```
 
 지금 이 코드를 다 이해할 필요 없습니다. 딱 세 줄만 보세요.
@@ -836,7 +838,7 @@ class QuizConsumer(AsyncWebsocketConsumer):
 실시간 서비스의 고장도 똑같습니다.
 에러 메시지를 먼저 검색하지 말고, **어느 종류의 문제인지 먼저 나누세요.**
 
-### 고장 5종류
+### 고장 6종류
 
 | 유형 | 증상 | 한 마디로 |
 |---|---|---|
@@ -845,6 +847,7 @@ class QuizConsumer(AsyncWebsocketConsumer):
 | 🟢 **상태 문제** | 새로고침하면 현재 문제나 제출 여부가 사라짐 | 칠판이 비어 있다 |
 | 🔴 **중복 문제** | 답안이 두 번 저장되거나 화면 갱신이 여러 번 | 같은 말을 두 번 했다 |
 | 🔵 **동기화 문제** | 학생마다 남은 시간이 다름 | 시계가 제각각이다 |
+| 🟣 **저장/확인 문제** | 저장됐는지 확신할 수 없음 (ACK 부재) | 접수증을 안 준다 |
 
 > ⭐ **에러 메시지보다 먼저 "어느 종류의 문제인지" 나누는 것이 중요합니다.**
 
@@ -956,7 +959,7 @@ class QuizConsumer(AsyncWebsocketConsumer):
  → 메시지 도착 지연 + 브라우저 시계 오차 = 학생마다 다름
 
 ✅ 좋은 방식: 서버가 "종료 시각 = 10:15:30" 을 보낸다
- → 브라우저는 매초 "종료 시각 - 지금" 을 계산해서 표시
+ → 브라우저는 주기적(200ms)으로 "종료 시각 - 지금" 을 계산해서 표시
  → 기준이 하나라서 모두 같은 값에 수렴
 ```
 
@@ -967,7 +970,7 @@ class QuizConsumer(AsyncWebsocketConsumer):
 **먼저 볼 곳**
 - **네트워크 상태** (교실 와이파이는 생각보다 자주 끊깁니다)
 - **클라이언트 재연결 처리**가 구현돼 있는가
-- **배포 재시작 여부** (배포할 때마다 전원이 모든 연결이 끊깁니다)
+- **배포 재시작 여부** (배포로 서버가 재시작되면 모든 연결이 끊깁니다)
 - 재연결 후 **상태 복원 흐름**
 
 **처방**: 재연결은 **지수 백오프(exponential backoff)** 로.
@@ -995,7 +998,7 @@ connect();
 
 ★ 표시된 줄을 빼먹지 마세요. **전화를 다시 걸었으면 "어디까지 얘기했죠?"를 물어야 합니다.**
 
-### 🟢 고장 8. 결과가 저장됐는지 확신이 안 듦
+### 🟣 고장 8. 결과가 저장됐는지 확신이 안 듦
 
 **먼저 볼 곳**
 - 서버 **저장 결과**
@@ -1104,7 +1107,7 @@ connect();
 
 | 이벤트 이름 | 방향 | 담을 내용 |
 |---|---|---|
-| `question_started` | 서버 → 전체 | 문제 번호, 내용, 보기, **종료 시각** |
+| `question_started` | 서버 → 전체 | 문제 번호, 내용, 보기, **종료 시각**, **server_time** |
 | `answer_saved` | 서버 → 개인 | 제출 ID, 저장 성공 여부 |
 | `answer_revealed` | 서버 → 전체 | 정답, 해설 |
 | `leaderboard_updated` | 서버 → 전체 | 상위 N명 |
@@ -1125,20 +1128,21 @@ AI에게 코드를 요청할 때도 이 표를 그대로 붙여 넣으면 결과
 ```python
 # settings.py
 INSTALLED_APPS = [
- "daphne", # ASGI 서버 (발전소)
- "channels",
- ...
+    "daphne", # ASGI 서버 (발전소)
+    "channels",
+    ...
 ]
 
 ASGI_APPLICATION = "config.asgi.application"
 
 CHANNEL_LAYERS = {
- "default": {
- # 운영 환경: Redis 백엔드 (건물 사이를 잇는 배선)
- "BACKEND": "channels_redis.core.RedisChannelLayer",
- "CONFIG": {"hosts": [("127.0.0.1", 6379)]},
- }
+    "default": {
+    # 운영 환경: Redis 백엔드 (건물 사이를 잇는 배선)
+    "BACKEND": "channels_redis.core.RedisChannelLayer",
+    "CONFIG": {"hosts": [("127.0.0.1", 6379)]},
+    }
 }
+
 ```
 
 > 개발 중엔 `channels.layers.InMemoryChannelLayer`도 동작합니다.
@@ -1153,8 +1157,9 @@ from django.urls import re_path
 from . import consumers
 
 websocket_urlpatterns = [
- re_path(r"ws/quiz/(?P<quiz_id>\w+)/$", consumers.QuizConsumer.as_asgi()),
+    re_path(r"ws/quiz/(?P<quiz_id>[0-9]+)/(?P<student_id>[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/$", consumers.QuizConsumer.as_asgi()),
 ]
+
 ```
 
 ### ③ Consumer — 교무실 담당자
@@ -1166,53 +1171,96 @@ from channels.db import database_sync_to_async
 
 class QuizConsumer(AsyncWebsocketConsumer):
 
- async def connect(self):
- self.quiz_id = self.scope["url_route"]["kwargs"]["quiz_id"]
- self.group_name = f"quiz_{self.quiz_id}"
+    async def connect(self):
+        self.quiz_id = self.scope["url_route"]["kwargs"]["quiz_id"]
+        self.student_id = self.scope["url_route"]["kwargs"]["student_id"] # URL 신원 바인딩 (부록 E-1)
+        self.group_name = f"quiz_{self.quiz_id}"
 
- await self.channel_layer.group_add(self.group_name, self.channel_name)
- await self.accept()
+        await self.accept()
+        # ★ 미join 학생은 방송 목록에 넣기 전에 걸러낸다 (스푸핑 차단)
+        if not await self.is_joined_student(self.student_id):
+            await self.send(text_data=json.dumps({"type": "error", "reason": "unknown_student"}))
+            await self.close()
+            return
 
- # ★ 연결하자마자 칠판을 보여 준다 (재연결 시에도 자동으로 복원됨)
- await self.send_state_snapshot()
+        await self.channel_layer.group_add(self.group_name, self.channel_name)
 
- async def disconnect(self, code):
- await self.channel_layer.group_discard(self.group_name, self.channel_name)
+        # ★ 연결하자마자 칠판을 보여 준다 (재연결 시에도 자동으로 복원됨)
+        await self.send_state_snapshot()
 
- async def receive(self, text_data):
- data = json.loads(text_data)
+    async def disconnect(self, code):
+        await self.channel_layer.group_discard(self.group_name, self.channel_name)
 
- if data["type"] == "sync_state":
- await self.send_state_snapshot()
+    async def receive(self, text_data):
+        # ⓪ malformed 게이트: 크기 → JSON → 구조 순으로 거르고, 저장은 절대 시도하지 않는다
+        if len(text_data.encode("utf-8")) > 65536: # 64KB 초과 페이로드 (바이트 기준)
+            await self.send(text_data=json.dumps({
+                "type": "answer_saved", "ok": False, "reason": "malformed",
+            }))
+            return
+        try:
+            data = json.loads(text_data)
+        except (json.JSONDecodeError, TypeError):
+            data = None
+        if not isinstance(data, dict) or "type" not in data: # 비-dict JSON, type 누락
+            await self.send(text_data=json.dumps({
+                "type": "answer_saved", "ok": False, "reason": "malformed",
+            }))
+            return
 
- elif data["type"] == "submit_answer":
- saved = await self.save_answer(data) # DB 저장 시도
- # ★ ACK: "접수했습니다" 를 반드시 돌려준다
- await self.send(text_data=json.dumps({
- "type": "answer_saved",
- "submission_id": data["submission_id"],
- "ok": saved,
- }))
+        if data.get("type") == "sync_state":
+            await self.send_state_snapshot()
 
- # --- Group 방송을 받았을 때 호출되는 핸들러 ---
- async def question_started(self, event):
- await self.send(text_data=json.dumps(event["payload"]))
+        elif data.get("type") == "submit_answer":
+            required = {"question_id", "choice", "submission_id"}
+            if not required <= data.keys() or any(data.get(k) is None for k in required):
+                await self.send(text_data=json.dumps({ # 키 누락·null 값 모두 malformed
+                    "type": "answer_saved", "ok": False, "reason": "malformed",
+                }))
+                return
+            ok, reason = await self.save_answer(data) # DB 저장 시도 (부록 E-3 계약)
+            # ★ ACK: "접수했습니다" 를 반드시 돌려준다 (실패 시 reason 포함)
+            await self.send(text_data=json.dumps({
+                "type": "answer_saved",
+                "submission_id": data["submission_id"],
+                "ok": ok,
+                "reason": reason, # 성공이면 None, 실패면 malformed/closed/duplicate 등
+            }))
 
- # --- 헬퍼 ---
- async def send_state_snapshot(self):
- state = await self.load_state()
- await self.send(text_data=json.dumps({
- "type": "state_snapshot",
- **state, # 현재 문제 번호, 종료 시각(ISO), 내 제출 여부
- }))
+        else:
+            # 정의되지 않은 type은 저장 없이 오류만 돌려준다
+            await self.send(text_data=json.dumps({
+                "type": "error", "reason": "unknown_type",
+            }))
 
- @database_sync_to_async
- def load_state(self):
- ... # DB에서 현재 상태를 읽어 온다
+    # --- Group 방송을 받았을 때 호출되는 핸들러 (type 이름 = 메서드 이름) ---
+    async def question_started(self, event):
+        await self.send(text_data=json.dumps(event["payload"]))
 
- @database_sync_to_async
- def save_answer(self, data):
- ... # 유니크 제약으로 중복이면 False 반환
+    async def answer_revealed(self, event):
+        await self.send(text_data=json.dumps(event["payload"]))
+
+    async def leaderboard_updated(self, event):
+        await self.send(text_data=json.dumps(event["payload"]))
+
+    async def quiz_finished(self, event):
+        await self.send(text_data=json.dumps(event["payload"]))
+
+    # --- 헬퍼 ---
+    async def send_state_snapshot(self):
+        state = await self.load_state()
+        await self.send(text_data=json.dumps({
+            "type": "state_snapshot",
+            **state, # 현재 문제 번호, 종료 시각(ISO), 내 제출 여부
+        }))
+
+    @database_sync_to_async
+    def load_state(self):
+        ... # DB에서 현재 상태를 읽어 온다
+
+    @database_sync_to_async
+    def save_answer(self, data):
+        ... # 유니크 제약으로 중복이면 False 반환
 ```
 
 핵심은 ★ 표시된 두 곳입니다.
@@ -1228,27 +1276,29 @@ from datetime import timedelta
 from django.utils import timezone
 
 def start_question(quiz, question):
- # ① 먼저 칠판에 적는다 (상태 저장)
- quiz.current_question = question
- quiz.started_at = timezone.now()
- quiz.ends_at = quiz.started_at + timedelta(seconds=30)
- quiz.answer_revealed = False
- quiz.save()
+    # ① 먼저 칠판에 적는다 (상태 저장)
+    quiz.current_question = question
+    quiz.started_at = timezone.now()
+    quiz.ends_at = quiz.started_at + timedelta(seconds=question.duration_sec) # 문제별 제한 시간은 모델 필드에서
+    quiz.answer_revealed = False
+    quiz.save()
 
- # ② 그 다음 총소리를 쏜다 (방송)
- async_to_sync(get_channel_layer().group_send)(
- f"quiz_{quiz.id}",
- {
- "type": "question_started", # ← Consumer의 메서드 이름과 일치
- "payload": {
- "type": "question_started",
- "number": question.number,
- "text": question.text,
- "choices": question.choices,
- "ends_at": quiz.ends_at.isoformat(), # ★ '남은 초'가 아니라 '종료 시각'
- },
- },
- )
+    # ② 그 다음 총소리를 쏜다 (방송)
+    async_to_sync(get_channel_layer().group_send)(
+    f"quiz_{quiz.id}",
+    {
+    "type": "question_started", # ← Consumer의 메서드 이름과 일치
+    "payload": {
+    "type": "question_started",
+    "number": question.number,
+    "text": question.text,
+    "choices": question.choices,
+    "ends_at": quiz.ends_at.isoformat(), # ★ '남은 초'가 아니라 '종료 시각'
+    "server_time": timezone.now().isoformat(), # ★ 오프셋 보정용 (부록 E-7)
+    },
+    },
+    )
+
 ```
 
 > **순서를 바꾸지 마세요.** 저장이 먼저, 방송이 나중입니다.
@@ -1268,7 +1318,7 @@ ws.onmessage = (e) => {
  }
 };
 
-// 매초 "지금"과 "종료 시각"의 차이를 계산 → 모두 같은 값에 수렴
+// 200ms마다 "지금"과 "종료 시각"의 차이를 계산 → 모두 같은 값에 수렴
 setInterval(() => {
  if (!endsAt) return;
  const left = Math.max(0, Math.ceil((endsAt - new Date()) / 1000));
@@ -1294,17 +1344,18 @@ submitBtn.onclick = () => {
 ```python
 # 3차 방어: DB — 가장 확실한 마지막 관문
 class Submission(models.Model):
- student = models.ForeignKey(Student, on_delete=models.CASCADE)
- question = models.ForeignKey(Question, on_delete=models.CASCADE)
- choice = models.CharField(max_length=10)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    choice = models.CharField(max_length=10)
 
- class Meta:
- constraints = [
- models.UniqueConstraint(
- fields=["student", "question"],
- name="uniq_submission_per_question",
- )
- ]
+    class Meta:
+        constraints = [
+        models.UniqueConstraint(
+        fields=["student", "question"],
+        name="uniq_submission_per_question",
+        )
+        ]
+
 ```
 
 화면에서 막고, ID로 막고, DB로 막습니다.
