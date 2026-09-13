@@ -1,0 +1,130 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2400" height="1600" viewBox="0 0 2400 1600" role="img" aria-labelledby="title desc">
+  <title id="title">AI 개발 프롬프트 한 장 지도</title>
+  <desc id="desc">계획부터 배포와 시연까지, AI 개발에 바로 복사해 쓸 프롬프트의 전체 흐름과 공통 문장 일곱 가지를 정리한 인포그래픽</desc>
+  <style>
+    .all { font-family: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; }
+    .kicker { font-size: 26px; font-weight: 700; letter-spacing: 4px; fill: #2563eb; }
+    .title { font-size: 70px; font-weight: 800; fill: #15191f; }
+    .subtitle { font-size: 32px; font-weight: 500; fill: #52606d; }
+    .section { font-size: 38px; font-weight: 800; fill: #15191f; }
+    .num { font-size: 28px; font-weight: 800; fill: #ffffff; }
+    .card-title { font-size: 42px; font-weight: 800; fill: #15191f; }
+    .card-file { font-size: 25px; font-weight: 700; fill: #2563eb; }
+    .card-body { font-size: 26px; font-weight: 500; fill: #394552; }
+    .rule-num { font-size: 26px; font-weight: 800; fill: #ffffff; }
+    .rule { font-size: 28px; font-weight: 600; fill: #24292f; }
+    .footer { font-size: 34px; font-weight: 800; fill: #ffffff; }
+    .small { font-size: 24px; font-weight: 500; fill: #dbe2ea; }
+  </style>
+
+  <rect width="2400" height="1600" fill="#f7f8f5"/>
+  <rect x="58" y="52" width="2284" height="1496" rx="30" fill="none" stroke="#d8dee6" stroke-width="3"/>
+
+  <!-- Header -->
+  <g class="all">
+    <text x="110" y="125" class="kicker">COPY-READY PROMPT PLAYBOOK</text>
+    <text x="110" y="215" class="title">AI 개발, 이 순서대로 물어보세요</text>
+    <text x="110" y="270" class="subtitle">계획부터 배포·시연까지 · 한 단계가 끝나면 확인하고 다음 단계로 넘어갑니다</text>
+
+    <text x="110" y="360" class="section">1. 프로젝트 전체 흐름</text>
+
+    <!-- Connectors first -->
+    <g fill="none" stroke="#9aa7b6" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M370 555 H400"/>
+      <path d="M690 555 H720"/>
+      <path d="M1010 555 H1040"/>
+      <path d="M1330 555 H1360"/>
+      <path d="M1650 555 H1680"/>
+      <path d="M1970 555 H2000"/>
+    </g>
+    <g fill="#9aa7b6">
+      <path d="M400 555 l-18 -14 v28 z"/>
+      <path d="M720 555 l-18 -14 v28 z"/>
+      <path d="M1040 555 l-18 -14 v28 z"/>
+      <path d="M1360 555 l-18 -14 v28 z"/>
+      <path d="M1680 555 l-18 -14 v28 z"/>
+      <path d="M2000 555 l-18 -14 v28 z"/>
+    </g>
+
+    <!-- Cards -->
+    <g>
+      <rect x="90" y="400" width="280" height="390" rx="22" fill="#e7efff" stroke="#8ab4ff" stroke-width="3"/>
+      <circle cx="128" cy="442" r="25" fill="#2563eb"/><text x="128" y="452" text-anchor="middle" class="num">1</text>
+      <text x="128" y="515" class="card-title">계획</text>
+      <text x="128" y="558" class="card-file">Project.md</text>
+      <text x="128" y="620" class="card-body"><tspan x="128" dy="0">문제·범위·사용자</tspan><tspan x="128" dy="39">완료 조건·승인 지점</tspan><tspan x="128" dy="39">코드는 아직 쓰지 않기</tspan></text>
+    </g>
+    <g>
+      <rect x="410" y="400" width="280" height="390" rx="22" fill="#e1f4f1" stroke="#5eead4" stroke-width="3"/>
+      <circle cx="448" cy="442" r="25" fill="#0f766e"/><text x="448" y="452" text-anchor="middle" class="num">2</text>
+      <text x="448" y="515" class="card-title">근거</text>
+      <text x="448" y="558" class="card-file">이론적 배경.md</text>
+      <text x="448" y="620" class="card-body"><tspan x="448" dy="0">왜 이 방법인가?</tspan><tspan x="448" dy="39">출처·적용 방법·주의점</tspan><tspan x="448" dy="39">적용하지 않을 이유도 기록</tspan></text>
+    </g>
+    <g>
+      <rect x="730" y="400" width="280" height="390" rx="22" fill="#fff0e8" stroke="#fdba74" stroke-width="3"/>
+      <circle cx="768" cy="442" r="25" fill="#c2410c"/><text x="768" y="452" text-anchor="middle" class="num">3</text>
+      <text x="768" y="515" class="card-title">요구사항</text>
+      <text x="768" y="558" class="card-file">PRD.md · TRD.md</text>
+      <text x="768" y="620" class="card-body"><tspan x="768" dy="0">PRD: 무엇을·누구에게</tspan><tspan x="768" dy="39">TRD: 어떤 기술로</tspan><tspan x="768" dy="39">요구사항 연결표 만들기</tspan></text>
+    </g>
+    <g>
+      <rect x="1050" y="400" width="280" height="390" rx="22" fill="#f0eafd" stroke="#c4b5fd" stroke-width="3"/>
+      <circle cx="1088" cy="442" r="25" fill="#7c3aed"/><text x="1088" y="452" text-anchor="middle" class="num">4</text>
+      <text x="1088" y="515" class="card-title">사용자</text>
+      <text x="1088" y="558" class="card-file">페르소나·시나리오</text>
+      <text x="1088" y="620" class="card-body"><tspan x="1088" dy="0">처음 쓰는 사람의 흐름</tspan><tspan x="1088" dy="39">실수·예외·완료 조건</tspan><tspan x="1088" dy="39">wireframes.md로 도면화</tspan></text>
+    </g>
+    <g>
+      <rect x="1370" y="400" width="280" height="390" rx="22" fill="#e9f3e7" stroke="#86b87b" stroke-width="3"/>
+      <circle cx="1408" cy="442" r="25" fill="#3f7d36"/><text x="1408" y="452" text-anchor="middle" class="num">5</text>
+      <text x="1408" y="515" class="card-title">구현</text>
+      <text x="1408" y="558" class="card-file">테스트·개발 일지</text>
+      <text x="1408" y="620" class="card-body"><tspan x="1408" dy="0">실패 테스트 먼저</tspan><tspan x="1408" dy="39">최소 코드로 통과</tspan><tspan x="1408" dy="39">정리하고 결과 기록</tspan></text>
+    </g>
+    <g>
+      <rect x="1690" y="400" width="280" height="390" rx="22" fill="#fff7d9" stroke="#facc15" stroke-width="3"/>
+      <circle cx="1728" cy="442" r="25" fill="#a16207"/><text x="1728" y="452" text-anchor="middle" class="num">6</text>
+      <text x="1728" y="515" class="card-title">운영</text>
+      <text x="1728" y="558" class="card-file">가이드·배포·이식</text>
+      <text x="1728" y="620" class="card-body"><tspan x="1728" dy="0">사용자·운영자 안내</tspan><tspan x="1728" dy="39">문제 해결·현장 점검</tspan><tspan x="1728" dy="39">Mac·Windows 차이 확인</tspan></text>
+    </g>
+    <g>
+      <rect x="2010" y="400" width="280" height="390" rx="22" fill="#e9eef2" stroke="#9aa7b6" stroke-width="3"/>
+      <circle cx="2048" cy="442" r="25" fill="#52606d"/><text x="2048" y="452" text-anchor="middle" class="num">7</text>
+      <text x="2048" y="515" class="card-title">공유</text>
+      <text x="2048" y="558" class="card-file">영상·HTML·PDF</text>
+      <text x="2048" y="620" class="card-body"><tspan x="2048" dy="0">실제 화면으로 시연</tspan><tspan x="2048" dy="39">민감정보는 가짜 데이터</tspan><tspan x="2048" dy="39">현재 상태만 정직하게</tspan></text>
+    </g>
+
+    <!-- Prompt rules -->
+    <rect x="90" y="860" width="2220" height="475" rx="24" fill="#ffffff" stroke="#d8dee6" stroke-width="3"/>
+    <text x="130" y="930" class="section">2. 모든 프롬프트에 붙이는 공통 문장</text>
+    <text x="130" y="975" class="subtitle">이 문장들이 AI의 속도보다 방향과 기록을 먼저 잡아 줍니다</text>
+
+    <g>
+      <circle cx="150" cy="1045" r="20" fill="#2563eb"/><text x="150" y="1054" text-anchor="middle" class="rule-num">1</text>
+      <text x="190" y="1055" class="rule">바로 구현하지 말고 현재 상태를 먼저 확인하세요.</text>
+      <circle cx="150" cy="1120" r="20" fill="#2563eb"/><text x="150" y="1129" text-anchor="middle" class="rule-num">2</text>
+      <text x="190" y="1130" class="rule">확인한 사실과 추측을 구분하세요.</text>
+      <circle cx="150" cy="1195" r="20" fill="#2563eb"/><text x="150" y="1204" text-anchor="middle" class="rule-num">3</text>
+      <text x="190" y="1205" class="rule">이번 단계의 범위와 완료 조건을 먼저 설명하세요.</text>
+      <circle cx="150" cy="1270" r="20" fill="#2563eb"/><text x="150" y="1279" text-anchor="middle" class="rule-num">4</text>
+      <text x="190" y="1280" class="rule">계획을 설명한 뒤 제 승인을 기다리세요.</text>
+    </g>
+    <g>
+      <circle cx="1260" cy="1045" r="20" fill="#0f766e"/><text x="1260" y="1054" text-anchor="middle" class="rule-num">5</text>
+      <text x="1300" y="1055" class="rule">민감정보와 비밀값은 읽거나 저장하지 마세요.</text>
+      <circle cx="1260" cy="1120" r="20" fill="#0f766e"/><text x="1260" y="1129" text-anchor="middle" class="rule-num">6</text>
+      <text x="1300" y="1130" class="rule">테스트 결과와 아직 검증하지 못한 항목을 기록하세요.</text>
+      <circle cx="1260" cy="1195" r="20" fill="#0f766e"/><text x="1260" y="1204" text-anchor="middle" class="rule-num">7</text>
+      <text x="1300" y="1205" class="rule">변경된 파일·남은 위험·다음 작업을 보고하세요.</text>
+      <text x="1260" y="1280" class="card-file">한 번에 하나씩 실행하고, 결과를 읽은 뒤 다음으로 이동</text>
+    </g>
+
+    <!-- Footer -->
+    <rect x="90" y="1390" width="2220" height="105" rx="20" fill="#182b3a"/>
+    <text x="130" y="1455" class="footer">완료의 기준 = 코드 + 테스트 + 문서 + 사람의 확인</text>
+    <text x="2260" y="1455" text-anchor="end" class="small">4060미들스쿨 · 개발 프롬프트 한 장 지도</text>
+  </g>
+</svg>

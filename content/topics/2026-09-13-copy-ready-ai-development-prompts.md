@@ -20,6 +20,13 @@ cssclasses:
   <p>스파크 비트 프로젝트를 진행하며 실제로 필요했던 요청들을 공개용으로 다듬었습니다. 괄호 안의 내용만 바꾸면 다른 웹앱·도구 개발에도 바로 적용할 수 있습니다.</p>
 </div>
 
+<figure>
+  <a href="https://goodlookingprokim.github.io/4060-middle-school/static/infographics/2026-09-13-ai-development-prompt-map.svg" target="_blank" rel="noopener">
+    <img src="../static/infographics/2026-09-13-ai-development-prompt-map.png" alt="AI 개발 프롬프트 한 장 지도: 계획부터 배포와 시연까지의 일곱 단계와 공통 문장" loading="lazy" />
+  </a>
+  <figcaption>한 장으로 보는 AI 개발 순서입니다. 글자가 작게 보이면 이미지를 눌러 전체 화면으로 열어 보세요.</figcaption>
+</figure>
+
 # 계획부터 배포·시연까지, AI 개발에 바로 복사해 쓰는 프롬프트 모음
 
 AI로 앱을 만들 때 가장 아쉬운 순간은 코드가 한 줄도 안 나와서가 아닙니다. 코드는 많이 생겼는데 무엇을 만들고 있는지, 어디까지 확인했는지, 다음에 무엇을 해야 하는지 모르게 되는 순간입니다.
