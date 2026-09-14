@@ -43,6 +43,12 @@ title: 4060미들스쿨
     <span>모임에서 나온 생각과 남겨둘 문장, 다음에 다시 이어갈 질문을 모아둡니다.</span>
     <span class="hub-meta">요약 · 회고 · 다음 이야기</span>
   </a>
+  <a class="hub-card" href="https://goodlookingprokim.github.io/4060-middle-school/lee-yeonho-gallery">
+    <span class="hub-status">자료 보관</span>
+    <strong>이연호 갤러리</strong>
+    <span>이연호님이 공유한 4060 AI LAB 웹 프레젠테이션을 원문 그대로 보관하는 공간입니다.</span>
+    <span class="hub-meta">원문 보관 · 웹 보기 · 제작 기록</span>
+  </a>
   <a class="hub-card" href="https://goodlookingprokim.github.io/4060-middle-school/lee-iksang-gallery">
     <span class="hub-status">자료 보관</span>
     <strong>이익상 갤러리</strong>

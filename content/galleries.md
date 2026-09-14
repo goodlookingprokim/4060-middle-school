@@ -15,6 +15,12 @@ cssclasses:
 # 자료 갤러리
 
 <div class="hub-grid">
+  <a class="hub-card" href="https://goodlookingprokim.github.io/4060-middle-school/lee-yeonho-gallery">
+    <span class="hub-status">자료 보관</span>
+    <strong>이연호 갤러리</strong>
+    <span>이연호님이 공유한 4060 AI LAB 웹 프레젠테이션을 원문 그대로 보관하는 공간입니다.</span>
+    <span class="hub-meta">원문 보관 · 웹 보기 · 제작 기록</span>
+  </a>
   <a class="hub-card" href="https://goodlookingprokim.github.io/4060-middle-school/kang-kyunghoon-gallery">
     <span class="hub-status">자료 보관</span>
     <strong>강경훈 갤러리</strong>

@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>4060 AI LAB · 최종 웹 프레젠테이션 · 2026-09-14</title>
+  <meta name="description" content="Claude의 첫 설계부터 Codex의 검증과 출력 실험까지, NFC 키링을 만들며 배우고 수정한 과정을 기록한 최종 웹 프레젠테이션.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath fill='%23ad8fc7' d='M10 3h20l10 17-10 17H10L0 20Z'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=font-r03">
+  <script src="app.js?v=gallery-r03" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">본문 바로가기</a>
+
+  <header class="hero" id="top">
+    <img class="hero-backdrop" src="assets/workbench.png" alt="" width="1586" height="992" fetchpriority="high">
+    <div class="hero-shade" aria-hidden="true"></div>
+    <div class="hero-inner">
+      <div class="masthead">
+        <a class="brand" href="#top" aria-label="4060 AI LAB 처음으로">
+          <span>4060 AI LAB</span>
+          <small>MAKING NOTES</small>
+        </a>
+        <nav class="hero-nav" aria-label="주요 내용"><a href="#story">시작</a><a href="#trials">실험 기록</a><a href="#inside">구조</a><a href="#gallery">실물</a></nav>
+      </div>
+
+      <div class="hero-copy">
+        <p class="hero-kicker">CLAUDE에서 시작해&nbsp; / &nbsp;CODEX로 검증하다</p>
+        <h1><span>작은 물건을</span><span>만드는 큰 과정.</span></h1>
+      </div>
+
+      <figure class="hero-object">
+        <img src="assets/d9-cutout.png" alt="보라색 육각 키링에 검정색 4060과 AI LAB 문양을 적용한 D9 디지털 설계 렌더" width="1200" height="1000">
+        <figcaption>D9 설계 렌더 · 배경은 연출 이미지</figcaption>
+      </figure>
+
+    </div>
+  </header>
+
+<main id="main">
+<section class="chapter origin" id="story" aria-labelledby="origin-title"><div class="wrap"><header class="section-heading reveal"><div><p class="eyebrow">01 / WHERE IT STARTED</p><h2 id="origin-title">처음부터 이 모양은<br>아니었습니다.</h2></div><p class="lead">Claude와 형태를 만들고, 구조를 바꾸고, 두 가지 색을 입혔습니다. 원래 제작기에 남은 여섯 단계가 이번 실험의 출발점입니다.</p></header><div class="origin-grid"><div class="origin-note reveal"><p class="big-quote">“오류 없음”과<br>“의도대로”는<br>다릅니다.</p><p>컴퓨터가 읽을 수 있는 파일이어도, 스티커가 들어갈 공간이나 실제 출력 결과까지 보장하지는 않습니다.</p><p class="source-note">원래 Claude 제작기의 핵심 교훈</p><div class="origin-shapes" aria-label="밀봉형, 분리형, 출력 중 삽입형으로 이어진 구조 탐색"><span>밀봉형</span><i>→</i><span>분리형</span><i>→</i><span>중간 삽입</span></div></div><ol class="timeline reveal" aria-label="Claude 제작기 버전 이력">
+            <li><details open><summary><span>v1</span><strong>단단하게 봉인하기</strong><i aria-hidden="true">+</i></summary><p>처음에는 4.0 mm 두께의 밀봉 구조였습니다. 무게와 재료 사용량을 줄이는 것이 다음 과제였습니다.</p></details></li>
+            <li><details><summary><span>v2</span><strong>뚜껑을 따로 만들면?</strong><i aria-hidden="true">+</i></summary><p>홈과 뚜껑을 나누니 부품은 두 개가 되었습니다. 별도 조립의 번거로움이 남았습니다.</p></details></li>
+            <li><details><summary><span>v3</span><strong>출력 중간에 넣기</strong><i aria-hidden="true">+</i></summary><p>하나의 부품으로 만들되 출력 도중 잠시 멈춰 NFC를 넣는 방식으로 전환했습니다. 홈 높이와 층 경계가 맞지 않았습니다.</p></details></li>
+            <li><details><summary><span>v4</span><strong>쌓이는 층에 맞추기</strong><i aria-hidden="true">+</i></summary><p>포켓 높이를 층 경계에 맞춰 멈출 지점을 정했습니다. 설계의 빈 공간이 실제 슬라이스에서도 비어 있는지 확인했습니다.</p></details></li>
+            <li><details><summary><span>v5</span><strong>터미널의 인상을 담기</strong><i aria-hidden="true">+</i></summary><p>노트북 화면 문양과 JetBrains Mono 글꼴을 적용하고, 뒷면에 NFC 표시를 넣었습니다.</p></details></li>
+            <li><details><summary><span>v6</span><strong>두 가지 색으로 읽히게</strong><i aria-hidden="true">+</i></summary><p>몸체와 글자의 색을 분리하고 선을 보강했습니다. 이후 실제 출력 사진에서 가독성을 다시 점검했습니다.</p></details></li>
+          </ol></div><p class="source-note">v1–v6는 원래 Claude 발표자료의 서술 순서입니다. 저장된 STL 파일명과 일부 다릅니다.</p></div></section>
+<section class="chapter trials" id="trials" aria-labelledby="trials-title"><div class="wrap"><header class="section-heading reveal"><div><p class="eyebrow">02 / PRINT. NOTICE. CHANGE.</p><h2 id="trials-title">출력할 때마다,<br>다음 수정이 보였습니다.</h2></div><p class="lead">좋아진 점도, 다시 실패한 점도 남깁니다.<br>실물에서 발견한 문제가 다음 설계를 바꾼 여섯&nbsp;장면.</p></header>
+<article class="trial reveal" id="trial-01"><figure class="trial-media"><div class="photo-pair"><img src="assets/v6-front.jpg" width="960" height="1280" alt="초기 V6 실제 출력물 앞면: 반사되는 가는 글자와 노트북 문양" loading="lazy"><img src="assets/v6-back.jpg" width="960" height="1280" alt="초기 V6 실제 출력물 뒷면: 작은 NFC 글자" loading="lazy"></div><figcaption>실제 출력 · 초기 V6 앞면과 뒷면</figcaption></figure><div class="trial-copy"><p class="eyebrow"><span class="trial-number">01</span>V6 → D2 · D3</p><h3>화면에서는 보이던 글자가<br>손 안에서는 흐렸습니다.</h3><dl class="trial-notes"><div><dt>관찰</dt><dd>가는 글자와 비슷한 색의 조합은 사진에서도, 실물에서도 읽기 어려웠습니다.</dd></div><div><dt>수정</dt><dd>D2에서 글자를 키우고 형태를 단순하게 다듬었습니다. 보라색 몸체와 검은 글자로 대비를 높이는 방향을 선택하고 D3로 이어갔습니다.</dd></div><div><dt>확인</dt><dd>읽기 쉬운 방향을 사용자가 선택했습니다. 이후 샘플에서도 표면 품질은 계속 확인해야 했습니다.</dd></div></dl></div></article>
+<article class="trial reveal" id="trial-02"><figure class="trial-media"><div class="diagram-card pocket-study"><span class="media-label">POCKET STUDY</span><svg viewBox="0 0 560 320" role="img" aria-label="D3 포켓 깊이 0.80mm에서 D4 0.48mm로 줄이고 바닥을 올린 단면 개념도"><path d="M55 100h35v100h130V100h35v155H55Z" fill="var(--lavender)"/><path d="M320 100h35v60h130v-60h35v155H320Z" fill="var(--lavender)"/><path d="M100 196h110M365 156h110" stroke="var(--warm-ink)" stroke-width="5"/><path d="M275 167h28m-8-8 8 8-8 8" fill="none" stroke="var(--ink)" stroke-width="2"/><text x="155" y="58" text-anchor="middle" class="measure">0.80 mm</text><text x="420" y="58" text-anchor="middle" class="measure">0.48 mm</text><text x="155" y="295" text-anchor="middle" class="svg-label">D3</text><text x="420" y="295" text-anchor="middle" class="svg-label">D4 · 바닥을 올리기</text></svg></div><figcaption>설계 변경 개념도 · 당시 원형 태그용 깊이 비교, 비례는 설명용</figcaption></figure><div class="trial-copy"><p class="eyebrow"><span class="trial-number">02</span>D3 → D4</p><h3>얇은 스티커인데,<br>홈이 이렇게 깊어야 할까?</h3><dl class="trial-notes"><div><dt>관찰</dt><dd>사용자가 얇은 NFC 스티커에 비해 포켓이 깊고, 붙이기 불편하다고 느꼈습니다.</dd></div><div><dt>수정</dt><dd>D4에서 덮개 높이는 유지하고 바닥을 올려, 홈 깊이를 0.80 mm에서 0.48 mm로 줄였습니다.</dd></div><div><dt>확인</dt><dd>삽입 작업을 쉽게 하려는 변경입니다. 얕은 홈 자체가 덮개 출력 품질을 보장하는 것은 아닙니다.</dd></div></dl></div></article>
+<article class="trial reveal" id="trial-03"><figure class="trial-media"><div class="diagram-card type-study"><span class="media-label">LETTERING STUDY</span><div class="old-type">&gt; 4060<span class="cursor">|</span><small>‘40601’로 읽힌 커서</small></div><span class="type-arrow" aria-hidden="true">↓</span><div class="new-type">&gt; 4060<small>프롬프트와 숫자만 남기기</small></div></div><figcaption>문구 비교 · 원래 글꼴과 실제 출력 크기를 재현한 도면은 아닙니다</figcaption></figure><div class="trial-copy"><p class="eyebrow"><span class="trial-number">03</span>D5 / PROMPT ONLY</p><h3>커서 하나가,<br>다른 숫자로 읽혔습니다.</h3><dl class="trial-notes"><div><dt>관찰</dt><dd>오른쪽의 세로 커서가 숫자 1처럼 보여, 로고가 ‘40601’로 읽혔습니다.</dd></div><div><dt>수정</dt><dd>D5에서 커서를 제거했습니다. 터미널의 인상은 앞쪽의 &gt; 기호로 남겼습니다.</dd></div><div><dt>확인</dt><dd>사용자가 선택한 문구는 <strong>&gt; 4060</strong>. 뒤의 샘플 사진에서도 커서가 빠진 모습을 볼 수 있습니다.</dd></div></dl></div></article>
+<article class="trial reveal" id="trial-04"><figure class="trial-media"><div class="diagram-card bed-study"><span class="media-label">INSERTION ACCESS</span><svg viewBox="0 0 560 310" role="img" aria-label="출력판 하강 거리 50mm에서 상대 150mm로 조정한 작업 공간 개념도"><path d="M90 252V55h300v197" fill="none" stroke="var(--line)" stroke-width="9"/><path d="M145 65h85v45h-85z" fill="var(--ink)"/><path d="M177 110h20l-10 15z" fill="var(--ink)"/><path d="M112 155h254" stroke="var(--lavender)" stroke-width="9" stroke-dasharray="10 7"/><path d="M112 255h254" stroke="var(--lavender-deep)" stroke-width="11"/><path d="M423 160v90m-8-9 8 9 8-9" fill="none" stroke="var(--ink)" stroke-width="2"/><text x="430" y="144" class="svg-label">50 mm</text><text x="430" y="278" class="svg-label">150 mm</text></svg><p>멈춘 뒤 작업판을 내려<br>스티커를 넣을 여유를 만들기.</p></div><figcaption>작업 공간 개념도 · 도해의 이동 거리와 비율은 실제 축척이 아닙니다</figcaption></figure><div class="trial-copy"><p class="eyebrow"><span class="trial-number">04</span>D4 · D5 → D6</p><h3>손이 들어갈 공간도<br>설계의 일부였습니다.</h3><dl class="trial-notes"><div><dt>관찰</dt><dd>50 mm 하강으로는 넣기 불편했고, 150 mm 설정도 실제 이동이 기대와 다른지 점검할 필요가 있었습니다.</dd></div><div><dt>수정</dt><dd>D6에서는 정지 위치를 기준으로 150 mm 내려갔다가 돌아오는 상대 이동 명령을 구성했습니다.</dd></div><div><dt>확인</dt><dd>사용자가 D6 출력이 잘 된다고 확인하고, 첫 최종 출력 기준본으로 채택했습니다. 모든 후속 버전의 성공을 뜻하지는 않습니다.</dd></div></dl><p class="status-label">D6 · 사용자가 채택한 첫 출력 기준본</p></div></article>
+<article class="trial reveal" id="trial-05"><figure class="trial-media"><img src="assets/square-failure.jpg" width="960" height="1280" alt="사각 NFC 스티커가 드러나고 그 위 덮개가 뜯기며 필라멘트가 뭉친 실패 시편" loading="lazy"><figcaption>실제 출력 · 35 mm 사각 태그 시험 중 드러난 덮개 실패</figcaption></figure><div class="trial-copy"><p class="eyebrow"><span class="trial-number">05</span>D7 → D8 / 35 mm SQUARE</p><h3>스티커가 바뀌니,<br>키링도 다시 커졌습니다.</h3><dl class="trial-notes"><div><dt>관찰</dt><dd>원형 태그 대신 35 mm 사각 스티커를 쓰자, D7의 새 삽입 영역이 기존 외곽에 너무 가까워졌습니다.</dd></div><div><dt>수정</dt><dd>D8은 몸체를 약 60 mm 크기로 넓혀 사각 스티커가 들어갈 공간을 확보했습니다.</dd></div><div><dt>확인</dt><dd>실제 시험에서는 덮개가 뜯기고 태그가 드러났습니다. 공간을 확보하는 것과 안정적으로 덮는 것은 별개의 과제였습니다.</dd></div></dl><p class="status-label">사각 태그용 · 재시험 필요</p></div></article>
+<article class="trial reveal" id="trial-06"><figure class="trial-media"><img src="assets/d9-roof-failure.jpg" width="1280" height="960" alt="프린터 안에서 두 키링의 사각 포켓 위에 필라멘트가 거칠게 뭉친 D9 시험 사진" loading="lazy"><figcaption>실제 출력 · D9 포켓 위를 덮는 구간의 뭉침</figcaption></figure><div class="trial-copy"><p class="eyebrow"><span class="trial-number">06</span>D8 → D9 / STILL LEARNING</p><h3>덮는 순간,<br>필라멘트가 뭉쳤습니다.</h3><dl class="trial-notes"><div><dt>관찰</dt><dd>뒷면 글자 맞물림을 수정한 뒤에도, 포켓을 덮을 때 플라스틱이 평평하게 놓이지 않았습니다.</dd></div><div><dt>수정</dt><dd>D9에서 글자와 몸체가 맞닿는 구조, 포켓 여유를 손봤습니다. 두 색 모두 Matte로 바꾼 시험도 진행했습니다.</dd></div><div><dt>확인</dt><dd>뭉침이 다시 관찰됐습니다. 스티커 높이, 첫 덮개 경로와 재개 동작을 함께 검토해야 합니다. 사진만으로 습기나 포켓 깊이를 원인으로 확정하지 않았습니다.</dd></div></dl><p class="status-label">D9 · 해결되지 않은 출력 문제</p></div></article></div></section>    <section class="chapter chapter-inside" id="inside" aria-labelledby="inside-title">
+      <div class="wrap layers-grid">
+        <div class="layers-copy reveal">
+          <p class="eyebrow">03 / INSIDE THE KEYCHAIN</p>
+          <h2 id="inside-title">한 겹씩 쌓고,<br>잠깐 멈추고.</h2>
+          <p class="lead">여러 장의 종이를 겹치면 두께가 생기듯, 프린터는 얇은 층을 차례로 쌓습니다. 그 사이에 NFC가 들어갈 자리를 남깁니다.</p>
+          <p class="plain-note"><strong>NFC란?</strong> 휴대폰을 가까이 대면 저장해 둔 링크가 열리는 작은 태그입니다.</p>
+
+          <div class="step-tabs" data-step-tabs>
+            <button id="tab-all" data-stage="all" data-panel="panel-all">전체 구조</button>
+            <button id="tab-floor" data-stage="floor" data-panel="panel-floor">① 바닥</button>
+            <button id="tab-insert" data-stage="insert" data-panel="panel-insert">② 삽입</button>
+            <button id="tab-close" data-stage="close" data-panel="panel-close">③ 덮기</button>
+          </div>
+
+          <div class="step-panels">
+            <article class="step-panel" id="panel-all" tabindex="0"><span>00</span><h3>겉으로 보이지 않는 세 층</h3><p>몸체 바닥, 얇은 NFC 스티커, 그리고 덮개. 버튼을 눌러 제작 순서를 살펴보세요.</p></article>
+            <article class="step-panel" id="panel-floor" tabindex="0"><span>01</span><h3>스티커가 앉을 바닥</h3><p>먼저 몸체와 포켓 바닥을 만듭니다. 스티커를 붙일 면이 평평하고, 위를 덮을 공간이 남아 있어야 합니다.</p></article>
+            <article class="step-panel" id="panel-insert" tabindex="0"><span>02</span><h3>잠시 멈추고, 평평하게</h3><p>덮개를 출력하기 전에 멈춰 스티커를 붙입니다. 칩과 모서리까지 출력 경로보다 낮게 놓였는지 확인합니다.</p></article>
+            <article class="step-panel" id="panel-close" tabindex="0"><span>03</span><h3>위를 덮는 순간이 관건</h3><p>출력을 재개해 안에 봉인합니다. 빈 공간을 가로지르는 첫 줄이 안정적으로 놓여야 합니다. D9에서는 이 구간에 뭉침이 관찰됐습니다.</p></article>
+          </div>
+          <p class="lab-note">D6에서는 12층 후, 13층 전에 삽입하도록 설정했습니다. 새 버전의 정지 지점은 실제 슬라이스로 다시 확인해야 합니다.</p>
+        </div>
+
+        <figure class="layer-figure reveal">
+          <div class="diagram" data-stage="all">
+            <svg viewBox="0 0 620 560" role="img" aria-labelledby="layer-title layer-desc">
+              <title id="layer-title">키링 안쪽을 층별로 살펴보는 개념도</title>
+              <desc id="layer-desc">아래는 출력한 바닥, 가운데는 NFC 스티커, 위는 나중에 출력할 덮개입니다. 설명을 위해 간격을 크게 표현했습니다.</desc>
+              <defs>
+                <linearGradient id="plastic" x1="0" y1="0" x2="1" y2="1"><stop stop-color="var(--lavender-200)"/><stop offset="1" stop-color="var(--lavender-400)"/></linearGradient>
+                <linearGradient id="ceiling" x1="0" y1="0" x2="0" y2="1"><stop stop-color="var(--lavender-400)"/><stop offset="1" stop-color="var(--lavender-650)"/></linearGradient>
+              </defs>
+              <g class="diagram-layer layer-floor">
+                <path d="m108 284 196-83 208 83v34l-87 93-218-9-99-84z" fill="var(--lavender-650)"/>
+                <path d="m108 284 95-98 218 9 91 89-87 93-218-9z" fill="url(#plastic)"/>
+                <path d="m190 272 111-69 134 72-120 70z" fill="var(--lavender-650)"/>
+                <path d="m203 280 98-59 119 62-105 54z" fill="var(--lavender-400)"/>
+              </g>
+              <g class="diagram-layer layer-tag">
+                <path d="m209 271 94-53 111 60-98 51z" fill="var(--brass-300)"/>
+                <g fill="none" stroke="var(--brass-900)" stroke-width="1.8"><path d="m223 271 80-43 97 50-85 43z"/><path d="m233 271 70-37 88 44-76 38z"/><path d="m244 271 59-30 76 37-64 32z"/></g>
+                <path d="m281 264 12-7 14 7-12 7z" fill="var(--brass-900)"/>
+              </g>
+              <g class="diagram-layer layer-roof">
+                <path d="m108 259 196-83 208 83v14l-87 93-218-9-99-84z" fill="var(--lavender-650)"/>
+                <path d="m108 259 95-98 218 9 91 89-87 93-218-9z" fill="url(#ceiling)"/>
+                <path d="m135 259 80-79 195 8 75 72-72 75-194-9z" fill="none" stroke="var(--coal-950)" stroke-width="4"/>
+                <g transform="matrix(.8381,.0333,.03125,.7875,224,190)" fill="var(--coal-950)"><rect width="210" height="88" rx="10" fill="none" stroke="var(--coal-950)" stroke-width="5"/><text x="20" y="59" font-size="40" font-weight="700">&gt; 4060</text><path d="M0 102h210l12 25H-12Z" fill="none" stroke="var(--coal-950)" stroke-width="4"/><text x="37" y="160" font-size="28" font-weight="650">AI LAB</text></g>
+              </g>
+            </svg>
+          </div>
+          <figcaption>구조 이해를 위한 개념도 · 실제 치수와 간격은 다릅니다.</figcaption>
+        </figure>
+      </div>
+    </section><section class="chapter gallery" id="gallery" aria-labelledby="gallery-title"><div class="wrap"><header class="section-heading reveal"><div><p class="eyebrow">04 / MADE REAL</p><h2 id="gallery-title">시도를 쌓아,<br>완성한 키링.</h2></div><p class="lead">글자를 다듬고, 색을 고르고, 고리를 연결했습니다.<br>출력과 조립, 개별 포장까지 마친 실제 결과물입니다.</p></header>
+<div class="gallery-grid reveal">
+<figure class="gallery-item"><a class="photo-link" href="assets/final-lineup-upright.jpg" data-photo data-caption="완성 키링 · 색상과 조립 · 골드와 블루, 고리까지 연결한 모습. 사용자가 최종 결과물로 공유한 실제 사진입니다."><img src="assets/final-lineup-upright.jpg" width="2880" height="3840" loading="lazy" alt="골드와 블루 키링을 중심으로 모아 놓은 완성 출력물과 연결된 금속 고리"><span class="enlarge" aria-hidden="true">확대 ↗</span></a><figcaption><strong>완성 키링 · 색상과 조립</strong><span>골드와 블루, 고리까지 연결한 모습</span></figcaption></figure>
+<figure class="gallery-item"><a class="photo-link" href="assets/final-front-back.jpg" data-photo data-caption="앞면과 뒷면 · 하나의 키링 · 4060 AI LAB과 NFC TAP HERE. 사용자가 최종 결과물로 공유한 실제 사진입니다."><img src="assets/final-front-back.jpg" width="2880" height="3840" loading="lazy" alt="골드와 블루 키링의 앞면 로고와 뒷면 NFC TAP HERE 표시를 함께 보여주는 최종 결과물"><span class="enlarge" aria-hidden="true">확대 ↗</span></a><figcaption><strong>앞면과 뒷면 · 하나의 키링</strong><span>4060 AI LAB과 NFC TAP HERE</span></figcaption></figure>
+<figure class="gallery-item"><a class="photo-link" href="assets/final-packaged.jpg" data-orientation="left" data-photo data-caption="개별 포장 · 건네줄 준비 · 골드와 핑크, 하나씩 담은 결과물. 사용자가 최종 결과물로 공유한 실제 사진입니다."><img src="assets/final-packaged.jpg" width="2880" height="3840" loading="lazy" alt="금속 고리가 달린 골드와 핑크 키링을 개별 투명 포장에 담고 블루 키링과 함께 놓은 모습"><span class="enlarge" aria-hidden="true">확대 ↗</span></a><figcaption><strong>개별 포장 · 건네줄 준비</strong><span>골드와 핑크, 하나씩 담은 결과물</span></figcaption></figure>
+</div><p class="source-note gallery-note">사용자가 ‘최종 결과물’로 공유한 실물 사진입니다. 색상별 모습과 조립·포장 상태를 확인할 수 있습니다.</p>
+<div class="result-grid reveal"><article><p class="eyebrow">PRINT / ASSEMBLY / PACKAGING</p><h3>아이디어가 손에 잡히는 결과로.</h3><p>골드와 블루, 라벤더·핑크 조합으로 출력한 키링에 금속 고리를 달았습니다. 앞면에는 4060 AI LAB, 뒷면에는 NFC TAP HERE를 담고, 일부는 개별 포장까지 마쳤습니다.</p></article><article><p class="eyebrow">THE RECORD CONTINUES</p><h3>완성품과 실험 기록을 함께 남깁니다.</h3><p>D6는 처음 채택한 출력 기준본입니다. 위 사진의 개별 설계 버전은 따로 지정하지 않았으며, 앞서 기록한 D9 덮개 문제와 NFC 인식 여부는 별도의 검증 기록으로 남깁니다.</p></article></div>
+</div></section>
+<section class="closing wrap reveal"><p class="eyebrow">SAME CURIOSITY. ONE MORE TRY.</p><h2>한 번의 완성보다,<br>한 번 더 확인한 기록.</h2><p>Claude에서 시작한 아이디어를 Codex로 이어받아,<br>파일과 출력 경로, 그리고 실물을 함께 살펴봤습니다.</p><a href="#trials" class="text-link">실험 기록 다시 보기 ↑</a></section>
+</main>
+<footer><div class="wrap footer-grid"><div><strong>4060 AI LAB</strong><span>제작과 검증의 기록 · 2026.09.14</span></div><p>최종 웹 프레젠테이션 · Dark Workbench</p><nav aria-label="하단 메뉴"><a href="#trials">실험 기록 다시 보기 ↗</a><a href="#top">처음으로 ↑</a></nav></div></footer>
+<dialog id="photo-dialog" aria-labelledby="photo-caption"><button type="button" class="dialog-close" aria-label="사진 닫기">닫기 ×</button><figure><div class="expanded-photo-frame"><img id="photo-expanded" alt=""></div><figcaption id="photo-caption"></figcaption></figure></dialog>
+</body></html>
