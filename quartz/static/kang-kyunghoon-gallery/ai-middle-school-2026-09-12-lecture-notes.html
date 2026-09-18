@@ -1,0 +1,979 @@
+<!doctype html>
+<html lang="ko" id="top">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="2026년 9월 12일 4060 AI 미들스쿨 강의의 Omarchy, 에이전트 OS, Spark Beat, HyperFrames 내용을 20개 타임스탬프 장으로 정리한 공개 노트">
+  <meta name="theme-color" content="#0b1b3b">
+  <title>에이전트가 일하는 환경에서 제작 시스템까지 | 4060 AI 미들스쿨</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%230b1b3b'/%3E%3Cpath d='M17 14h9v36h-9zm21 0h9v36h-9zM12 27h40v10H12z' fill='%23b8f51b'/%3E%3C/svg%3E">
+  <style>
+    :root{--canvas:#f4f1e8;--paper:#fffefa;--paper-quiet:#ebe7dc;--ink:#102247;--body:#263957;--muted:#586579;--line:#d7dce4;--blue:#145bc7;--blue-dark:#0c419d;--lime:#b8f51b;--lime-soft:#e8ffc0;--navy:#0b1b3b;--navy-quiet:#172b50;--on-navy:#fffefa;--on-navy-muted:#d9e2f2;--warning:#a34700;--warning-soft:#fff0df;--s1:.25rem;--s2:.5rem;--s3:.75rem;--s4:1rem;--s5:1.25rem;--s6:1.5rem;--s8:2rem;--s10:2.5rem;--s12:3rem;--s16:4rem;--s20:5rem}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:var(--s6)}body{margin:0;color:var(--body);background:var(--canvas);font:1rem/1.8 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif;word-break:keep-all}a{color:inherit}p,li{max-width:72ch}code{overflow-wrap:anywhere}.skip-link{position:fixed;z-index:10;top:var(--s3);left:var(--s3);padding:var(--s3) var(--s4);color:var(--on-navy);background:var(--blue);font-weight:800;text-decoration:none;transform:translateY(-220%)}.skip-link:focus{transform:none}.masthead{color:var(--on-navy);background:var(--navy);border-bottom:.5rem solid var(--lime)}.masthead-inner{width:min(calc(100% - 2rem),73.75rem);margin:auto;padding:var(--s20) 0 var(--s16)}.eyebrow,.kicker,.toc-label,.part-label{margin:0 0 var(--s3);color:var(--blue);font-size:.875rem;font-weight:850;letter-spacing:.07em}.masthead .eyebrow{color:var(--lime)}h1{max-width:11ch;margin:0;font-size:clamp(2.75rem,8vw,6rem);font-weight:850;line-height:1.02;letter-spacing:-.055em}.deck{max-width:43rem;margin:var(--s6) 0 0;color:var(--on-navy-muted);font-size:1.125rem;line-height:1.75}.meta{display:flex;flex-wrap:wrap;gap:var(--s3);margin-top:var(--s8)}.meta span{padding:var(--s2) var(--s3);border:1px solid var(--navy-quiet);font-size:.875rem;font-weight:750}.part-map{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;margin-top:var(--s10);border:1px solid var(--navy-quiet);background:var(--navy-quiet)}.part-map div{padding:var(--s4);background:var(--navy)}.part-map b{display:block;color:var(--lime);font:850 .8125rem/1.4 ui-monospace,"SFMono-Regular",Menlo,monospace}.part-map span{display:block;margin-top:var(--s1);color:var(--on-navy-muted);font-size:.875rem;line-height:1.5}.layout{display:grid;grid-template-columns:16.25rem minmax(0,47.5rem);gap:var(--s16);width:min(calc(100% - 2rem),73.75rem);margin:auto;padding:var(--s16) 0}.toc nav{position:sticky;top:var(--s6);max-height:calc(100vh - var(--s12));overflow:auto;scrollbar-width:thin}.toc ol{margin:0;padding:0;list-style:none;border-top:1px solid var(--line)}.toc li{border-bottom:1px solid var(--line)}.toc .toc-part{min-height:auto;padding:var(--s4) 0 var(--s2);border:0;color:var(--muted);font-size:.75rem;font-weight:850;letter-spacing:.08em}.toc a{display:grid;grid-template-columns:4.2rem 1fr;gap:var(--s3);align-items:center;min-height:2.75rem;padding:var(--s2) 0;text-decoration:none;line-height:1.35;transition:color .16s ease-out,transform .16s ease-out}.toc time,.time{color:var(--blue);font:850 .8125rem/1.4 ui-monospace,"SFMono-Regular",Menlo,monospace}.toc span{font-size:.8125rem;font-weight:750}.toc a:hover{color:var(--blue-dark);transform:translateX(var(--s1))}.article{min-width:0}.overview,.principles,.scope-note,.evidence-card{padding:var(--s8);border:1px solid var(--line);background:var(--paper)}.overview h2,.principles h2,.scope-note h2,.evidence h2{margin:0;color:var(--ink);font-size:clamp(1.75rem,4vw,2.5rem);font-weight:820;line-height:1.25;letter-spacing:-.035em}.overview p:not(.kicker),.scope-note p{margin:var(--s4) 0 0;font-size:1.0625rem}.throughline{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s3);margin-top:var(--s6)}.throughline div{padding:var(--s4);border-top:.25rem solid var(--blue);background:var(--canvas)}.throughline b{display:block;color:var(--ink);font-size:.875rem}.throughline span{display:block;margin-top:var(--s1);font-size:.875rem;line-height:1.55}.chapters{margin-top:var(--s16)}.part-band{margin:0 0 var(--s12);padding:var(--s8);color:var(--on-navy);background:var(--navy);border-bottom:.375rem solid var(--lime);scroll-margin-top:var(--s6)}.part-band .part-label{color:var(--lime)}.part-band h2{margin:0;font-size:clamp(2rem,5vw,3.5rem);font-weight:820;line-height:1.12;letter-spacing:-.045em}.part-band p:last-child{margin:var(--s3) 0 0;color:var(--on-navy-muted);font-size:1rem}.chapter{position:relative;padding:0 0 var(--s16) var(--s8);border-left:2px solid var(--line);scroll-margin-top:var(--s6)}.chapter::before{position:absolute;top:.8rem;left:-.4375rem;width:.75rem;height:.75rem;border:2px solid var(--paper);border-radius:50%;background:var(--blue);content:""}.chapter-head{display:grid;grid-template-columns:3rem 1fr;gap:var(--s4)}.num{color:var(--muted);font:850 .875rem/2.75rem ui-monospace,"SFMono-Regular",Menlo,monospace}.timestamp{display:inline-flex;align-items:center;min-height:2.75rem;padding:var(--s2) var(--s3);color:var(--navy);background:var(--lime);font:900 .875rem/1.4 ui-monospace,"SFMono-Regular",Menlo,monospace;text-decoration:none;transition:color .16s ease-out,background .16s ease-out,transform .16s ease-out}.timestamp:hover{color:var(--on-navy);background:var(--navy);transform:translateY(-.125rem)}.range{margin:var(--s2) 0 0;color:var(--muted);font-size:.875rem}.chapter h2{margin:var(--s3) 0 0;color:var(--ink);font-size:clamp(1.625rem,4vw,2.5rem);font-weight:800;line-height:1.25;letter-spacing:-.035em}.lead{margin:var(--s6) 0 0;color:var(--ink);font-size:1.125rem;font-weight:700;line-height:1.75}.detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s3);margin-top:var(--s5)}.detail{padding:var(--s4);border-top:.25rem solid var(--blue);background:var(--paper)}.detail h3{margin:0;color:var(--ink);font-size:1.125rem;line-height:1.45;letter-spacing:-.015em}.detail p{margin:var(--s2) 0 0;font-size:.9375rem;line-height:1.7}.points{margin:var(--s4) 0 0;padding-left:1.25rem}.points li{margin-top:var(--s2);padding-left:var(--s2)}.points li::marker{color:var(--blue)}.tags{display:flex;flex-wrap:wrap;gap:var(--s2);margin-top:var(--s6)}code{padding:.25rem var(--s2);border:1px solid var(--line);color:var(--blue);background:var(--paper);font:750 .8125rem ui-monospace,"SFMono-Regular",Menlo,monospace}.principles{margin-top:var(--s4)}.principles h3{margin:var(--s8) 0 0;color:var(--blue);font-size:1.125rem}.principles ol{margin:var(--s3) 0 0;padding:0;list-style:none;border-top:1px solid var(--line);counter-reset:rule}.principles li{display:grid;grid-template-columns:2.75rem 1fr;gap:var(--s4);padding:var(--s3) 0;border-bottom:1px solid var(--line);counter-increment:rule}.principles li::before{color:var(--blue);font:850 .875rem/1.8 ui-monospace,monospace;content:counter(rule,decimal-leading-zero)}.principles li p{margin:0;font-weight:650}.evidence{margin-top:var(--s16)}.evidence-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s3);margin-top:var(--s6)}.evidence-card{padding:var(--s5);border-left:.5rem solid var(--blue)}.evidence-card.claim{border-left-color:var(--warning);background:var(--warning-soft)}.evidence-card.unknown{border-left-color:var(--muted);background:var(--paper-quiet)}.evidence-card h3{margin:0;color:var(--ink);font-size:1.125rem;line-height:1.45}.evidence-card ul{margin:var(--s3) 0 0;padding-left:1.1rem}.evidence-card li{margin-top:var(--s2);font-size:.9375rem;line-height:1.65}.scope-note{margin-top:var(--s6);border-left:.5rem solid var(--blue)}.scope-note h2{font-size:1.5rem}.search-terms{margin-top:var(--s6);font-size:.875rem}.search-terms code{display:inline-block;margin:0 var(--s1) var(--s2) 0}footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:var(--s4);padding:var(--s8) 0 0;color:var(--muted);font-size:.875rem}footer p{margin:0}footer a{color:var(--blue);font-weight:850}a:focus-visible{outline:.25rem solid var(--blue);outline-offset:.25rem}.chapter:target{border-left-color:var(--blue)}.chapter:target::before{background:var(--lime);box-shadow:0 0 0 .125rem var(--blue)}
+    .layout,.article,.chapter,.chapter-head,.chapter-head>div,.detail-grid,.detail{min-width:0}h1,h2,h3,p,li,.toc span,.part-map span{overflow-wrap:anywhere}
+    @media(max-width:56rem){.part-map{grid-template-columns:repeat(2,minmax(0,1fr))}.layout{grid-template-columns:1fr;gap:var(--s8)}.toc nav{position:static;max-height:none;overflow:visible}.toc ol{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.toc .toc-part{grid-column:1/-1}.toc li:nth-child(even){border-right:1px solid var(--line)}.toc a{padding:var(--s2) var(--s3)}.throughline,.evidence-grid{grid-template-columns:1fr}}
+    @media(max-width:40rem){.masthead-inner,.layout{width:min(calc(100% - 16px),73.75rem);padding-top:var(--s12);padding-bottom:var(--s12)}h1{font-size:clamp(2.75rem,15vw,4.25rem)}.part-map,.toc ol,.detail-grid{grid-template-columns:1fr}.toc li:nth-child(even){border-right:0}.overview,.principles,.scope-note{padding:24px}.part-band{padding:24px}.chapter{padding-left:16px}.chapter-head{grid-template-columns:1fr;gap:var(--s2)}.num{order:0;line-height:1.4}.points{padding-left:24px}.detail{padding:16px}.evidence-card{padding:20px}.throughline{grid-template-columns:1fr}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.toc a,.timestamp{transition:none}.toc a:hover,.timestamp:hover{transform:none}}
+    @media(forced-colors:active){.chapter::before{border:2px solid CanvasText}.timestamp{border:1px solid CanvasText}.chapter:target::before{box-shadow:none}}
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#content">본문으로 바로가기</a>
+  <header class="masthead">
+    <div class="masthead-inner">
+      <p class="eyebrow">4060 AI 미들스쿨 · 2026년 9월 12일</p>
+      <h1>에이전트가 일하는 환경에서 제작 시스템까지</h1>
+      <p class="deck">Omarchy와 에이전트 OS에서 시작해 NFC 키체인, Spark Beat 앱, HyperFrames 영상 제작으로 이어진 2시간 57분 강의를 시간 순서대로 정리했습니다.</p>
+      <div class="meta" aria-label="강의 정보">
+<span>전체 2:57:04</span>
+<span>20개 장</span>
+<span>4개 흐름</span>
+<span>화면·전사 교차 검토</span>
+</div>
+      <div class="part-map" aria-label="강의 네 부분">
+        <div>
+<b>PART 01 · 0:00—55:00</b>
+<span>Omarchy와 에이전트 OS</span>
+</div>
+        <div>
+<b>PART 02 · 55:00—67:45</b>
+<span>AI와 NFC 키체인</span>
+</div>
+        <div>
+<b>PART 03 · 67:45—125:58</b>
+<span>Spark Beat 종단간 개발</span>
+</div>
+        <div>
+<b>PART 04 · 125:58—177:04</b>
+<span>HyperFrames 영상 제작</span>
+</div>
+      </div>
+    </div>
+  </header>
+  <div class="layout">
+    <aside class="toc">
+<nav aria-label="강의 시간 목차">
+<p class="toc-label">시간 목차</p>
+<ol>
+      <li class="toc-part">PART 01 · OMARCHY</li>
+      <li>
+<a href="#chapter-1">
+<time>0:00</time>
+<span>접속과 발표 준비</span>
+</a>
+</li>
+      <li>
+<a href="#chapter-2">
+<time>9:20</time>
+<span>설치 참가자 첫 보고</span>
+</a>
+</li>
+      <li>
+<a href="#chapter-3">
+<time>15:00</time>
+<span>AI에게 OS 세팅 맡기기</span>
+</a>
+</li>
+      <li>
+<a href="#chapter-4">
+<time>20:45</time>
+<span>왜 에이전트 OS인가</span>
+</a>
+</li>
+      <li>
+<a href="#chapter-5">
+<time>27:15</time>
+<span>Grok Bot과 Herdr</span>
+</a>
+</li>
+      <li>
+<a href="#chapter-6">
+<time>35:00</time>
+<span>개발자 역할 전망</span>
+</a>
+</li>
+      <li>
+<a href="#chapter-7">
+<time>40:25</time>
+<span>커뮤니티·설치 Q&amp;A</span>
+</a>
+</li>
+      <li class="toc-part">PART 02 · NFC</li>
+      <li>
+<a href="#chapter-8">
+<time>55:00</time>
+<span>AI와 NFC 키체인</span>
+</a>
+</li>
+      <li class="toc-part">PART 03 · SPARK BEAT</li>
+      <li>
+<a href="#chapter-9">
+<time>67:45</time>
+<span>아이디어와 제품 구조</span>
+</a>
+</li>
+      <li>
+<a href="#chapter-10">
+<time>75:00</time>
+<span>웹·데스크톱·릴리스</span>
+</a>
+</li>
+      <li>
+<a href="#chapter-11">
+<time>85:00</time>
+<span>발표 자료와 음성</span>
+</a>
+</li>
+      <li>
+<a href="#chapter-12">
+<time>95:00</time>
+<span>계획과 승인</span>
+</a>
+</li>
+      <li>
+<a href="#chapter-13">
+<time>105:00</time>
+<span>계획 압축과 모델 배치</span>
+</a>
+</li>
+      <li>
+<a href="#chapter-14">
+<time>115:00</time>
+<span>데모·매뉴얼·대화 분할</span>
+</a>
+</li>
+      <li class="toc-part">PART 04 · HYPERFRAMES</li>
+      <li>
+<a href="#chapter-15">
+<time>125:58</time>
+<span>교육 영상 비용 문제</span>
+</a>
+</li>
+      <li>
+<a href="#chapter-16">
+<time>135:00</time>
+<span>구조와 첫 계획</span>
+</a>
+</li>
+      <li>
+<a href="#chapter-17">
+<time>145:00</time>
+<span>일본어 영상 제약</span>
+</a>
+</li>
+      <li>
+<a href="#chapter-18">
+<time>155:00</time>
+<span>V1에서 V6까지</span>
+</a>
+</li>
+      <li>
+<a href="#chapter-19">
+<time>160:00</time>
+<span>웹사이트에서 브랜드 필름</span>
+</a>
+</li>
+      <li>
+<a href="#chapter-20">
+<time>174:38</time>
+<span>마무리</span>
+</a>
+</li>
+    </ol>
+</nav>
+</aside>
+    <main class="article" id="content">
+      <section class="overview">
+<p class="kicker">전체 결론</p>
+<h2>사람은 더 앞단에서 방향과 경계를 설계한다</h2>
+<p>이 강의의 공통 주제는 AI가 답을 주는 도구에서, 컴퓨터 안에서 실제 작업을 수행하고 여러 도구를 연결해 결과물을 배포하는 작업자로 이동하고 있다는 것입니다. Omarchy는 운영 환경, Spark Beat는 제품화, HyperFrames는 반복 가능한 영상 제작으로 같은 변화를 보여줍니다.</p>
+<p>완전 자동화가 결론은 아닙니다. 사람이 해야 할 핵심 역할은 무엇을 만들지 정하고, 바꾸면 안 되는 것을 제한하고, 계획을 승인하고, 독립적으로 실패를 검토하며, 최종 결과가 실제 현장에서 쓸 만한지 판단하는 일로 이동합니다.</p>
+<div class="throughline">
+<div>
+<b>환경</b>
+<span>에이전트가 파일·터미널·브라우저를 지속적으로 다루는 작업 공간</span>
+</div>
+<div>
+<b>제품</b>
+<span>아이디어를 문서·앱·배포·발표 자료까지 잇는 종단간 흐름</span>
+</div>
+<div>
+<b>생산 체계</b>
+<span>한 번의 결과보다 수정 규칙을 스킬로 남겨 다음 작업에 재사용</span>
+</div>
+</div>
+</section>
+      <div class="chapters">
+        <section class="part-band" id="part-1">
+<p class="part-label">PART 01 · 0:00—55:00</p>
+<h2>Omarchy와 에이전트 OS</h2>
+<p>설치 경험에서 시작해, 여러 CLI 에이전트가 상주하고 협업하는 작업 환경의 변화로 시야를 넓힙니다.</p>
+</section>
+        <section class="chapter" id="chapter-1">
+<header class="chapter-head">
+<span class="num">01</span>
+<div>
+<a class="timestamp" href="#chapter-1" aria-label="0:00 — 접속과 발표 준비">0:00</a>
+<p class="range">0:00–9:20</p>
+<h2>접속과 발표 준비</h2>
+</div>
+</header>
+<p class="lead">초반 약 9분은 와이파이, HDMI, 카메라, 마이크와 Zoom 화면 공유를 맞추는 현장 준비 구간입니다.</p>
+<ul class="points">
+<li>오프라인 참석자와 온라인 참석자가 함께 듣는 구조라 발표자 전환마다 마이크와 화면을 다시 맞춥니다.</li>
+<li>Omarchy 본론은 약 9분 20초부터 시작됩니다.</li>
+<li>이 구간은 강의 내용과 분리해 두면 이후 타임스탬프를 더 정확히 탐색할 수 있습니다.</li>
+</ul>
+<div class="tags">
+<code>현장 준비</code>
+<code>Zoom</code>
+<code>화면 공유</code>
+</div>
+</section>
+        <section class="chapter" id="chapter-2">
+<header class="chapter-head">
+<span class="num">02</span>
+<div>
+<a class="timestamp" href="#chapter-2" aria-label="9:20 — 설치 행사 참가자의 첫 보고">9:20</a>
+<p class="range">9:20–15:00</p>
+<h2>설치 행사 참가자의 첫 보고</h2>
+</div>
+</header>
+<p class="lead">당일 Omarchy 설치 행사에서 보고 배운 내용을 하드웨어, 설치 방식, 제작자와 커뮤니티 순서로 소개합니다.</p>
+<div class="detail-grid">
+<div class="detail">
+<h3>ISO와 USB 설치</h3>
+<p>ISO를 USB에 담고 PC의 부팅 순서를 바꿔 설치합니다. 기존 Windows PC에 직접 설치하면 디스크가 지워질 수 있다는 경고가 반복됩니다.</p>
+</div>
+<div class="detail">
+<h3>하드웨어 해석의 경계</h3>
+<p>2011년형 노트북 사례와 M2 MacBook 사례가 언급되지만, M2는 가상 머신 설치였습니다. 베어메탈 호환성으로 확대 해석하면 안 됩니다.</p>
+</div>
+<div class="detail">
+<h3>이름과 제작자</h3>
+<p>화면에서 DHH가 제작자로 소개됩니다. “오마카세식 사전 선택과 Arch Linux의 결합”이라는 어원은 발표자의 설명입니다.</p>
+</div>
+<div class="detail">
+<h3>국내 커뮤니티</h3>
+<p>설치 행사에서 개발자와 서비스 운영자의 실제 작업 방식과 에이전트 중심 컴퓨팅에 대한 관심을 확인했다고 말합니다.</p>
+</div>
+</div>
+<div class="tags">
+<code>Omarchy</code>
+<code>DHH</code>
+<code>ISO</code>
+<code>VM</code>
+</div>
+</section>
+        <section class="chapter" id="chapter-3">
+<header class="chapter-head">
+<span class="num">03</span>
+<div>
+<a class="timestamp" href="#chapter-3" aria-label="15:00 — AI에게 운영체제 세팅 맡기기">15:00</a>
+<p class="range">15:00–20:45</p>
+<h2>설치 후 첫 세팅을 AI에게 맡긴다</h2>
+</div>
+</header>
+<p class="lead">설치 직후 터미널 에이전트를 먼저 준비하고, 한글 입력과 추가 도구 설치를 그 에이전트에게 요청하는 흐름을 설명합니다.</p>
+<ul class="points">
+<li>Codex, Claude 계열 도구, Hermes 같은 CLI 에이전트 중 하나를 먼저 설치하고 구독 인증을 연결합니다.</li>
+<li>Omarchy 소개 화면에는 편집기, 네 가지 터미널, Herdr, Tmux, Docker, Lazygit 등 통합 개발 도구가 표시됐습니다.</li>
+<li>Linux를 기본 환경으로 두고 필요할 때 Windows 환경을 올리는 방향이 소개되지만, 인증과 라이선스는 별도 과제입니다.</li>
+<li>CPU·GPU 상태를 읽어 최적화를 돕는다는 설명은 현장 전달 내용이며, 영상에서 성능 측정은 하지 않았습니다.</li>
+</ul>
+<div class="tags">
+<code>CLI agent</code>
+<code>한글 입력</code>
+<code>Tmux</code>
+<code>Docker</code>
+</div>
+</section>
+        <section class="chapter" id="chapter-4">
+<header class="chapter-head">
+<span class="num">04</span>
+<div>
+<a class="timestamp" href="#chapter-4" aria-label="20:45 — 왜 지금 에이전트 운영체제인가">20:45</a>
+<p class="range">20:45–27:15</p>
+<h2>왜 지금 “에이전트 OS”인가</h2>
+</div>
+</header>
+<p class="lead">CLI 에이전트가 로컬 파일을 직접 다루는 시대에, macOS와 Windows가 아닌 에이전트 중심 기본 환경이 필요하다는 문제의식을 제시합니다.</p>
+<div class="detail-grid">
+<div class="detail">
+<h3>앱에서 OS로</h3>
+<p>여러 터미널과 병렬 에이전트를 띄울수록 기존 데스크톱 환경이 무거워지고 조작 방식도 파편화된다는 경험에서 출발합니다.</p>
+</div>
+<div class="detail">
+<h3>사전 선택된 가벼운 환경</h3>
+<p>좋은 도구와 설정을 제작자가 미리 묶어 Linux 구성의 선택·충돌 비용을 줄인다는 설명입니다. 48초 설치 주장은 강의에서 측정하지 않았습니다.</p>
+</div>
+<div class="detail">
+<h3>좌표 추정과 네이티브 제어</h3>
+<p>화면 캡처 후 좌표를 찾는 Computer Use보다, OS 안에서 더 직접적으로 동작하는 환경이 오류와 비용을 줄일 수 있다고 해석합니다.</p>
+</div>
+<div class="detail">
+<h3>“에이전트가 이 안에서 산다”</h3>
+<p>에이전트가 컴퓨터 바깥의 도구가 아니라 파일·브라우저·터미널·창을 다루는 기본 구성원이 된다는 비유입니다.</p>
+</div>
+</div>
+<div class="tags">
+<code>agent OS</code>
+<code>Computer Use</code>
+<code>Arch Linux</code>
+<code>native control</code>
+</div>
+</section>
+        <section class="chapter" id="chapter-5">
+<header class="chapter-head">
+<span class="num">05</span>
+<div>
+<a class="timestamp" href="#chapter-5" aria-label="27:15 — Grok Bot 가상 머신과 Herdr">27:15</a>
+<p class="range">27:15–35:00</p>
+<h2>Grok Bot VM과 Herdr 다중 에이전트 데모</h2>
+</div>
+</header>
+<p class="lead">24시간 켜진 Linux 작업 컴퓨터와, 한 프로젝트 안에서 여러 CLI 에이전트의 상태와 역할을 관리하는 런타임을 함께 보여줍니다.</p>
+<div class="detail-grid">
+<div class="detail">
+<h3>지속되는 작업 컴퓨터</h3>
+<p>Grok Bot의 Linux VM은 브라우저와 터미널을 에이전트가 직접 조작하는 가벼운 원격 환경으로 설명됩니다.</p>
+</div>
+<div class="detail">
+<h3>화면에서 확인된 Herdr</h3>
+<p>Grok, Droid, Codex, Hermes 탭과 프로젝트별 space·agent 목록이 보였습니다. 하나의 프로젝트에 여러 역할을 붙이는 구조입니다.</p>
+</div>
+<div class="detail">
+<h3>결과를 넘기는 구조</h3>
+<p>과거의 독립된 대화와 달리 같은 작업 공간에서 계획·스펙·구현·검토·한글화 결과를 다음 에이전트로 전달한다고 설명합니다.</p>
+</div>
+<div class="detail">
+<h3>맞춤형 하네스</h3>
+<p>범용 하네스를 설치하는 단계를 넘어, 업무마다 역할·모델·검증 순서를 즉석에서 구성하는 방향을 전망합니다.</p>
+</div>
+</div>
+<ul class="points">
+<li>핵심은 특정 모델 이름보다 여러 세션의 상태와 터미널을 지속적으로 관리하는 운영 계층입니다.</li>
+<li>화면의 배치는 직접 확인됐지만, 생산성 향상 폭을 정량 비교한 실험은 아니었습니다.</li>
+</ul>
+<div class="tags">
+<code>Grok Bot</code>
+<code>Herdr</code>
+<code>Hermes</code>
+<code>multi-agent</code>
+</div>
+</section>
+        <section class="chapter" id="chapter-6">
+<header class="chapter-head">
+<span class="num">06</span>
+<div>
+<a class="timestamp" href="#chapter-6" aria-label="35:00 — 개발자 역할에 대한 전망">35:00</a>
+<p class="range">35:00–40:25</p>
+<h2>개발자 역할에 대한 강한 전망</h2>
+</div>
+</header>
+<p class="lead">코드를 직접 쓰는 기술만으로 개발자의 전문성을 설명하기 어려워질 것이라는 발표자의 개인 전망이 제시됩니다.</p>
+<ul class="points">
+<li>Omarchy를 “사람을 위한 OS라기보다 에이전트가 생활하며 작업하는 OS”로 정의합니다.</li>
+<li>숙련 개발자의 일부 업무까지 멀티에이전트 오케스트레이션이 흡수할 것이라고 예측합니다.</li>
+<li>“6개월 안에 기존 가치관이 무너질 것” 같은 시간 예측은 강한 견해이지 영상에서 증명된 사실이 아닙니다.</li>
+<li>발표자도 Omarchy를 장기 테스트하지 않았고, 유사한 Grok VM 환경을 연구 중이라고 선을 긋습니다.</li>
+</ul>
+<div class="tags">
+<code>개발자 역할</code>
+<code>전망</code>
+<code>검증 경계</code>
+</div>
+</section>
+        <section class="chapter" id="chapter-7">
+<header class="chapter-head">
+<span class="num">07</span>
+<div>
+<a class="timestamp" href="#chapter-7" aria-label="40:25 — 커뮤니티 하드웨어 설치 질의응답">40:25</a>
+<p class="range">40:25–55:00</p>
+<h2>커뮤니티·하드웨어·설치 질의응답</h2>
+</div>
+</header>
+<p class="lead">모든 사람에게 다중 에이전트가 필요한 것은 아니며, 단일 에이전트로 부족한 복잡한 일에서 다음 단계로 시험하라고 정리합니다.</p>
+<div class="detail-grid">
+<div class="detail">
+<h3>기존 설정을 옮겨 실험</h3>
+<p>이미 쓰는 에이전트의 설정과 작업 방식을 새 환경으로 옮기기 전에, 백업과 인증 범위를 확인하며 작은 과제로 비교합니다.</p>
+</div>
+<div class="detail">
+<h3>현장 학습의 가치</h3>
+<p>고급 사용자의 실제 질문과 작업 방식을 옆에서 보는 것이 영상만 보는 학습과 다르다고 강조합니다.</p>
+</div>
+<div class="detail">
+<h3>생태계·하드웨어 전망</h3>
+<p>투자 규모, 플러그인 수, 미니 PC와 Raspberry Pi급 장비 활용이 언급되지만 외부 검증하지 않은 전달·전망입니다.</p>
+</div>
+<div class="detail">
+<h3>베어메탈과 VM</h3>
+<p>직접 설치는 디스크를 지울 수 있지만 VM은 호스트에 같은 영향을 주지 않습니다. 당일 설치와 장기 안정성도 구분해야 합니다.</p>
+</div>
+</div>
+<div class="tags">
+<code>bare metal</code>
+<code>virtual machine</code>
+<code>community</code>
+</div>
+</section>
+
+        <section class="part-band" id="part-2">
+<p class="part-label">PART 02 · 55:00—67:45</p>
+<h2>AI와 3D 프린팅 NFC 키체인</h2>
+<p>아이디어, 모델링, 물리적 출력, 실패 진단, 모바일 테스트가 하나의 작업 흐름으로 이어진 짧은 응용 사례입니다.</p>
+</section>
+        <section class="chapter" id="chapter-8">
+<header class="chapter-head">
+<span class="num">08</span>
+<div>
+<a class="timestamp" href="#chapter-8" aria-label="55:00 — AI와 NFC 키체인">55:00</a>
+<p class="range">55:00–67:45</p>
+<h2>아이디어가 물리적 선물로 이어지는 과정</h2>
+</div>
+</header>
+<p class="lead">4060 모임 기념품 안에 NFC 스티커를 넣어, 스마트폰으로 태그하면 지정한 페이지로 이동하는 키체인을 제작합니다.</p>
+<div class="detail-grid">
+<div class="detail">
+<h3>Claude·MCP·Codex</h3>
+<p>3D 모델링 프로그램을 MCP로 Claude에 연결해 기본 모델을 만들고, 반복 수정과 오류 마무리는 Codex와 Computer Use의 도움을 받았다고 설명합니다.</p>
+</div>
+<div class="detail">
+<h3>적층 중 NFC 삽입</h3>
+<p>출력을 중간에 멈추고 NFC 스티커를 넣은 뒤 다시 출력하는 방식을 사용하며 Android와 iPhone에서 태그를 시험합니다.</p>
+</div>
+<div class="detail">
+<h3>실패 사진으로 진단</h3>
+<p>필라멘트 꼬임과 출력 실패 사진을 AI에 보여 원인을 추정하고 설정 변경을 제안받습니다. 약 여덟 번의 시행착오가 있었다고 합니다.</p>
+</div>
+<div class="detail">
+<h3>사례의 의미</h3>
+<p>핵심은 물건 하나가 아니라 서로 다른 디지털 도구와 물리 제작 단계를 한 목표 아래 연결한 것입니다.</p>
+</div>
+</div>
+<div class="tags">
+<code>NFC keychain</code>
+<code>3D printing</code>
+<code>MCP</code>
+<code>Computer Use</code>
+</div>
+</section>
+
+        <section class="part-band" id="part-3">
+<p class="part-label">PART 03 · 67:45—125:58</p>
+<h2>Spark Beat: 아이디어에서 앱과 배포까지</h2>
+<p>참가자용 웹 편집기, 운영팀용 데스크톱 앱, GitHub Releases, 스토어 제출, 발표 자료와 음성까지 하나의 프로젝트로 연결합니다.</p>
+</section>
+        <section class="chapter" id="chapter-9">
+<header class="chapter-head">
+<span class="num">09</span>
+<div>
+<a class="timestamp" href="#chapter-9" aria-label="67:45 — Spark Beat 아이디어와 제품 구조">67:45</a>
+<p class="range">67:45–75:00</p>
+<h2>불꽃놀이 아이디어와 제품 구조</h2>
+</div>
+</header>
+<p class="lead">음악에 맞춰 디지털 불꽃 타임라인을 만들고, 운영팀이 여러 프로젝트를 순서대로 공연하는 창작·운영 도구를 구상합니다.</p>
+<ul class="points">
+<li>참가자는 로그인 없이 웹에서 편집하고 프로젝트 파일을 로컬로 내려받습니다.</li>
+<li>운영팀은 별도 데스크톱 앱에서 수집한 파일을 순서대로 불러와 공연합니다.</li>
+<li>계정과 서버 데이터베이스를 두지 않아 공개 창작 도구의 복잡도를 줄였습니다.</li>
+<li>화면에서 공개 사이트와 “음악 위에 그리는 나만의 불꽃놀이” 문구가 확인됐습니다.</li>
+</ul>
+<div class="tags">
+<code>Spark Beat</code>
+<code>local-first</code>
+<code>participant</code>
+<code>operator</code>
+</div>
+</section>
+        <section class="chapter" id="chapter-10">
+<header class="chapter-head">
+<span class="num">10</span>
+<div>
+<a class="timestamp" href="#chapter-10" aria-label="75:00 — 웹 데스크톱 GitHub 릴리스">75:00</a>
+<p class="range">75:00–85:00</p>
+<h2>웹, 데스크톱, GitHub Releases</h2>
+</div>
+</header>
+<p class="lead">참가자 접근성은 웹으로, 네트워크가 불안정한 공연 운영은 로컬 데스크톱 앱으로 분리합니다.</p>
+<div class="detail-grid">
+<div class="detail">
+<h3>크로스플랫폼 릴리스</h3>
+<p>공개 사이트의 다운로드 버튼을 GitHub Releases와 연결하고 Windows x64·ARM64, Mac Universal 배포 영역을 보여줍니다.</p>
+</div>
+<div class="detail">
+<h3>macOS 서명·공증</h3>
+<p>Apple 개발자 계정과 Xcode 설정이 필요한 배포 과정에서 Codex Computer Use가 화면 이동과 설정을 도왔다고 말합니다.</p>
+</div>
+<div class="detail">
+<h3>실제 OS에서 검증</h3>
+<p>VM에서의 성공을 실제 Windows 성공으로 보지 않고, private GitHub 저장소를 공통 전달점으로 삼아 각 OS 실기기에서 수정·빌드합니다.</p>
+</div>
+<div class="detail">
+<h3>Partner Center의 상태</h3>
+<p>`Spark Beat Show` MSIX/PWA 제출 화면은 초안이었습니다. 강의 시점의 Microsoft Store 최종 승인 증거는 아닙니다.</p>
+</div>
+</div>
+<div class="tags">
+<code>Electron</code>
+<code>GitHub Releases</code>
+<code>notarization</code>
+<code>MSIX</code>
+</div>
+</section>
+        <section class="chapter" id="chapter-11">
+<header class="chapter-head">
+<span class="num">11</span>
+<div>
+<a class="timestamp" href="#chapter-11" aria-label="85:00 — 발표 자료와 음성 제작">85:00</a>
+<p class="range">85:00–95:00</p>
+<h2>발표 자료와 음성 제작</h2>
+</div>
+</header>
+<p class="lead">앱 자체뿐 아니라 설명 자료, 실패 기록, 데모 영상과 음성까지 같은 프로젝트 맥락에서 제작합니다.</p>
+<div class="detail-grid">
+<div class="detail">
+<h3>HTML에서 PDF로</h3>
+<p>편집 가능한 PPT가 꼭 필요하지 않다면 16:9 HTML 프레젠테이션을 먼저 디자인한 뒤 PDF로 변환하는 방식을 추천합니다.</p>
+</div>
+<div class="detail">
+<h3>실패를 교육 자료로</h3>
+<p>완성 화면만 보여주지 않고 실패와 수정 전후를 포함한 약 36장의 발표 자료로 개발 과정을 설명했다고 합니다.</p>
+</div>
+<div class="detail">
+<h3>로컬 Voicebox</h3>
+<p>자신의 음성을 학습한 로컬 Voicebox 서버를 Codex가 호출해 내레이션을 만들었다고 설명합니다. 품질과 비용은 발표자의 경험담입니다.</p>
+</div>
+<div class="detail">
+<h3>Computer Use의 연결 역할</h3>
+<p>웹사이트, GitHub, Xcode, Partner Center, Voicebox와 로컬 파일을 오가며 마지막 연결 단계를 수행합니다.</p>
+</div>
+</div>
+<div class="tags">
+<code>HTML presentation</code>
+<code>Voicebox</code>
+<code>demo video</code>
+</div>
+</section>
+        <section class="chapter" id="chapter-12">
+<header class="chapter-head">
+<span class="num">12</span>
+<div>
+<a class="timestamp" href="#chapter-12" aria-label="95:00 — 계획을 먼저 만들고 승인 뒤 개발">95:00</a>
+<p class="range">95:00–105:00</p>
+<h2>계획 먼저, 코딩은 승인 뒤에</h2>
+</div>
+</header>
+<p class="lead">자연어로 아이디어를 설명하되, 바로 구현하지 말고 계획을 제시한 뒤 사용자 승인까지 멈추라는 조건을 둡니다.</p>
+<ul class="points">
+<li>음악 저작권, 배포 위치, 기술 스택처럼 처음 요청에서 빠진 조건을 계획 대화에서 발견합니다.</li>
+<li>최종 배포 환경과 사용자 흐름을 먼저 정한 뒤 TypeScript·React·WebGL 중심 구성을 선택합니다.</li>
+<li>PRD→TRD→페르소나→사용자 시나리오→와이어프레임 순으로 구체화합니다.</li>
+<li>프로젝트 폴더를 Obsidian Vault로 열어 결정, 개발 일지와 troubleshooting 기록을 다음 대화의 기억으로 남깁니다.</li>
+</ul>
+<div class="tags">
+<code>PRD</code>
+<code>TRD</code>
+<code>persona</code>
+<code>Obsidian</code>
+</div>
+</section>
+        <section class="chapter" id="chapter-13">
+<header class="chapter-head">
+<span class="num">13</span>
+<div>
+<a class="timestamp" href="#chapter-13" aria-label="105:00 — 긴 계획을 줄이고 모델을 배치">105:00</a>
+<p class="range">105:00–115:00</p>
+<h2>긴 계획을 줄이고 최고 모델을 모든 단계에 쓰지 않는다</h2>
+</div>
+</header>
+<p class="lead">처음 제안된 20~30단계 계획을 중복 검사로 약 12단계까지 줄이고, 작업 난이도에 따라 모델 등급을 다르게 배치합니다.</p>
+<div class="detail-grid">
+<div class="detail">
+<h3>계획 압축</h3>
+<p>상세한 계획이 나왔다고 곧바로 실행하지 않고, 핵심 단계만 남길 수 있는지 다시 질문합니다.</p>
+</div>
+<div class="detail">
+<h3>모델 역할 분리</h3>
+<p>설계·검토에는 깊은 추론을, 단순 문서 갱신과 반복 구현에는 빠른 모델을 쓰는 편이 효율적이었다고 회고합니다.</p>
+</div>
+<div class="detail">
+<h3>독립 검토의 실패 판정</h3>
+<p>구현 세션이 완료를 보고했지만 새 세션의 `review-work` 검토는 실패를 찾았습니다. 완료 선언과 독립 증거를 분리해야 합니다.</p>
+</div>
+<div class="detail">
+<h3>환경 간 인수인계</h3>
+<p>Mac 작업을 Windows Codex 세션이 이어받도록 인수인계 프롬프트를 만들고, 완료 뒤 문서 갱신까지 반복 가능한 절차로 봅니다.</p>
+</div>
+</div>
+<div class="tags">
+<code>plan compression</code>
+<code>model routing</code>
+<code>review-work</code>
+<code>handoff</code>
+</div>
+</section>
+        <section class="chapter" id="chapter-14">
+<header class="chapter-head">
+<span class="num">14</span>
+<div>
+<a class="timestamp" href="#chapter-14" aria-label="115:00 — 데모 매뉴얼 제작과 대화 분할">115:00</a>
+<p class="range">115:00–125:58</p>
+<h2>데모·매뉴얼 제작과 대화 분할</h2>
+</div>
+</header>
+<p class="lead">모든 화면 수집을 하나의 도구에 맡기지 않고, 매체와 접근 범위에 맞는 전문 도구를 조합합니다.</p>
+<ul class="points">
+<li>앱 소개 영상은 GitHub의 `demo-video`, 웹 매뉴얼은 Chrome 확장 프로그램, 데스크톱 앱은 Computer Use로 수집했다고 설명합니다.</li>
+<li>학생이 프로젝트 파일을 만들고 교사가 모아 순서대로 공연하는 교육 현장 활용을 상상합니다.</li>
+<li>기획, 구현 차수, 검토, 배포와 발표 준비를 같은 대화에 몰지 않고 별도 대화로 분리합니다.</li>
+<li>핵심 원칙은 “대화는 짧게 나누고, 기억은 프로젝트 문서에 남긴다”입니다.</li>
+</ul>
+<div class="tags">
+<code>demo-video</code>
+<code>manual</code>
+<code>conversation split</code>
+</div>
+</section>
+
+        <section class="part-band" id="part-4">
+<p class="part-label">PART 04 · 125:58—177:04</p>
+<h2>HyperFrames로 교육 영상을 로컬 제작하기</h2>
+<p>원본 스타일을 보존하면서 레이어·타임라인·코드 기반 모션을 반복 가능한 제작 스킬로 바꾼 현업 사례입니다.</p>
+</section>
+        <section class="chapter" id="chapter-15">
+<header class="chapter-head">
+<span class="num">15</span>
+<div>
+<a class="timestamp" href="#chapter-15" aria-label="125:58 — 교육 영상 제작비 문제">125:58</a>
+<p class="range">125:58–135:00</p>
+<h2>현업 문제: 짧은 교과서 영상도 비싸다</h2>
+</div>
+</header>
+<p class="lead">교재의 색감과 캐릭터를 유지하면서 음성·대사·모션을 더해야 하는 전자 저작물 제작 문제에서 출발합니다.</p>
+<div class="detail-grid">
+<div class="detail">
+<h3>비용 가설</h3>
+<p>40초 안팎 영상도 외주 비용이 50만~100만 원에서 시작하고, 10개를 내부 제작하면 약 800만 원을 줄일 수 있다는 발표자의 거친 계산입니다.</p>
+</div>
+<div class="detail">
+<h3>생성형 영상의 한계</h3>
+<p>화려한 움직임보다 교과서 원화의 색·형태·캐릭터를 유지하는 것이 중요해, 생성형 재해석이 오히려 부적합할 수 있습니다.</p>
+</div>
+<div class="detail">
+<h3>현업 사용성 먼저</h3>
+<p>교사·제작자에게 여러 샘플을 보여주고 모션이 적어도 교육용으로 충분한지 먼저 확인했습니다.</p>
+</div>
+<div class="detail">
+<h3>HyperFrames 선택</h3>
+<p>HeyGen의 HyperFrames를 HTML·CSS·GSAP 장면을 레이어와 타임라인으로 구성해 로컬 렌더하는 도구로 소개합니다.</p>
+</div>
+</div>
+<div class="tags">
+<code>HyperFrames</code>
+<code>HeyGen</code>
+<code>source fidelity</code>
+<code>local rendering</code>
+</div>
+</section>
+        <section class="chapter" id="chapter-16">
+<header class="chapter-head">
+<span class="num">16</span>
+<div>
+<a class="timestamp" href="#chapter-16" aria-label="135:00 — HyperFrames 구조와 첫 계획">135:00</a>
+<p class="range">135:00–145:00</p>
+<h2>HyperFrames의 구조와 첫 계획</h2>
+</div>
+</header>
+<p class="lead">일반 영상 편집기처럼 이미지·말풍선·자막·음성·음악을 시간축에 쌓되, HTML 장면과 코드를 Codex가 함께 편집합니다.</p>
+<ul class="points">
+<li>로컬 Studio의 레이어, 타임라인, 위치·회전 키프레임과 렌더 결과가 화면에서 확인됐습니다.</li>
+<li>좋은 고해상도 원본, 깨끗한 성우 음성, 정확한 대본이 결과 품질의 상한을 정합니다.</li>
+<li>첫 요청은 플러그인의 능력과 한계를 설명하고 대량 생산 가능성만 점검하라고 제한합니다.</li>
+<li>계획 승인 전에는 빌드하지 말고, 원화의 색·형태·캐릭터를 바꾸지 말라는 변경 금지 조건을 명시합니다.</li>
+<li>안전 영역, 음성 싱크, 인코딩, 글꼴과 사용권을 계획 단계에서 위험 목록으로 만듭니다.</li>
+</ul>
+<div class="tags">
+<code>GSAP</code>
+<code>timeline</code>
+<code>keyframe</code>
+<code>approval gate</code>
+</div>
+</section>
+        <section class="chapter" id="chapter-17">
+<header class="chapter-head">
+<span class="num">17</span>
+<div>
+<a class="timestamp" href="#chapter-17" aria-label="145:00 — 일본어 교육 영상의 제약">145:00</a>
+<p class="range">145:00–155:00</p>
+<h2>일본어 교육 영상의 세부 제약</h2>
+</div>
+</header>
+<p class="lead">1920×1080, 30fps, 일본어 대사와 한자 위 읽는 법을 표시하는 furigana까지 구체적인 완료 조건을 둡니다.</p>
+<div class="detail-grid">
+<div class="detail">
+<h3>HTML ruby 구조</h3>
+<p>한자와 읽는 법을 함께 표현하는 `ruby` 구조를 사용하고, 일본어 글꼴의 가독성과 라이선스를 확인합니다.</p>
+</div>
+<div class="detail">
+<h3>첫 렌더의 오류</h3>
+<p>말풍선 중앙 정렬과 furigana 정렬이 깨졌습니다. AI의 완료 메시지 뒤에도 사람이 실제 영상을 재생해 자막과 음성 싱크를 봅니다.</p>
+</div>
+<div class="detail">
+<h3>프로토타입 이후 양산</h3>
+<p>첫 프로토타입과 스킬 제작에는 몇 시간이 들었지만 이후에는 자산을 바꿔 반복 제작할 수 있다고 말합니다.</p>
+</div>
+<div class="detail">
+<h3>효과는 뒤에서 확장</h3>
+<p>기본본을 먼저 만든 뒤 원화를 변형하지 않는 범위에서 줌, 이동, 포커스 효과를 찾아 추가합니다.</p>
+</div>
+</div>
+<p class="range">35초·약 2.5MB·18초 렌더는 발표 환경의 사례이며 다른 하드웨어에서 보장되는 수치가 아닙니다.</p>
+<div class="tags">
+<code>furigana</code>
+<code>ruby</code>
+<code>1920×1080</code>
+<code>30fps</code>
+</div>
+</section>
+        <section class="chapter" id="chapter-18">
+<header class="chapter-head">
+<span class="num">18</span>
+<div>
+<a class="timestamp" href="#chapter-18" aria-label="155:00 — V1에서 V6까지 현업 승인과 스킬화">155:00</a>
+<p class="range">155:00–165:00</p>
+<h2>V1에서 V6까지: 현업 승인과 스킬화</h2>
+</div>
+</header>
+<p class="lead">여섯 번의 버전을 거치며 발견한 예외와 수정법을 스킬에 누적하고, 마지막 V6가 현업에서 사용할 수 있다는 판정을 받았다고 설명합니다.</p>
+<ul class="points">
+<li>재사용 가능한 가치는 최종 MP4 하나보다 다음 자산 세트에서 같은 오류를 피하는 제작 규칙에 있습니다.</li>
+<li>제작자는 화려한 캐릭터 모션보다 학생이 대사와 문장에 집중할 수 있는 제한된 줌·포커스를 높게 평가했습니다.</li>
+<li>초기 캡처의 확대 흐림은 고해상도 PSD 원본으로 교체해 해결하기로 합니다.</li>
+<li>고급 전신 애니메이션에는 부적합할 수 있지만 설명 영상, 교과서 보조 영상, 제품 데모와 단순 브랜드 필름에는 강합니다.</li>
+</ul>
+<div class="tags">
+<code>V1–V6</code>
+<code>skill accumulation</code>
+<code>PSD</code>
+<code>human approval</code>
+</div>
+</section>
+        <section class="chapter" id="chapter-19">
+<header class="chapter-head">
+<span class="num">19</span>
+<div>
+<a class="timestamp" href="#chapter-19" aria-label="160:00 — 웹사이트에서 브랜드 필름 만들기">160:00</a>
+<p class="range">160:00–174:38</p>
+<h2>웹사이트 하나에서 브랜드 필름 만들기</h2>
+</div>
+</header>
+<p class="lead">공개 웹사이트의 텍스트·색상·영상·구조를 분석해 브랜드 필름을 만드는 별도 실험을 소개합니다.</p>
+<div class="detail-grid">
+<div class="detail">
+<h3>URL에서 구조 추출</h3>
+<p>디자인 토큰과 핵심 문구를 바탕으로 타임라인과 시나리오를 제안하되, 결정이 필요한 부분은 사용자에게 묻게 합니다.</p>
+</div>
+<div class="detail">
+<h3>웹 문법에서 영상 문법으로</h3>
+<p>첫 결과는 메뉴·페이지 제목·번호가 남아 웹페이지를 넘기는 영상처럼 보였습니다. 이 요소를 제거해 브랜드 필름 문법으로 바꿉니다.</p>
+</div>
+<div class="detail">
+<h3>음악과 라이선스</h3>
+<p>무료 음원도 크레딧 표시 의무를 확인해 반영합니다. 공개 웹 자산도 별도의 사용 권리 확인이 필요합니다.</p>
+</div>
+<div class="detail">
+<h3>민감 이미지 제외</h3>
+<p>치아 시술 전후 사진은 개인정보·민감 이미지 가능성을 경고받고 사용 여부를 다시 판단합니다.</p>
+</div>
+</div>
+<p class="range">한 시간 안팎 프로토타입이라는 주장은 시행착오와 제작 스킬 구축 시간을 제외한 값일 수 있으므로 생산 체계의 총비용과 구분해야 합니다.</p>
+<div class="tags">
+<code>brand film</code>
+<code>license</code>
+<code>privacy</code>
+<code>design token</code>
+</div>
+</section>
+        <section class="chapter" id="chapter-20">
+<header class="chapter-head">
+<span class="num">20</span>
+<div>
+<a class="timestamp" href="#chapter-20" aria-label="174:38 — 마무리">174:38</a>
+<p class="range">174:38–177:04</p>
+<h2>세 발표를 하나의 흐름으로 연결한다</h2>
+</div>
+</header>
+<p class="lead">사전 조율 없이도 Omarchy, Spark Beat, HyperFrames가 환경→제품→생산 체계라는 하나의 이야기로 이어졌다고 정리합니다.</p>
+<ul class="points">
+<li>Omarchy는 에이전트가 일할 운영 환경을 제안합니다.</li>
+<li>Spark Beat는 아이디어를 제품, 문서, 배포와 발표 자료로 연결합니다.</li>
+<li>HyperFrames는 같은 원리를 반복 가능한 영상 제작에 적용합니다.</li>
+<li>다음 모임과 일정 안내 뒤 녹화를 종료합니다.</li>
+</ul>
+<div class="tags">
+<code>environment</code>
+<code>product</code>
+<code>production system</code>
+</div>
+</section>
+      </div>
+
+      <section class="principles">
+<p class="kicker">실전 작업 원칙</p>
+<h2>강의에서 바로 가져갈 수 있는 21가지</h2>
+<h3>A. 에이전트 작업 환경을 시험할 때</h3>
+<ol>
+<li>
+<p>주력 컴퓨터를 바로 지우지 말고 여분 PC나 VM에서 먼저 설치합니다.</p>
+</li>
+<li>
+<p>설치 성공과 실제 업무의 장기 안정성을 구분합니다.</p>
+</li>
+<li>
+<p>기존 Codex·Claude·Hermes 설정을 옮기기 전에 백업과 인증 범위를 확인합니다.</p>
+</li>
+<li>
+<p>단일 에이전트와 멀티에이전트 결과를 같은 과제로 비교합니다.</p>
+</li>
+<li>
+<p>역할 수가 늘어날수록 품질뿐 아니라 토큰, 시간, 충돌과 관찰 가능성을 함께 기록합니다.</p>
+</li>
+</ol>
+<h3>B. 아이디어를 앱으로 만들 때</h3>
+<ol>
+<li>
+<p>사용자와 운영자를 분리해 각각의 실제 흐름을 적습니다.</p>
+</li>
+<li>
+<p>바로 코딩하지 말고 계획 설명과 사용자 승인을 사이에 둡니다.</p>
+</li>
+<li>
+<p>PRD→TRD→페르소나→사용자 시나리오→와이어프레임 순으로 구체화합니다.</p>
+</li>
+<li>
+<p>배포 대상 OS와 스토어를 기술 선택 전에 정합니다.</p>
+</li>
+<li>
+<p>실제 OS에서 빌드와 설치를 검증합니다.</p>
+</li>
+<li>
+<p>한 대화를 길게 끌지 말고 단계별 대화로 분리합니다.</p>
+</li>
+<li>
+<p>결정, 문제, 해결과 개발 일지를 프로젝트 파일에 남깁니다.</p>
+</li>
+<li>
+<p>같은 구현 세션이 아닌 새 검토 관점에서 완료 여부를 재확인합니다.</p>
+</li>
+</ol>
+<h3>C. AI로 영상을 양산할 때</h3>
+<ol>
+<li>
+<p>생성 모델보다 먼저 원본 자산의 품질, 권리와 변경 금지 조건을 정합니다.</p>
+</li>
+<li>
+<p>처음에는 가능성 점검만 요청하고 계획 승인 전 구현을 막습니다.</p>
+</li>
+<li>
+<p>출력 규격, 글꼴, 자막, 안전 영역, 음성 싱크와 인코딩을 완료 조건으로 적습니다.</p>
+</li>
+<li>
+<p>원본 스타일을 지켜야 하면 생성형 변형보다 레이어 조합 방식을 택합니다.</p>
+</li>
+<li>
+<p>첫 렌더를 실제 재생해 사람이 자막, 타이밍과 강조를 검토합니다.</p>
+</li>
+<li>
+<p>수정 규칙을 스킬이나 제작 지침으로 누적해 다음 영상에 재사용합니다.</p>
+</li>
+<li>
+<p>무료 음악·폰트·웹 자산도 라이선스와 크레딧 의무를 확인합니다.</p>
+</li>
+<li>
+<p>공개 웹사이트의 이미지도 개인정보와 초상·의료 정보 여부를 별도로 판단합니다.</p>
+</li>
+</ol>
+</section>
+
+      <section class="evidence" id="evidence">
+<p class="kicker">증거 경계</p>
+<h2>화면에서 본 것과 발표자의 주장을 구분합니다</h2>
+<div class="evidence-grid">
+<article class="evidence-card">
+<h3>화면에서 직접 확인</h3>
+<ul>
+<li>Omarchy 소개·설치·테마·개발 환경 페이지</li>
+<li>Herdr의 Grok, Droid, Codex, Hermes 계열 세션</li>
+<li>Spark Beat 사이트와 GitHub Releases 다운로드 구조</li>
+<li>Partner Center의 제품 제출 초안</li>
+<li>PRD·개발 일지·검토 보고서 문서 구조</li>
+<li>HyperFrames Studio의 레이어·타임라인·V6 결과</li>
+</ul>
+</article>
+<article class="evidence-card claim">
+<h3>발표자의 설명으로 제시</h3>
+<ul>
+<li>구형 노트북 설치와 48초 설치 속도</li>
+<li>투자 규모, 플러그인 수와 향후 생태계 전망</li>
+<li>멀티에이전트 구성의 실제 생산성 향상 폭</li>
+<li>Voicebox 60분 음성의 품질과 비용</li>
+<li>영상 외주비 절감액과 18초 렌더 속도</li>
+<li>한 시간 이내 브랜드 필름 프로토타입</li>
+</ul>
+</article>
+<article class="evidence-card unknown">
+<h3>영상에서 관찰되지 않음</h3>
+<ul>
+<li>Omarchy의 장시간 안정성·절전·발열</li>
+<li>Secure Boot, GPU, Wi-Fi 등 하드웨어별 검증</li>
+<li>Spark Beat의 Microsoft Store 최종 승인</li>
+<li>실제 공연 환경의 연속 운영 부하 테스트</li>
+<li>HyperFrames 양산물의 품질 편차와 총비용 비교</li>
+</ul>
+</article>
+</div>
+</section>
+
+      <aside class="scope-note">
+<h2>이 페이지의 공개 범위</h2>
+<p>발표 화면과 자동 전사를 함께 검토해 만든 편집 요약입니다. 타임스탬프는 설명이 시작되는 대략적인 위치이며 현장 이동과 마이크 조정으로 몇 초 차이가 날 수 있습니다. 영어 고유명사는 교정했지만, 제품의 현재 기능·버전·가격을 외부 웹에서 검증한 문서는 아닙니다.</p>
+<p>원본 영상, 추출 음성, 자동 전사와 화면 표본은 공개 패키지에 포함하지 않았습니다.</p>
+<div class="search-terms" aria-label="검색용 핵심어">
+<code>Omarchy</code>
+<code>DHH</code>
+<code>agent OS</code>
+<code>Grok Bot</code>
+<code>Herdr</code>
+<code>Hermes</code>
+<code>Codex</code>
+<code>Computer Use</code>
+<code>NFC keychain</code>
+<code>3D printing</code>
+<code>Spark Beat</code>
+<code>GitHub Releases</code>
+<code>Electron</code>
+<code>Partner Center</code>
+<code>PRD</code>
+<code>TRD</code>
+<code>Obsidian</code>
+<code>Voicebox</code>
+<code>HyperFrames</code>
+<code>HeyGen</code>
+<code>GSAP</code>
+<code>furigana</code>
+<code>local rendering</code>
+<code>source fidelity</code>
+<code>brand film</code>
+</div>
+</aside>
+      <footer>
+<a href="#top">처음으로</a>
+<p>4060 AI 미들스쿨 · 2026년 9월 12일 강의 기록</p>
+</footer>
+    </main>
+  </div>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a3d0012d6fc47183',t:'MTc4OTczMDg3OQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

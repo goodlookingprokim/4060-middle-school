@@ -16,6 +16,10 @@ cssclasses:
 ## 자료 보기
 
 <div class="reading-path">
+  <a href="https://goodlookingprokim.github.io/4060-middle-school/kang-kyunghoon-gallery/agent-environment-to-production-system" class="internal">
+    <strong>에이전트가 일하는 환경에서 제작 시스템까지</strong>
+    <span>9월 12일 강의 노트 전체를 네 가지 흐름과 20개 장으로 정리한 자료입니다. 에이전트 OS, NFC 키체인, Spark Beat, HyperFrames 제작 과정을 시간 순서대로 볼 수 있습니다.</span>
+  </a>
   <a href="https://goodlookingprokim.github.io/4060-middle-school/kang-kyunghoon-gallery/omo-workflow-system" class="internal">
     <strong>OMO 작업 체계</strong>
     <span>8월 22일 강의 노트 가운데 2장 내용을 바로 열어볼 수 있게 연결한 자료입니다. 조사, 계획, 실행, 검증의 흐름을 짧게 먼저 잡고 원문으로 이어집니다.</span>
