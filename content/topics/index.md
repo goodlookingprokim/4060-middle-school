@@ -16,6 +16,10 @@ cssclasses:
 ## 읽기 경로
 
 <div class="reading-path">
+  <a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-09-20-prd-trd-tdd-sot-teacherflow-guide" class="internal">
+    <strong>초보 개발자를 위한 개발 기획 문서 가이드: PRD·TRD·TDD에서 SOT까지</strong>
+    <span>TeacherFlow 사례를 따라가며 개발 전에 만드는 문서의 역할과 순서, 그리고 여러 결정이 SOT 하나로 모이는 과정을 What·Why·How 구조로 쉽게 정리했습니다.</span>
+  </a>
   <a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-09-13-copy-ready-ai-development-prompts" class="internal">
     <strong>계획부터 배포·시연까지, AI 개발에 바로 복사해 쓰는 프롬프트 모음</strong>
     <span>프로젝트를 바로 코딩하지 않고 계획·문서·테스트·배포·시연까지 차근차근 진행하도록 돕는 재사용 프롬프트를 4060 회원님 눈높이로 정리했습니다.</span>
