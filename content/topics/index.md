@@ -16,6 +16,10 @@ cssclasses:
 ## 읽기 경로
 
 <div class="reading-path">
+  <a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-09-28-sunshine-moonlight-remote-work-guide" class="internal">
+    <strong>맥북 하나로 윈도우 PC와 맥미니를 오가는 법: Sunshine과 Moonlight 실전 세팅</strong>
+    <span>맥북 M1을 조작 화면으로 두고 윈도우 PC와 맥미니를 일꾼 컴퓨터로 나누어 쓰는 방법, 네트워크·권한·보안·문제 해결 순서를 정리한 실전 안내입니다.</span>
+  </a>
   <a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-09-20-prd-trd-tdd-sot-teacherflow-guide" class="internal">
     <strong>초보 개발자를 위한 개발 기획 문서 가이드: PRD·TRD·TDD에서 SOT까지</strong>
     <span>TeacherFlow 사례를 따라가며 개발 전에 만드는 문서의 역할과 순서, 그리고 여러 결정이 SOT 하나로 모이는 과정을 What·Why·How 구조로 쉽게 정리했습니다.</span>
