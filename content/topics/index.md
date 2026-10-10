@@ -16,6 +16,10 @@ cssclasses:
 ## 읽기 경로
 
 <div class="reading-path">
+  <a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-10-10-ai-collaboration-trust-checklist" class="internal">
+    <strong>AI가 대신 일하는 시대, 우리는 무엇을 맡기고 무엇을 확인해야 할까</strong>
+    <span>교육·기획·행정·개발·자영업 현장에서 AI에게 맡길 일과 사람이 직접 확인할 일을 나누는 다섯 가지 기준과 실전 체크리스트를 정리했습니다.</span>
+  </a>
   <a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-09-28-sunshine-moonlight-remote-work-guide" class="internal">
     <strong>맥북 하나로 윈도우 PC와 맥미니를 오가는 법: Sunshine과 Moonlight 실전 세팅</strong>
     <span>맥북 M1을 조작 화면으로 두고 윈도우 PC와 맥미니를 일꾼 컴퓨터로 나누어 쓰는 방법, 네트워크·권한·보안·문제 해결 순서를 정리한 실전 안내입니다.</span>
