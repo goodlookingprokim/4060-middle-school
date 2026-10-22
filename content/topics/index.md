@@ -16,6 +16,10 @@ cssclasses:
 ## 읽기 경로
 
 <div class="reading-path">
+  <a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-10-22-omarchy-old-laptop-practical-manual" class="internal">
+    <strong>오래된 노트북을 다시 쓰는 Omarchy 실전 매뉴얼</strong>
+    <span>맥에서 설치 USB를 만들고 HP 250 G7에 Omarchy를 설치한 실제 흐름을 바탕으로, 한글 입력·파일 공유·Windows VM·개발 환경 도전까지 4060 회원님이 따라가기 쉽게 정리한 긴 실전 매뉴얼입니다.</span>
+  </a>
   <a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-10-10-ai-collaboration-trust-checklist" class="internal">
     <strong>AI가 대신 일하는 시대, 우리는 무엇을 맡기고 무엇을 확인해야 할까</strong>
     <span>교육·기획·행정·개발·자영업 현장에서 AI에게 맡길 일과 사람이 직접 확인할 일을 나누는 다섯 가지 기준과 실전 체크리스트를 정리했습니다.</span>
