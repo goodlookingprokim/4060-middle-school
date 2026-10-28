@@ -60,6 +60,34 @@ export const defaultContentPageLayout: PageLayout = {
         const rankA = a.isFolder ? ((a.slugSegment ?? "").endsWith("-gallery") ? 0 : 1) : 2
         const rankB = b.isFolder ? ((b.slugSegment ?? "").endsWith("-gallery") ? 0 : 1) : 2
         if (rankA !== rankB) return rankA - rankB
+
+        // 날짜가 있는 글은 발행일 최신순으로 정렬한다.
+        // 파일명에 날짜가 없는 오래된 글은 예전 발행일을 보완한다.
+        const legacyDates = {
+          "ai-tools-in-my-own-environment": "2026-05-09",
+          "the-speed-of-relearning": "2026-05-04",
+        }
+        const slugDateA = (a.slugSegment ?? "").match(/^\d{4}-\d{2}-\d{2}/)?.[0]
+        const titleDateA = (a.displayName ?? "").match(/^(\d{4})년\s+(\d{1,2})월\s+(\d{1,2})일/)
+        const dateA =
+          slugDateA ??
+          (titleDateA
+            ? `${titleDateA[1]}-${titleDateA[2].padStart(2, "0")}-${titleDateA[3].padStart(2, "0")}`
+            : legacyDates[a.slugSegment ?? ""] ?? null)
+        const slugDateB = (b.slugSegment ?? "").match(/^\d{4}-\d{2}-\d{2}/)?.[0]
+        const titleDateB = (b.displayName ?? "").match(/^(\d{4})년\s+(\d{1,2})월\s+(\d{1,2})일/)
+        const dateB =
+          slugDateB ??
+          (titleDateB
+            ? `${titleDateB[1]}-${titleDateB[2].padStart(2, "0")}-${titleDateB[3].padStart(2, "0")}`
+            : legacyDates[b.slugSegment ?? ""] ?? null)
+        if (dateA || dateB) {
+          if (!dateA) return 1
+          if (!dateB) return -1
+          const byDate = dateB.localeCompare(dateA)
+          if (byDate !== 0) return byDate
+        }
+
         return a.displayName.localeCompare(b.displayName, undefined, {
           numeric: true,
           sensitivity: "base",
@@ -99,6 +127,34 @@ export const defaultListPageLayout: PageLayout = {
         const rankA = a.isFolder ? ((a.slugSegment ?? "").endsWith("-gallery") ? 0 : 1) : 2
         const rankB = b.isFolder ? ((b.slugSegment ?? "").endsWith("-gallery") ? 0 : 1) : 2
         if (rankA !== rankB) return rankA - rankB
+
+        // 날짜가 있는 글은 발행일 최신순으로 정렬한다.
+        // 파일명에 날짜가 없는 오래된 글은 예전 발행일을 보완한다.
+        const legacyDates = {
+          "ai-tools-in-my-own-environment": "2026-05-09",
+          "the-speed-of-relearning": "2026-05-04",
+        }
+        const slugDateA = (a.slugSegment ?? "").match(/^\d{4}-\d{2}-\d{2}/)?.[0]
+        const titleDateA = (a.displayName ?? "").match(/^(\d{4})년\s+(\d{1,2})월\s+(\d{1,2})일/)
+        const dateA =
+          slugDateA ??
+          (titleDateA
+            ? `${titleDateA[1]}-${titleDateA[2].padStart(2, "0")}-${titleDateA[3].padStart(2, "0")}`
+            : legacyDates[a.slugSegment ?? ""] ?? null)
+        const slugDateB = (b.slugSegment ?? "").match(/^\d{4}-\d{2}-\d{2}/)?.[0]
+        const titleDateB = (b.displayName ?? "").match(/^(\d{4})년\s+(\d{1,2})월\s+(\d{1,2})일/)
+        const dateB =
+          slugDateB ??
+          (titleDateB
+            ? `${titleDateB[1]}-${titleDateB[2].padStart(2, "0")}-${titleDateB[3].padStart(2, "0")}`
+            : legacyDates[b.slugSegment ?? ""] ?? null)
+        if (dateA || dateB) {
+          if (!dateA) return 1
+          if (!dateB) return -1
+          const byDate = dateB.localeCompare(dateA)
+          if (byDate !== 0) return byDate
+        }
+
         return a.displayName.localeCompare(b.displayName, undefined, {
           numeric: true,
           sensitivity: "base",
