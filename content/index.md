@@ -72,12 +72,12 @@ title: 4060미들스쿨
 ## 지금 먼저 보면 좋은 글
 
 <ul class="note-list">
+  <li><a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-10-29-muse-mac-remote-control-guide" class="internal">Muse로 내 맥을 원격으로 조종하기 — 아주 쉬운 안내서</a></li>
   <li><a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-10-22-omarchy-old-laptop-practical-manual" class="internal">오래된 노트북을 다시 쓰는 Omarchy 실전 매뉴얼</a></li>
   <li><a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-10-10-ai-collaboration-trust-checklist" class="internal">AI가 대신 일하는 시대, 우리는 무엇을 맡기고 무엇을 확인해야 할까</a></li>
   <li><a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-09-28-sunshine-moonlight-remote-work-guide" class="internal">맥북 하나로 윈도우 PC와 맥미니를 오가는 법: Sunshine과 Moonlight 실전 세팅</a></li>
   <li><a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-09-20-prd-trd-tdd-sot-teacherflow-guide" class="internal">초보 개발자를 위한 개발 기획 문서 가이드: PRD·TRD·TDD에서 SOT까지</a></li>
   <li><a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-09-13-copy-ready-ai-development-prompts" class="internal">계획부터 배포·시연까지, AI 개발에 바로 복사해 쓰는 프롬프트 모음</a></li>
-  <li><a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-09-12-spark-beat-fireworks-project-lessons" class="internal">화려한 불꽃놀이보다 더 어려운 것, 같은 작품을 다시 재생하는 구조</a></li>
 </ul>
 
 <p>지난 글 전체는 <a href="https://goodlookingprokim.github.io/4060-middle-school/topics" class="internal">이번에 나눌 이야기</a>와 <a href="https://goodlookingprokim.github.io/4060-middle-school/after-notes" class="internal">모임 후 정리</a>에 모여 있습니다.</p>

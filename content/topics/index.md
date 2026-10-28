@@ -16,6 +16,10 @@ cssclasses:
 ## 읽기 경로
 
 <div class="reading-path">
+  <a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-10-29-muse-mac-remote-control-guide" class="internal">
+    <strong>Muse로 내 맥을 원격으로 조종하기 — 아주 쉬운 안내서</strong>
+    <span>휴대폰의 Muse에서 집의 맥북을 안전하게 확인하고 조작하기 위해 Tailscale·SSH·GUI 러너를 연결하는 방법과 실제 시행착오를 4060 회원님 눈높이로 정리했습니다.</span>
+  </a>
   <a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-10-22-omarchy-old-laptop-practical-manual" class="internal">
     <strong>오래된 노트북을 다시 쓰는 Omarchy 실전 매뉴얼</strong>
     <span>맥에서 설치 USB를 만들고 HP 250 G7에 Omarchy를 설치한 실제 흐름을 바탕으로, 한글 입력·파일 공유·Windows VM·개발 환경 도전까지 4060 회원님이 따라가기 쉽게 정리한 긴 실전 매뉴얼입니다.</span>
