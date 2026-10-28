@@ -17,31 +17,31 @@ cssclasses:
 
 <div class="reading-path">
   <a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-10-29-muse-mac-remote-control-guide" class="internal">
-    <strong>Muse로 내 맥을 원격으로 조종하기 — 아주 쉬운 안내서</strong>
+    <strong>2026년 10월 29일(목) Muse로 내 맥을 원격으로 조종하기 — 아주 쉬운 안내서</strong>
     <span>휴대폰의 Muse에서 집의 맥북을 안전하게 확인하고 조작하기 위해 Tailscale·SSH·GUI 러너를 연결하는 방법과 실제 시행착오를 4060 회원님 눈높이로 정리했습니다.</span>
   </a>
   <a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-10-22-omarchy-old-laptop-practical-manual" class="internal">
-    <strong>오래된 노트북을 다시 쓰는 Omarchy 실전 매뉴얼</strong>
+    <strong>2026년 10월 22일(목) 오래된 노트북을 다시 쓰는 Omarchy 실전 매뉴얼</strong>
     <span>맥에서 설치 USB를 만들고 HP 250 G7에 Omarchy를 설치한 실제 흐름을 바탕으로, 한글 입력·파일 공유·Windows VM·개발 환경 도전까지 4060 회원님이 따라가기 쉽게 정리한 긴 실전 매뉴얼입니다.</span>
   </a>
   <a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-10-10-ai-collaboration-trust-checklist" class="internal">
-    <strong>AI가 대신 일하는 시대, 우리는 무엇을 맡기고 무엇을 확인해야 할까</strong>
+    <strong>2026년 10월 10일(토) AI가 대신 일하는 시대, 우리는 무엇을 맡기고 무엇을 확인해야 할까</strong>
     <span>교육·기획·행정·개발·자영업 현장에서 AI에게 맡길 일과 사람이 직접 확인할 일을 나누는 다섯 가지 기준과 실전 체크리스트를 정리했습니다.</span>
   </a>
   <a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-09-28-sunshine-moonlight-remote-work-guide" class="internal">
-    <strong>맥북 하나로 윈도우 PC와 맥미니를 오가는 법: Sunshine과 Moonlight 실전 세팅</strong>
+    <strong>2026년 9월 28일(월) 맥북 하나로 윈도우 PC와 맥미니를 오가는 법: Sunshine과 Moonlight 실전 세팅</strong>
     <span>맥북 M1을 조작 화면으로 두고 윈도우 PC와 맥미니를 일꾼 컴퓨터로 나누어 쓰는 방법, 네트워크·권한·보안·문제 해결 순서를 정리한 실전 안내입니다.</span>
   </a>
   <a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-09-20-prd-trd-tdd-sot-teacherflow-guide" class="internal">
-    <strong>초보 개발자를 위한 개발 기획 문서 가이드: PRD·TRD·TDD에서 SOT까지</strong>
+    <strong>2026년 9월 20일(일) 초보 개발자를 위한 개발 기획 문서 가이드: PRD·TRD·TDD에서 SOT까지</strong>
     <span>TeacherFlow 사례를 따라가며 개발 전에 만드는 문서의 역할과 순서, 그리고 여러 결정이 SOT 하나로 모이는 과정을 What·Why·How 구조로 쉽게 정리했습니다.</span>
   </a>
   <a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-09-13-copy-ready-ai-development-prompts" class="internal">
-    <strong>계획부터 배포·시연까지, AI 개발에 바로 복사해 쓰는 프롬프트 모음</strong>
+    <strong>2026년 9월 13일(일) 계획부터 배포·시연까지, AI 개발에 바로 복사해 쓰는 프롬프트 모음</strong>
     <span>프로젝트를 바로 코딩하지 않고 계획·문서·테스트·배포·시연까지 차근차근 진행하도록 돕는 재사용 프롬프트를 4060 회원님 눈높이로 정리했습니다.</span>
   </a>
   <a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-09-12-spark-beat-fireworks-project-lessons" class="internal">
-    <strong>화려한 불꽃놀이보다 더 어려운 것, 같은 작품을 다시 재생하는 구조</strong>
+    <strong>2026년 9월 12일(토) 화려한 불꽃놀이보다 더 어려운 것, 같은 작품을 다시 재생하는 구조</strong>
     <span>스파크 비트 개발 기록을 바탕으로 불꽃놀이 앱을 만들 때 왜 재현성·소리·사용성·현장 운영을 함께 설계해야 하는지 4060 회원님 눈높이로 정리한 글입니다.</span>
   </a>
   <a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-08-30-vibe-coding-security-checklist-part-2" class="internal">
@@ -196,12 +196,12 @@ cssclasses:
     <strong>2026년 5월 10일(일) CLAUDE.md 완벽 세팅 가이드</strong>
     <span>Claude Code를 처음 쓰는 사람이 전역 규칙, 프로젝트 규칙, 로컬 규칙을 어떻게 잡으면 좋은지 핵심만 간단히 정리한 글입니다.</span>
   </a>
-  <a href="https://goodlookingprokim.github.io/4060-middle-school/topics/the-speed-of-relearning" class="internal">
-    <strong>다시 배우는 사람의 속도</strong>
-    <span>다음 모임에서 꺼내기 좋은 배움과 변화에 관한 질문을 정리한 글입니다.</span>
-  </a>
   <a href="https://goodlookingprokim.github.io/4060-middle-school/topics/ai-tools-in-my-own-environment" class="internal">
     <strong>2026년 5월 9일(토) AI를 내 환경에 붙여보는 여섯 가지 이야기</strong>
     <span>오늘 중급반에서 함께 볼 블로그, 윈도우 환경, 로컬 LLM, 옵시디언, 코덱스 앱 이야기를 한 글로 정리했습니다.</span>
+  </a>
+  <a href="https://goodlookingprokim.github.io/4060-middle-school/topics/the-speed-of-relearning" class="internal">
+    <strong>2026년 5월 4일(월) 다시 배우는 사람의 속도</strong>
+    <span>다음 모임에서 꺼내기 좋은 배움과 변화에 관한 질문을 정리한 글입니다.</span>
   </a>
 </div>
