@@ -1,5 +1,5 @@
 ---
-title: "코덱스 스레드, 에이전트, 서브에이전트가 자꾸 헷갈릴 때 일상 비유로 이해하는 안내서"
+title: "2026년 6월 6일(토) 코덱스 스레드, 에이전트, 서브에이전트가 자꾸 헷갈릴 때 일상 비유로 이해하는 안내서"
 description: "Codex를 쓰다 보면 thread, agent, subagent, parallel thread, worktree, workspace 같은 말이 한꺼번에 나와서 헷갈립니다. 가족회의, 집안일, 여행 준비, 보고서 작성 같은 익숙한 비유로 각각이 어떤 역할인지 쉽게 풀어봅니다."
 tags:
   - middle-school

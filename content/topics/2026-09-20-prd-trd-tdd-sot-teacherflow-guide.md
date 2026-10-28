@@ -1,5 +1,5 @@
 ---
-title: "초보 개발자를 위한 개발 기획 문서 가이드: PRD·TRD·TDD에서 SOT까지"
+title: "2026년 9월 20일(일) 초보 개발자를 위한 개발 기획 문서 가이드: PRD·TRD·TDD에서 SOT까지"
 description: "TeacherFlow 기획 과정을 사례로, 개발 전에 어떤 문서를 왜 만들고 어떻게 SOT로 정리하는지 What·Why·How 구조로 쉽게 설명합니다."
 created: "2026-09-20"
 modified: "2026-09-20"

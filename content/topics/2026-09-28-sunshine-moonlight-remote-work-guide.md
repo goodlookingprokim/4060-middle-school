@@ -1,5 +1,5 @@
 ---
-title: "맥북 하나로 윈도우 PC와 맥미니를 오가는 법: Sunshine과 Moonlight 실전 세팅"
+title: "2026년 9월 28일(월) 맥북 하나로 윈도우 PC와 맥미니를 오가는 법: Sunshine과 Moonlight 실전 세팅"
 description: "맥북 M1을 조작 화면으로 삼고 윈도우 PC와 맥미니의 성능을 원격으로 사용하는 Sunshine·Moonlight 구성과 안정적인 네트워크·보안·문제 해결 순서를 정리합니다."
 created: "2026-09-28"
 modified: "2026-09-28"

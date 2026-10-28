@@ -1,5 +1,5 @@
 ---
-title: "오래된 노트북을 다시 쓰는 Omarchy 실전 매뉴얼"
+title: "2026년 10월 22일(목) 오래된 노트북을 다시 쓰는 Omarchy 실전 매뉴얼"
 description: "맥에서 설치 USB를 만들고 오래된 HP 노트북에 Omarchy를 설치한 뒤, 한글 입력·파일 공유·Windows VM·개발 환경까지 확장해 본 4060미들스쿨용 실전 매뉴얼입니다."
 tags:
   - omarchy
