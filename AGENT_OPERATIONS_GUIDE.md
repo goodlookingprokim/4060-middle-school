@@ -1,7 +1,7 @@
 # AGENT OPERATIONS GUIDE — 블로그 운영 에이전트 공통 지침
 
 적용 대상: 코너 속의 코너(goodlookingprokim.github.io), 4060미들스쿨(goodlookingprokim.github.io/4060-middle-school)
-버전: 1.3 (2026-10-29) · 이 문서는 두 저장소에 동일한 내용으로 존재해야 한다. 수정 시 양쪽에 함께 반영한다.
+버전: 1.4 (2026-10-29) · 이 문서는 두 저장소에 동일한 내용으로 존재해야 한다. 수정 시 양쪽에 함께 반영한다.
 
 ## 0. 문서 우선순위
 
@@ -154,6 +154,7 @@
 | 4060 글을 읽다가 클릭하면 코너 속의 코너(루트 도메인)로 이동 | 실습 교육 글의 예시 주소(https://goodlookingprokim.github.io)가 클릭 가능한 링크로 렌더링됨. 코드 블록 안 주소는 안전하지만 본문의 맨 URL과 마크다운 링크는 클릭됨 | 예시 주소는 백틱 코드 + "예시" 표시, 실제 외부 참조는 `<a target="_blank">` + "(블로그 밖 · 새 창)" 표시. 발행 전 점검: `grep -rn "goodlookingprokim.github.io" content/ --include="*.md" \| grep -v 4060-middle-school` 결과가 코드 표기·새 창 처리 외 0건이어야 함 | 2026-07-12 |
 | 4060 허브/읽기 경로 카드를 클릭하면 코너(루트 도메인)의 404로 이동 | Quartz가 원시 HTML(`<a href="./글이름">`) 상대 링크를 변환할 때 서브 경로 배포(baseUrl의 /4060-middle-school)를 반영하지 않고 루트 절대경로(`/topics/...`)로 출력함. 마크다운 링크는 정상 변환되지만 hub-card, reading-path, action-row 같은 원시 HTML 블록의 href가 당함. 루트 배포인 코너에서는 증상이 안 보임 | **원시 HTML 블록의 href는 항상 전체 URL**(https://...github.io/4060-middle-school/...)로 쓴다. 상대경로(./, ../)와 베이스 없는 절대경로(/) 금지. 2026-07-12에 두 블로그 13개 인덱스 파일 전량 전환 완료 | 2026-07-12 |
 | 탐색기(Explorer)가 갑자기 비어 보임 (데스크톱·모바일 공통) | Explorer의 커스텀 sortFn/filterFn/mapFn은 문자열로 직렬화되어 브라우저에서 실행되는데, slugSegment가 없는 노드(루트 등)에서 `.endsWith` 호출 → TypeError → 탐색기 렌더링 전체 중단. 빌드·tsc는 통과하므로 배포 후에만 드러남 | Explorer 옵션 함수 안에서는 모든 속성 접근을 방어한다: `(n.slugSegment ?? "")`. 수정 후 반드시 배포된 페이지에서 탐색기 항목 수를 확인한다. 브라우저 콘솔 오류 확인도 병행 | 2026-07-12 |
+| 자동 목록은 새 제목인데 Explorer만 예전 제목을 보임 | PageList는 빌드된 HTML을 사용하지만 Explorer는 런타임에 `static/contentIndex.json`을 별도로 가져온다. 브라우저/CDN이 이전 JSON을 캐시하면 두 화면의 제목이 달라진다 | Explorer의 content index fetch에 빌드 버전 쿼리와 `cache: "no-cache"`를 넣고, 배포 후 캐시 우회 URL에서 Explorer와 PageList를 함께 확인한다 | 2026-10-29 |
 | 푸시했는데 사이트에 반영 안 보임 | GitHub Pages 배포에 2~3분 소요 + 브라우저 캐시 | 몇 분 기다린 뒤 강력 새로고침(Cmd+Shift+R). 그래도 의심되면 배포 URL에 쿼리스트링을 붙여 다시 열고, 원격 HTML과 `index.css`를 직접 받아 기대한 문구·선택자·값이 들어갔는지 확인한 뒤에만 반영 완료로 판단한다 | 2026-07-12 |
 | 브라우저 화면은 예전 CSS처럼 보이는데 배포 런은 성공 | 로컬/호스트 브라우저가 이전 정적 자산 캐시를 계속 사용함 | 시각 확인만 믿지 말고 원격 HTML/CSS를 직접 fetch해서 새 규칙이 들어갔는지 먼저 판정한다. 배포 파일이 맞으면 브라우저는 새 세션, 캐시 우회 쿼리, 강력 새로고침으로 재확인한다 | 2026-08-29 |
 | `⚠️ 🛠️ run python3 4176 ... failed` 메시지가 뜸 | 이미 같은 포트의 미리보기 서버가 떠 있는데 고정 포트로 다시 실행함 | `python3 -m http.server 4176`를 직접 실행하지 말고 `bash blog/site/scripts/preview_server.sh`를 사용한다. 이미 4176이 살아 있으면 재사용하고, 아니면 빈 포트를 찾아 띄운다 | 2026-07-24 |
@@ -164,6 +165,7 @@
 
 ## 변경 이력
 
+- 1.4 (2026-10-29): 런타임 content index 캐시 때문에 Explorer 제목이 PageList와 달라지는 문제와 캐시 무효화 검증 절차 추가.
 - 1.3 (2026-10-29): 4060 `topics`의 frontmatter 제목·허브 카드·Explorer·자동 목록 날짜 동기화와 원격 검증 절차 추가.
 - 1.2 (2026-08-29): 배포 확인 단계에 원격 HTML/CSS 직접 검증 규칙 추가.
 - 1.1 (2026-07-12): 트러블슈팅 사례집 부록 추가.

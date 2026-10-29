@@ -28,7 +28,8 @@ export function pageResources(
   staticResources: StaticResources,
 ): StaticResources {
   const contentIndexPath = joinSegments(baseDir, "static/contentIndex.json")
-  const contentIndexScript = `const fetchData = fetch("${contentIndexPath}").then(data => data.json())`
+  // Explorer reads this index at runtime; version it so browser/CDN caches cannot keep old titles.
+  const contentIndexScript = `const fetchData = fetch("${contentIndexPath}?v=${Date.now()}", { cache: "no-cache" }).then(data => data.json())`
 
   const resources: StaticResources = {
     css: [
