@@ -72,7 +72,7 @@ title: 4060미들스쿨
 ## 지금 먼저 보면 좋은 글
 
 <ul class="note-list">
-  <li><a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-10-29-muse-mac-remote-control-guide" class="internal">2026년 10월 29일(목) Muse로 내 맥을 원격으로 조종하기 — 아주 쉬운 안내서</a></li>
+  <li><a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-11-14-ai-agent-practical-guide" class="internal">2026년 11월 14일(토) 내 책상 위의 AI 드림팀: 최신 AI 에이전트 실전 강의</a></li>
   <li><a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-10-22-omarchy-old-laptop-practical-manual" class="internal">2026년 10월 22일(목) 오래된 노트북을 다시 쓰는 Omarchy 실전 매뉴얼</a></li>
   <li><a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-10-10-ai-collaboration-trust-checklist" class="internal">2026년 10월 10일(토) AI가 대신 일하는 시대, 우리는 무엇을 맡기고 무엇을 확인해야 할까</a></li>
   <li><a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-09-28-sunshine-moonlight-remote-work-guide" class="internal">2026년 9월 28일(월) 맥북 하나로 윈도우 PC와 맥미니를 오가는 법: Sunshine과 Moonlight 실전 세팅</a></li>
