@@ -18,7 +18,7 @@ cssclasses:
 <div class="reading-path">
   <a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-11-14-ai-agent-practical-guide" class="internal">
     <strong>2026년 11월 14일(토) 내 책상 위의 AI 드림팀: 최신 AI 에이전트 실전 강의</strong>
-    <span>챗봇과 AI 에이전트의 차이부터 Cue·그록봇·뮤즈·피클 비교, 구글 시트 작업함 실습, 노션 세컨드 브레인까지 4060 회원님 눈높이로 정리한 강의 안내입니다.</span>
+    <span>챗봇과 AI 에이전트의 차이부터 Cue·그록봇·뮤즈·피클의 역할, 구글 시트 작업함과 노션 세컨드 브레인까지 4060 회원님 눈높이로 풀어 쓴 실전 기록입니다.</span>
   </a>
   <a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-10-29-muse-mac-remote-control-guide" class="internal">
     <strong>2026년 10월 29일(목) Muse로 내 맥을 원격으로 조종하기 — 아주 쉬운 안내서</strong>
