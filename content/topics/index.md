@@ -16,6 +16,10 @@ cssclasses:
 ## 읽기 경로
 
 <div class="reading-path">
+  <a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-11-20-fm-macos-local-ai-story" class="internal">
+    <strong>2026년 11월 20일(금) 내 맥 속에 숨어 있던 AI 친구, fm 이야기</strong>
+    <span>macOS 27에 들어온 fm 명령어를 민지와 삼촌의 이야기로 쉽게 풀어 보고, 첫 확인부터 요약·정리·로컬 서버 활용까지 차근차근 살펴봅니다.</span>
+  </a>
   <a href="https://goodlookingprokim.github.io/4060-middle-school/topics/2026-11-14-ai-agent-practical-guide" class="internal">
     <strong>2026년 11월 14일(토) 내 책상 위의 AI 드림팀: 최신 AI 에이전트 실전 강의</strong>
     <span>챗봇과 AI 에이전트의 차이부터 Cue·그록봇·뮤즈·피클의 역할, 구글 시트 작업함과 노션 세컨드 브레인까지 4060 회원님 눈높이로 풀어 쓴 실전 기록입니다.</span>
